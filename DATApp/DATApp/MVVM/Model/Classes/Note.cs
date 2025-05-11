@@ -12,7 +12,7 @@ namespace DATApp.MVVM.Model.Classes
 
         public override string ToString()
         {
-            return $"{NoteNumber},{NoteContent},{NoteClient.UserName},{NoteSkill.SkillNumber}";
+            return $"{NoteNumber},{NoteContent},{NoteClient.Email},{NoteSkill.SkillNumber}";
         }
 
         public static Note FromString(string input)

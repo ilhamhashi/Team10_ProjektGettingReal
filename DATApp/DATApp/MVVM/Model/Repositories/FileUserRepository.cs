@@ -30,10 +30,10 @@ namespace DATApp.MVVM.Model.Repositories
             }
         }
 
-        public void DeleteUser(string userName)
+        public void DeleteUser(string email)
         {
             List<User> users = GetAllUsers().ToList();
-            users.RemoveAll(u => u.UserName == userName);
+            users.RemoveAll(u => u.Email == email);
             RewriteFile(users);
         }
 
@@ -53,15 +53,15 @@ namespace DATApp.MVVM.Model.Repositories
             }
         }
 
-        public User GetUser(string userName)
+        public User GetUser(string email)
         {
-            return GetAllUsers().FirstOrDefault(u => u.UserName == userName);
+            return GetAllUsers().FirstOrDefault(u => u.Email == email);
         }
 
         public void UpdateUser(User user)
         {
             List<User> users = GetAllUsers().ToList();
-            int index = users.FindIndex(u => u.UserName == user.UserName);
+            int index = users.FindIndex(u => u.Email == user.Email);
             if (index != -1)
             {
                 users[index] = user;

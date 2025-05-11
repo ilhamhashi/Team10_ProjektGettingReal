@@ -10,14 +10,13 @@ namespace DATApp.MVVM.Model.Classes
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public string UserName { get; set; }
         public bool IsAdmin { get; set; }        
-        public Roles Role { get; set; }
+        //public Roles Role { get; set; }
 
 
         public override string ToString()
         {
-            return $"{Name},{Email},{Password},{UserName},{IsAdmin},{Role}";
+            return $"{Name},{Email},{Password},{IsAdmin}";
         }
 
         public static User FromString(string input)
@@ -28,9 +27,8 @@ namespace DATApp.MVVM.Model.Classes
                 Name = parts[0],
                 Email = parts[1],
                 Password = parts[2],
-                UserName = parts[3],
                 IsAdmin = bool.Parse(parts[4]),
-                Role = Enum.Parse<Roles>(parts[5])
+                //Role = Enum.Parse<Roles>(parts[5])
             };
         }
 

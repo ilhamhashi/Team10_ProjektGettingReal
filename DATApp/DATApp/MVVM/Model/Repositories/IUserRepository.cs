@@ -2,12 +2,12 @@
 
 namespace DATApp.MVVM.Model.Repositories
 {
-    internal interface IUserRepository
+    public interface IUserRepository
     {
         IEnumerable<User> GetAllUsers();
-        User GetUser(string userName);
+        User GetUser(string email);
         void AddUser(User user);
         void UpdateUser(User user);
-        void DeleteUser(string userName);
+        void DeleteUser(string email);
     }
 }

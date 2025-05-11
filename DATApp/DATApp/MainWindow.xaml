@@ -10,7 +10,7 @@
         ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True">
-    
+
     <Window.DataContext>
         <viewmodel:MainWindowViewModel />
     </Window.DataContext>
@@ -52,6 +52,12 @@
                          Foreground="White"
                          FontSize="14"
                          Style="{StaticResource MenuButtonTheme}"/>
+                
+                <RadioButton Content="Brugere"
+                         Height="50"
+                         Foreground="White"
+                         FontSize="14"
+                         Style="{StaticResource MenuButtonTheme}" Checked="RadioButton_Checked"/>
             </StackPanel>
 
             <TextBox Width="250"
@@ -65,6 +71,7 @@
             <ContentControl Grid.Row="1"
                             Grid.Column="1"
                             Margin="10"/>
+            <Button Grid.Column="1" Content="Log ind" HorizontalAlignment="Left" Margin="611,0,0,0" VerticalAlignment="Center" Click="Button_Click" Height="29" Width="72"/>
 
         </Grid>
     </Border>
