@@ -1,12 +1,75 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
+using DATApp.MVVM.Model.Classes;
+using DATApp.MVVM.Model.Repositories;
+using DATApp.Core;
 
 namespace DATApp.MVVM.ViewModel
 {
-    class NotesViewModel
+    public class NotesViewModel : INotifyPropertyChanged
     {
+        private readonly INoteRepository noteRepository;
+
+        private Note _selectedNote;
+        public Note SelectedNote
+        {
+            get => _selectedNote;
+            set
+            {
+                _selectedNote = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Note> Notes { get; }
+
+        public ICommand AddNoteCommand { get; }
+        public ICommand DeleteNoteCommand { get; }
+        public ICommand SaveNoteCommand { get; }
+
+
+        public NotesViewModel()
+        {
+            noteRepository = new FileNoteRepository("notes.txt");
+
+            Notes = new ObservableCollection<Note>(noteRepository.GetAll());
+
+            AddNoteCommand = new RelayCommand(_ => AddNote());
+            DeleteNoteCommand = new RelayCommand(_ => DeleteNote(), _ => SelectedNote != null);
+            SaveNoteCommand = new RelayCommand(_ => SaveNote(), _ => SelectedNote != null);
+        }
+
+        private void AddNote()
+        {
+            var newNote = new Note { Name = "Ny note", NoteContent = "Note indhold" };
+            noteRepository.Add(newNote);
+            Notes.Add(newNote);
+        }
+
+        private void DeleteNote()
+        {
+            if (SelectedNote != null)
+            {
+                noteRepository.Delete(SelectedNote);
+                Notes.Remove(SelectedNote);
+                SelectedNote = null;
+            }
+        }
+
+        private void SaveNote()
+        {
+            if (SelectedNote != null)
+            {
+                noteRepository.Update(SelectedNote);
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

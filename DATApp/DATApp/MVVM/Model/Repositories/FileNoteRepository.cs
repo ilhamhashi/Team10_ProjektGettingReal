@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DATApp.MVVM.Model.Classes;
+using System.IO;
 
 namespace DATApp.MVVM.Model.Repositories
 {
@@ -12,10 +13,32 @@ namespace DATApp.MVVM.Model.Repositories
         private readonly List<Note> _notes = new List<Note>();
         private int _nextId = 0;
 
+        private readonly string _noteFilePath;
+        private readonly bool _isLoggedIn;
+
+
+        public FileNoteRepository(string filePath)
+        {
+            _noteFilePath = filePath;
+            if (!File.Exists(_noteFilePath))
+            {
+                File.Create(_noteFilePath).Close();
+            }
+        }
+
         public void Add(Note note)
         {
             note.Id = _nextId++;
             _notes.Add(note);
+
+            try
+            {
+                File.AppendAllText(_noteFilePath, note.ToString() + Environment.NewLine);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Fejl ved skrivning til fil: {ex.Message}");
+            }
         }
 
         public void Delete(Note note)
@@ -39,6 +62,17 @@ namespace DATApp.MVVM.Model.Repositories
             if (existingNote != null)
             {
                 existingNote.Name = note.Name;
+                existingNote.NoteContent = note.NoteContent;
+                existingNote.NoteNumber = note.NoteNumber;
+               
+                try
+                {
+                    File.WriteAllLines(_noteFilePath, _notes.Select(n => n.ToString()));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Fejl ved opdatering af fil: {ex.Message}");
+                }
             }
         }
     }
