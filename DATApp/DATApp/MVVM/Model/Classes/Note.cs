@@ -20,13 +20,14 @@ namespace DATApp.MVVM.Model.Classes
 
         public static Note FromString(string input)
         {
-            string[] parts = input.Split(','); // Opdeler strengen baseret på kommategn
+            var parts = input.Split(',');
+            if (parts.Length < 3) return null;
+
             return new Note
             {
                 NoteNumber = int.Parse(parts[0]),
                 NoteContent = parts[1],
-                //NoteClient.UserName = parts[2],
-                //NoteSkill.SkillNumber = int.Parse(parts[3])
+                Name = parts[2]
             };
         }
 

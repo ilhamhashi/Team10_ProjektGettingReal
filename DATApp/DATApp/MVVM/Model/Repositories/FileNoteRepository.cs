@@ -16,13 +16,24 @@ namespace DATApp.MVVM.Model.Repositories
         private readonly string _noteFilePath;
         private readonly bool _isLoggedIn;
 
-
         public FileNoteRepository(string filePath)
         {
             _noteFilePath = filePath;
+
             if (!File.Exists(_noteFilePath))
             {
                 File.Create(_noteFilePath).Close();
+            }
+
+            var lines = File.ReadAllLines(_noteFilePath);
+            foreach (var line in lines)
+            {
+                var note = Note.FromString(line);
+                if (note != null)
+                {
+                    note.Id = _nextId++;
+                    _notes.Add(note);
+                }
             }
         }
 
