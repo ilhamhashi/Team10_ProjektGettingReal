@@ -20,24 +20,29 @@
             <MenuItem Header="DAT-Match"
             Height="50"
             Foreground="Black"
-            FontSize="14"/>
+            FontSize="14"
+            Command="{Binding DatMatchViewCommand}"/>
 
             <MenuItem Header="Færdigheder"
             Height="50"
             Foreground="Black"
-            FontSize="14"/>
+            FontSize="14"
+            Command="{Binding SkillsViewCommand}"/>
 
             <MenuItem Header="Moduler"
             Height="50"
             Foreground="Black"
-            FontSize="14"/>
+            FontSize="14"
+            Command="{Binding ModulesViewCommand}"/>
 
             <MenuItem Header="Min Konto"
                       Height="50"
                       Foreground="Black"
                       FontSize="14">
-                <MenuItem Header="Client Client"/>
-                <MenuItem Header="Administrer Noter"/>
+                <MenuItem Header="Client Client"
+                          Command="{Binding MyAccountViewCommand}"/>
+                <MenuItem Header="Administrer Noter"
+                          Command="{Binding NotesViewCommand}"/>
             </MenuItem>
 
         </Menu>

@@ -20,7 +20,27 @@
             <DataTemplate DataType="{x:Type viewmodel:UsersViewModel}">
                 <view:UsersView/>
             </DataTemplate>
-            
+
+            <DataTemplate DataType="{x:Type viewmodel:SkillsViewModel}">
+                <view:SkillsView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodel:ModulesViewModel}">
+                <view:ModulesView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodel:DatMatchViewModel}">
+                <view:DatMatchView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodel:MyAccountViewModel}">
+                <view:MyAccountView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodel:NotesViewModel}">
+                <view:NotesView/>
+            </DataTemplate>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

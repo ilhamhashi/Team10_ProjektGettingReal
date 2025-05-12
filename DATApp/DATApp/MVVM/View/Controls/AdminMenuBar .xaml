@@ -22,26 +22,31 @@
             <MenuItem Header="DAT-Match"
             Height="50"
             Foreground="Black"
-            FontSize="14"/>
+            FontSize="14"
+            Command="{Binding DatMatchViewCommand}"/>
 
             <MenuItem Header="Færdigheder"
             Height="50"
             Foreground="Black"
-            FontSize="14"/>
+            FontSize="14"
+            Command="{Binding SkillsViewCommand}"/>
 
             <MenuItem Header="Moduler"
             Height="50"
             Foreground="Black"
-            FontSize="14"/>
+            FontSize="14"
+            Command="{Binding ModulesViewCommand}"/>
 
             <MenuItem Header="Min Konto"
                       Height="50"
                       Foreground="Black"
                       FontSize="14">
-                <MenuItem Header="Admin Admin"/>
+                <MenuItem Header="Admin Admin"
+                          Command="{Binding MyAccountViewCommand}"/>
                 <MenuItem Header="Administrer brugere"
                           Command="{Binding UsersViewCommand}"/>
-                <MenuItem Header="Vis alle noter"/>
+                <MenuItem Header="Vis alle noter"
+                          Command="{Binding NotesViewCommand}"/>
             </MenuItem>
             
         </Menu>

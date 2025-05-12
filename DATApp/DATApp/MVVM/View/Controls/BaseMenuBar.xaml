@@ -21,17 +21,20 @@
             <MenuItem Header="DAT-Match"
             Height="50"
             Foreground="Black"
-            FontSize="14"/>
+            FontSize="14"
+            Command="{Binding DatMatchViewCommand}"/>
 
             <MenuItem Header="Færdigheder"
             Height="50"
             Foreground="Black"
-            FontSize="14"/>
+            FontSize="14"
+            Command="{Binding SkillsViewCommand}"/>
 
             <MenuItem Header="Moduler"
             Height="50"
             Foreground="Black"
-            FontSize="14"/>
+            FontSize="14"
+            Command="{Binding ModulesViewCommand}"/>
 
             <MenuItem Header="Log Ind"
             Height="50"

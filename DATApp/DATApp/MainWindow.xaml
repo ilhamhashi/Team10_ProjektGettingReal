@@ -36,7 +36,7 @@
                FontSize="22"
                Margin="20,0,0,0"/>
 
-            <controls:ClientMenuBar Margin="10,10,10,10" Grid.Column="1" HorizontalAlignment="Left" Width="592" />
+            <controls:AdminMenuBar Margin="10,10,10,10" Grid.Column="1" HorizontalAlignment="Left" Width="592" />
             
             <ContentControl Grid.Row="1"
                             Grid.Column="0"

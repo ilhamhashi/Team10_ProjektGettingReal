@@ -1,7 +1,4 @@
-﻿using System.Windows.Controls;
-using System.Windows.Media.Media3D;
-using System.Windows;
-using System.Xml.Linq;
+﻿
 using DATApp.Core;
 
 namespace DATApp.MVVM.ViewModel
@@ -10,8 +7,19 @@ namespace DATApp.MVVM.ViewModel
     {
         public RelayCommand HomeViewCommand {  get; set; }
         public RelayCommand UsersViewCommand { get; set; }
+        public RelayCommand ModulesViewCommand { get; set; }
+        public RelayCommand SkillsViewCommand { get; set; }
+        public RelayCommand DatMatchViewCommand { get; set; }
+        public RelayCommand MyAccountViewCommand { get; set; }
+        public RelayCommand NotesViewCommand { get; set; }
+
         public HomeViewModel HomeVM { get; set; }
         public UsersViewModel UsersVM { get; set; }
+        public ModulesViewModel ModulesVM { get; set; }
+        public SkillsViewModel SkillsVM { get; set; }
+        public DatMatchViewModel DatMatchVM { get; set; }
+        public NotesViewModel NotesVM { get; set; }
+        public MyAccountViewModel MyAccountVM { get; set; }
 
         private object _currentView;
 
@@ -29,6 +37,13 @@ namespace DATApp.MVVM.ViewModel
         {
             HomeVM = new HomeViewModel();
             UsersVM = new UsersViewModel();
+            ModulesVM =  new ModulesViewModel();
+            SkillsVM = new SkillsViewModel();
+            DatMatchVM = new DatMatchViewModel();
+            NotesVM = new NotesViewModel();
+            MyAccountVM = new MyAccountViewModel();
+
+
             CurrentView = HomeVM;
 
             HomeViewCommand = new RelayCommand(o =>
@@ -39,6 +54,31 @@ namespace DATApp.MVVM.ViewModel
             UsersViewCommand = new RelayCommand(o =>
             {
                 CurrentView = UsersVM;
+            });
+
+            ModulesViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = ModulesVM;
+            });
+
+            SkillsViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = SkillsVM;
+            });
+
+            DatMatchViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = DatMatchVM;
+            });
+
+            NotesViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = NotesVM;
+            });
+
+            MyAccountViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = MyAccountVM;
             });
         }
     }
