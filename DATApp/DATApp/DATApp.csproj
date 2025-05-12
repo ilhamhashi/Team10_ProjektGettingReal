@@ -12,4 +12,10 @@
     <Folder Include="MVVM\Model\Files\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="MVVM\View\Controls\AdminMenuBar .xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

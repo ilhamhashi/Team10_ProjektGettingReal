@@ -27,7 +27,7 @@ namespace DATApp.MVVM.Model.Classes
                 Name = parts[0],
                 Email = parts[1],
                 Password = parts[2],
-                IsAdmin = bool.Parse(parts[4]),
+                IsAdmin = bool.Parse(parts[3]),
                 //Role = Enum.Parse<Roles>(parts[5])
             };
         }

@@ -12,8 +12,8 @@ namespace DATApp.Tests
         {
             // Arrange
             var userRepositoryTest = new FileUserRepository("userstest.txt");
-            var viewModel = new MainWindowViewModel();
-            new User { "Bo", "bo@gmail.com", "adgangskode", "BO1234", false, Roles.Klient };
+           //vr viewModel = new MainWindowViewModel();
+            //new User { "Bo", "bo@gmail.com", "adgangskode", "BO1234", false, Roles.Klient };
 
             // Act
 

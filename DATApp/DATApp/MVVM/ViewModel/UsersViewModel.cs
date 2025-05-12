@@ -1,20 +1,20 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using DATApp.MVVM.Model.Classes;
 using DATApp.MVVM.Model.Repositories;
 using System.Windows.Input;
 using System.Windows;
+using DATApp.Core;
 
 namespace DATApp.MVVM.ViewModel
 {
-    public class BrugereViewModel
+    class UsersViewModel : ViewModelBase
     {
         private readonly IUserRepository userRepository = new FileUserRepository("users.txt");
         private string name;
         private string email;
         private string password;
         private bool isAdmin;
+        private User selectedUser;
 
         public string Name
         {
@@ -39,19 +39,27 @@ namespace DATApp.MVVM.ViewModel
             set { isAdmin = value; OnPropertyChanged(); }
         }
 
+        public User SelectedUser
+        {
+            get => selectedUser;
+            set { selectedUser = value; OnPropertyChanged(); }
+        }
+
         public ObservableCollection<User> Users { get; } = [];
 
         public ICommand AddUserCommand { get; }
+        public ICommand DeleteUserCommand { get; }
 
-        public BrugereViewModel()
+        public UsersViewModel()
         {
             List<User> usersFromFile = userRepository.GetAllUsers().ToList();
             foreach (var user in usersFromFile)
             {
-                new User { Name = user.Name, Email = user.Email, Password = user.Password, IsAdmin = user.IsAdmin  };
+                new User { Name = user.Name, Email = user.Email, Password = user.Password, IsAdmin = user.IsAdmin };
                 Users.Add(user);
             }
-            AddUserCommand = new RelayCommand(AddUser, CanAddUser);
+            AddUserCommand = new RelayCommandUser(AddUser, CanAddUser);
+            //DeleteUserCommand = new RelayCommandUser(DeleteUser);
         }
 
         private void AddUser()
@@ -61,7 +69,7 @@ namespace DATApp.MVVM.ViewModel
             userRepository.AddUser(user);
 
             // Simpel dialogboks som bekræftelse
-            MessageBox.Show($"Bruger '{user.Name}' added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show($"Bruger '{user.Name}' oprettet!", "Tilføjet", MessageBoxButton.OK, MessageBoxImage.Information);
 
             Name = string.Empty;
             Email = string.Empty;
@@ -69,10 +77,17 @@ namespace DATApp.MVVM.ViewModel
             IsAdmin = false;
         }
 
-        private bool CanAddUser() => !string.IsNullOrWhiteSpace(Name);
+        private void DeleteUser()
+        {
+            var user = new User { Name = name, Email = email, Password = password, IsAdmin = isAdmin };
+            Users.Add(user);
+            userRepository.AddUser(user);
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string _name = null) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(_name));
+            // Simpel dialogboks som bekræftelse
+            MessageBox.Show($"Bruger '{user.Name}' slettet!", "Fjernet", MessageBoxButton.OK, MessageBoxImage.Information);
+
+        }
+        private bool CanAddUser() => !string.IsNullOrWhiteSpace(Name);
+        
     }
 }

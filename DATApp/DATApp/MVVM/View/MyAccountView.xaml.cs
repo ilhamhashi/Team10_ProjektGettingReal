@@ -10,23 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace DATApp.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for Brugere.xaml
+    /// Interaction logic for MyAccountView.xaml
     /// </summary>
-    public partial class Brugere : Window
+    public partial class MyAccountView : UserControl
     {
-        public Brugere()
+        public MyAccountView()
         {
             InitializeComponent();
-        }
-
-        private void BrugerTypeDrowDown_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-      
         }
     }
 }

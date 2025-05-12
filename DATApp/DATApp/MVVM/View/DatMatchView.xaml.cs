@@ -10,23 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace DATApp.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for LogInd.xaml
+    /// Interaction logic for DatMatch.xaml
     /// </summary>
-    public partial class LogInd : Window
+    public partial class DatMatchView : UserControl
     {
-        public LogInd()
+        public DatMatchView()
         {
             InitializeComponent();
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
     }
 }

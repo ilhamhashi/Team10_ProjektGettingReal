@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace DATApp.Core
 {
-    class ObservableObject : INotifyPropertyChanged
+    class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null) =>

@@ -12,16 +12,15 @@ namespace DATApp
         {
             InitializeComponent();
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            LogInd logInd = new LogInd();
-            logInd.Show();
+            Close();
         }
 
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        private void BaseMenuBar_Loaded(object sender, RoutedEventArgs e)
         {
-            Brugere brugere = new Brugere();
-            brugere.Show();
+
         }
     }
 }
