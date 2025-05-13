@@ -32,6 +32,9 @@ namespace DATApp.MVVM.ViewModel
 
         public NotesViewModel()
         {
+            //Determines who user and if they can see all notes or not.
+            Session.CurrentUser = new User { Email = "test@example.com", IsAdmin = true };
+
             noteRepository = new FileNoteRepository("notes.txt");
 
             Notes = new ObservableCollection<Note>(noteRepository.GetAll());
