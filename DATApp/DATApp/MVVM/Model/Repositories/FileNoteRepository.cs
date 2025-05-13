@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DATApp.MVVM.Model.Classes;
 using System.IO;
+using DATApp.Core;
 
 namespace DATApp.MVVM.Model.Repositories
 {
@@ -40,6 +41,7 @@ namespace DATApp.MVVM.Model.Repositories
         public void Add(Note note)
         {
             note.Id = _nextId++;
+            note.NoteClient = Session.CurrentUser;
             _notes.Add(note);
 
             try
@@ -59,7 +61,24 @@ namespace DATApp.MVVM.Model.Repositories
 
         public IEnumerable<Note> GetAll()
         {
-            return _notes;
+            if (Session.CurrentUser == null)
+            {
+                Console.WriteLine("No user logged in.");
+                return Enumerable.Empty<Note>();
+            }
+
+            if (Session.CurrentUser.IsAdmin)
+            {
+                Console.WriteLine("Admin user: loading all notes.");
+                return _notes;
+            }
+
+            var userNotes = _notes
+                .Where(n => n.NoteClient != null && n.NoteClient.Email == Session.CurrentUser.Email)
+                .ToList();
+
+            Console.WriteLine($"User {Session.CurrentUser.Email}: loading {userNotes.Count} notes.");
+            return userNotes;
         }
 
         public Note GetByID(int id)

@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using DATApp.MVVM.View;
+using DATApp.Core;
+using DATApp.MVVM.Model.Classes;
 
 namespace DATApp
 {
@@ -13,7 +15,7 @@ namespace DATApp
             InitializeComponent();
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+    private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
