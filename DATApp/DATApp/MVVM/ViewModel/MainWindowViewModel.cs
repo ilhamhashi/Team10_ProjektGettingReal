@@ -1,5 +1,6 @@
 ﻿
 using DATApp.Core;
+using DATApp.MVVM.View;
 
 namespace DATApp.MVVM.ViewModel
 {
@@ -12,6 +13,7 @@ namespace DATApp.MVVM.ViewModel
         public RelayCommand DatMatchViewCommand { get; set; }
         public RelayCommand MyAccountViewCommand { get; set; }
         public RelayCommand NotesViewCommand { get; set; }
+        public RelayCommand LoginViewCommand { get; set; }
 
         public HomeViewModel HomeVM { get; set; }
         public UsersViewModel UsersVM { get; set; }
@@ -20,6 +22,7 @@ namespace DATApp.MVVM.ViewModel
         public DatMatchViewModel DatMatchVM { get; set; }
         public NotesViewModel NotesVM { get; set; }
         public MyAccountViewModel MyAccountVM { get; set; }
+        public LoginViewModel LoginVM { get; set; }
 
         private object _currentView;
 
@@ -42,6 +45,7 @@ namespace DATApp.MVVM.ViewModel
             DatMatchVM = new DatMatchViewModel();
             NotesVM = new NotesViewModel();
             MyAccountVM = new MyAccountViewModel();
+            LoginVM = new LoginViewModel();
 
 
             CurrentView = HomeVM;
@@ -80,12 +84,9 @@ namespace DATApp.MVVM.ViewModel
             {
                 CurrentView = MyAccountVM;
             });
+
         }
     }
 }
 
-
-//< Button Grid.Column = "1" Content = "Log ind" HorizontalAlignment = "Left" Margin = "564,0,0,0" VerticalAlignment = "Center" Click = "Button_Click" Height = "29" Width = "72" />
-
-//            < Button Name = "CloseButton" Content = "Luk" Click = "CloseButton_Click" Grid.Column = "1" Margin = "647,23,15,23" />
             

@@ -36,8 +36,8 @@
                FontSize="22"
                Margin="20,0,0,0"/>
 
-            <controls:AdminMenuBar Margin="10,10,10,10" Grid.Column="1" HorizontalAlignment="Left" Width="592" />
-            
+            <controls:BaseMenuBar Margin="10,10,0,515" Grid.Column="1" HorizontalAlignment="Left" Width="592" Grid.RowSpan="2"/>
+
             <ContentControl Grid.Row="1"
                             Grid.Column="0"
                             Margin="10"/>
@@ -47,6 +47,7 @@
                             Content="{Binding CurrentView}" Grid.Column="1"/>
 
             <Button Name = "CloseButton" Content = "Luk" Click = "CloseButton_Click" Grid.Column = "1" Margin = "634,26,28,19" />
+            <Button x:Name = "LoginButton" Content = "Log ind" Click = "LoginButton_Click" Grid.Column = "1" Margin = "554,27,108,18" />
         </Grid>
     </Border>
 </Window>

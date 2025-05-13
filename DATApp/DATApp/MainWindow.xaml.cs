@@ -18,9 +18,10 @@ namespace DATApp
             Close();
         }
 
-        private void BaseMenuBar_Loaded(object sender, RoutedEventArgs e)
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-
+            LoginView loginView = new LoginView();
+            loginView.Show();
         }
     }
 }
