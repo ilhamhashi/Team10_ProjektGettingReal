@@ -26,7 +26,7 @@
                 </ListView>
                 <Button Height="30"  Content="Slet Bruger" Width="100" VerticalContentAlignment="Center" Padding="5" Margin="0,258,189,0" VerticalAlignment="Top" HorizontalAlignment="Right" BorderThickness="1" BorderBrush="#E0E0E0" RenderTransformOrigin="-1.669,7.553"  />
                 <Button Height="30"  Content="Gem Bruger" Width="100" VerticalContentAlignment="Center" Padding="5" Margin="0,258,50,0" VerticalAlignment="Top" HorizontalAlignment="Right" BorderThickness="1" BorderBrush="#E0E0E0" RenderTransformOrigin="-1.669,7.553" Click="Button_Click_1"  />
-                <controls:Søgeknap Margin="10,15,338,248"/>
+                
             </Grid>
             <Label Content = "Navn:" Margin="453,143,16,36" />
             <TextBox Text = "{Binding SelectedUser.Name, UpdateSourceTrigger=PropertyChanged}" Margin="453,169,16,18" />

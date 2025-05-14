@@ -4,6 +4,8 @@ using DATApp.MVVM.Model.Repositories;
 using System.Windows.Input;
 using System.Windows;
 using DATApp.Core;
+using DATApp.MVVM.View;
+using DATApp.MVVM.ViewModel;
 
 namespace DATApp.MVVM.ViewModel
 {
@@ -49,6 +51,7 @@ namespace DATApp.MVVM.ViewModel
 
         public ICommand AddUserCommand { get; }
         public ICommand DeleteUserCommand { get; }
+        public ICommand ValidateUserLoginCommand { get; }
 
         public UsersViewModel()
         {
@@ -59,6 +62,7 @@ namespace DATApp.MVVM.ViewModel
                 Users.Add(user);
             }
             AddUserCommand = new RelayCommandUser(AddUser, CanAddUser);
+            ValidateUserLoginCommand = new RelayCommandUser(ValidateUserLogin, CanLoginUser);
             //DeleteUserCommand = new RelayCommandUser(DeleteUser);
         }
 
@@ -87,7 +91,28 @@ namespace DATApp.MVVM.ViewModel
             MessageBox.Show($"Bruger '{user.Name}' slettet!", "Fjernet", MessageBoxButton.OK, MessageBoxImage.Information);
 
         }
+
+        private void ValidateUserLogin()
+        {
+            bool loginValye = userRepository.ValidateUserLogin(Email, Password);
+            if (loginValye && IsAdmin)
+            {
+                MessageBox.Show($"Login Succesful. You are signed in as Admin", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else if (loginValye && IsAdmin == false)
+            {
+                MessageBox.Show($"Login Succesful. You are signed in as Client", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show($"Login invalid. Try again", "Failed", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
+
+        }
+
         private bool CanAddUser() => !string.IsNullOrWhiteSpace(Name);
-        
+        private bool CanLoginUser() => !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Password);
+
     }
 }

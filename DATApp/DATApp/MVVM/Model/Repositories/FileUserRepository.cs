@@ -69,6 +69,29 @@ namespace DATApp.MVVM.Model.Repositories
             }
         }
 
+        public bool ValidateUserLogin(string email, string password)
+        {
+            try
+            {
+                List<User> users = GetAllUsers().ToList();
+                foreach (User user in users)
+                {
+                    var storedEmail = user.Email;
+                    var storedPassword = user.Password;
+                    if (storedEmail == email && storedPassword == password)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine($"Fejl ved læsning af fil: {ex.Message}");
+                return false;
+            }
+        }
+
         private void RewriteFile(List<User> users)
         {
             try
