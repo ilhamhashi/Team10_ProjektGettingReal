@@ -20,7 +20,7 @@
             <!-- This row takes the remaining space for ListBox -->
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Skills Search and Add"
+        <TextBlock Text="Søge funktion"
                    FontSize="24"
                    FontWeight="Bold"
                    Grid.Row="0" />
@@ -55,10 +55,16 @@
 
                 <TextBlock Text="Følelse" />
                 <ItemsControl ItemsSource="{Binding EmotionalStates}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <CheckBox Content="{Binding}"
-                                      IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                      IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                      Margin="5,0"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
