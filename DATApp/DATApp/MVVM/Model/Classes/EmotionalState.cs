@@ -13,4 +13,6 @@ namespace DATApp.MVVM.Model.Classes
         Angry = 2,
         Sad = 3
     }
+
+
 }

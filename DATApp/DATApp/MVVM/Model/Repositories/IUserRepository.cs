@@ -8,7 +8,7 @@ namespace DATApp.MVVM.Model.Repositories
         User GetUser(string email);
         void AddUser(User user);
         void UpdateUser(User user);
-        void DeleteUser(string email);
+        void DeleteUser(User user);
         bool ValidateUserLogin(string email, string password);
     }
 }

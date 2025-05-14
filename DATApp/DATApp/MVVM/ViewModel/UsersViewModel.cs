@@ -5,7 +5,6 @@ using System.Windows.Input;
 using System.Windows;
 using DATApp.Core;
 using DATApp.MVVM.View;
-using DATApp.MVVM.ViewModel;
 
 namespace DATApp.MVVM.ViewModel
 {
@@ -47,23 +46,22 @@ namespace DATApp.MVVM.ViewModel
             set { selectedUser = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<User> Users { get; } = [];
+        public ObservableCollection<User> Users { get; }
 
+        public ICommand OpenAddUserCommand { get; }
+        public ICommand SaveUserCommand { get; }
         public ICommand AddUserCommand { get; }
         public ICommand DeleteUserCommand { get; }
         public ICommand ValidateUserLoginCommand { get; }
 
         public UsersViewModel()
         {
-            List<User> usersFromFile = userRepository.GetAllUsers().ToList();
-            foreach (var user in usersFromFile)
-            {
-                new User { Name = user.Name, Email = user.Email, Password = user.Password, IsAdmin = user.IsAdmin };
-                Users.Add(user);
-            }
+            Users = new ObservableCollection<User>(userRepository.GetAllUsers());
             AddUserCommand = new RelayCommandUser(AddUser, CanAddUser);
+            SaveUserCommand = new RelayCommandUser(SaveUser, CanSaveUser);
+            OpenAddUserCommand = new RelayCommandUser(OpenAddUser, CanOpenAddUser);
             ValidateUserLoginCommand = new RelayCommandUser(ValidateUserLogin, CanLoginUser);
-            //DeleteUserCommand = new RelayCommandUser(DeleteUser);
+            DeleteUserCommand = new RelayCommandUser(DeleteUser,CanDeleteUser);
         }
 
         private void AddUser()
@@ -81,15 +79,25 @@ namespace DATApp.MVVM.ViewModel
             IsAdmin = false;
         }
 
+        private void OpenAddUser()
+        {
+            AddUserView addUserView = new AddUserView();
+            addUserView.Show();
+        }
+
+        private void SaveUser()
+        {
+            userRepository.UpdateUser(SelectedUser);
+            MessageBox.Show($"Bruger '{Name}' Rettet!", "Redigeret", MessageBoxButton.OK, MessageBoxImage.Information);
+            SelectedUser = null;
+        }
+
         private void DeleteUser()
         {
-            var user = new User { Name = name, Email = email, Password = password, IsAdmin = isAdmin };
-            Users.Add(user);
-            userRepository.AddUser(user);
-
-            // Simpel dialogboks som bekræftelse
-            MessageBox.Show($"Bruger '{user.Name}' slettet!", "Fjernet", MessageBoxButton.OK, MessageBoxImage.Information);
-
+                userRepository.DeleteUser(SelectedUser);
+                Users.Remove(SelectedUser);
+                MessageBox.Show($"Bruger '{Name}' slettet!", "Fjernet", MessageBoxButton.OK, MessageBoxImage.Information);
+                SelectedUser = null;
         }
 
         private void ValidateUserLogin()
@@ -111,7 +119,10 @@ namespace DATApp.MVVM.ViewModel
 
         }
 
-        private bool CanAddUser() => !string.IsNullOrWhiteSpace(Name);
+        private bool CanAddUser() => !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Password);
+        private bool CanOpenAddUser() => true;
+        private bool CanSaveUser() => SelectedUser != null;
+        private bool CanDeleteUser() => SelectedUser != null;
         private bool CanLoginUser() => !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Password);
 
     }

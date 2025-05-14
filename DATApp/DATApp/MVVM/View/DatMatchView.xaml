@@ -4,10 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DATApp.MVVM.View"
+             xmlns:viewModel="clr-namespace:DATApp.MVVM.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="White">
+    <UserControl.DataContext>
+        <viewModel:DatMatchViewModel/>
+    </UserControl.DataContext>
     <Grid>
-        <Label Content="DAT-MATCH" HorizontalAlignment="Left" Margin="333,0,0,0" VerticalAlignment="Center" Foreground="Black"/>
-
+        <Label Content="DAT-MATCH" FontSize=" 24" VerticalAlignment="Top" Foreground="Black" Margin="327,30,327,0"/>
+        <TextBlock Text="Vælg en følelse" Margin="234,229,234,190" />
+        <ComboBox x:Name="FølelseDropDown" SelectedValue="{Binding EmotionalState}" SelectedValuePath="Tag" Padding="2" Margin="234,250,234,0" Height="22" VerticalAlignment="Top">
+            <ComboBoxItem Content="Klient bruger" Tag="False"/>
+            <ComboBoxItem Content="Admin bruger" Tag="True"/>
+        </ComboBox>
     </Grid>
 </UserControl>

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using DATApp.MVVM.Model.Classes;
 
 namespace DATApp.MVVM.Model.Repositories
@@ -7,7 +8,6 @@ namespace DATApp.MVVM.Model.Repositories
     {
         private readonly string _userFilePath;
         private readonly bool _isLoggedIn;
-
 
         public FileUserRepository(string filePath)
         {
@@ -30,10 +30,10 @@ namespace DATApp.MVVM.Model.Repositories
             }
         }
 
-        public void DeleteUser(string email)
+        public void DeleteUser(User user)
         {
             List<User> users = GetAllUsers().ToList();
-            users.RemoveAll(u => u.Email == email);
+            users.RemoveAll(u => u.Email == user.Email);
             RewriteFile(users);
         }
 
@@ -73,8 +73,7 @@ namespace DATApp.MVVM.Model.Repositories
         {
             try
             {
-                List<User> users = GetAllUsers().ToList();
-                foreach (User user in users)
+                foreach (User user in GetAllUsers())
                 {
                     var storedEmail = user.Email;
                     var storedPassword = user.Password;
