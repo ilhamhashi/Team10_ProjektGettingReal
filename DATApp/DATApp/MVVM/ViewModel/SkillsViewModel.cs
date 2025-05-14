@@ -39,7 +39,7 @@ namespace DATApp.MVVM.ViewModel
 
             //definér søgekommandoen
 
-            SearchCommand = new RelayCommand(Search);
+            //SearchCommand = new RelayCommand(Search);
         }
 
         public string SearchTerm
