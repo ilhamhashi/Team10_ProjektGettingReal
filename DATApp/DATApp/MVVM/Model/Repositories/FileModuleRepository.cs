@@ -7,6 +7,7 @@ namespace DATApp.MVVM.Model.Repositories
     public class FileModuleRepository : IModuleRepository
     {
         private readonly string _moduleFilePath;
+        private int _nextNumber = 0;
         public FileModuleRepository(string filePath)
         {
             _moduleFilePath = filePath;
@@ -18,6 +19,8 @@ namespace DATApp.MVVM.Model.Repositories
 
         public void AddModule(Module module)
         {
+            int modulescount = GetAllModules().Count();
+            module.ModuleNumber = modulescount++;
             try
             {
                 File.AppendAllText(_moduleFilePath, module.ToString() + Environment.NewLine);
@@ -28,10 +31,10 @@ namespace DATApp.MVVM.Model.Repositories
             }
         }
 
-        public void DeleteModule(int moduleNumber)
+        public void DeleteModule(Module module)
         {
             List<Module> modules = GetAllModules().ToList();
-            modules.RemoveAll(s => s.ModuleNumber == moduleNumber);
+            modules.RemoveAll(m => m.ModuleNumber == module.ModuleNumber);
             RewriteFile(modules);
         }
 

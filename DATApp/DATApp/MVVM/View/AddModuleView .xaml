@@ -1,0 +1,24 @@
+﻿<Window x:Class="DATApp.MVVM.View.AddModuleView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DATApp.MVVM.View"
+        xmlns:viewModel="clr-namespace:DATApp.MVVM.ViewModel"
+        mc:Ignorable="d"
+        >
+    
+    <Window.DataContext>
+        <viewModel:ModulesViewModel/>
+    </Window.DataContext>
+    
+    <Grid>
+        <Label Content = "Navn:" Margin="234,93,234,315" />
+        <TextBox Text = "{Binding Name}" Margin="234,119,234,297" />
+        <Label Content = "Description:" Margin="234,137,234,271" />
+        <TextBox Text = "{Binding Description}" Margin="234,163,234,253" />
+        
+        <Button Content="Add Module" Command="{Binding AddModuleCommand}" Margin="350,319,350,85"/>
+
+    </Grid>
+</Window>

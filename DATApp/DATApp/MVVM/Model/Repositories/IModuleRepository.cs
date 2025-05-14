@@ -8,6 +8,6 @@ namespace DATApp.MVVM.Model.Repositories
         Module GetModule(int moduleNumber);
         void AddModule(Module module);
         void UpdateModule(Module module);
-        void DeleteModule(int moduleNumber);
+        void DeleteModule(Module module);
     }
 }
