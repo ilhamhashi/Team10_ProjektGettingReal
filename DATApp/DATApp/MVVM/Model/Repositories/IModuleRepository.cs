@@ -9,5 +9,10 @@ namespace DATApp.MVVM.Model.Repositories
         void AddModule(Module module);
         void UpdateModule(Module module);
         void DeleteModule(int moduleNumber);
-    }
+
+
+IEnumerable<Module> FindModulesByFeeling(string feeling);
+
+}
+
 }
