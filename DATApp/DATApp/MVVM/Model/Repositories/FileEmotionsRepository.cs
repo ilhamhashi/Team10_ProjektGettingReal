@@ -1,9 +1,12 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using DATApp.MVVM.Model.Classes;
 
 namespace DATApp.MVVM.Model.Repositories
 {
-    class FileEmotionsRepository
+    public class FileEmotionsRepository
     {
         private readonly string _emotionsFilePath;
 
@@ -21,14 +24,22 @@ namespace DATApp.MVVM.Model.Repositories
             try
             {
                 return File.ReadAllLines(_emotionsFilePath)
-                           .Where(line => !string.IsNullOrEmpty(line)) // Undgå tomme linjer
-                           .Select(Enum.TryParse("Active", out EmotionalState depressed))
+                           .Where(line => !string.IsNullOrWhiteSpace(line))
+                           .Select(line =>
+                           {
+                               if (Enum.TryParse<EmotionalState>(line, true, out var emotion))
+                                   return emotion;
+                               else
+                                   return (EmotionalState?)null;
+                           })
+                           .Where(e => e.HasValue)
+                           .Select(e => e.Value)
                            .ToList();
             }
             catch (IOException ex)
             {
                 Console.WriteLine($"Fejl ved læsning af fil: {ex.Message}");
-                return [];
+                return new List<EmotionalState>();
             }
         }
     }
