@@ -8,7 +8,7 @@
         xmlns:view="clr-namespace:DATApp.MVVM.View"
         xmlns:controls="clr-namespace:DATApp.MVVM.View.Controls"   
         mc:Ignorable="d"
-        Height="600" Width="920"
+        Height="900" Width="920"
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="Transparent"
