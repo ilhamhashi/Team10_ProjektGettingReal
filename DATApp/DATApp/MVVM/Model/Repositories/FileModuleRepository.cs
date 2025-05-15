@@ -9,6 +9,7 @@ namespace DATApp.MVVM.Model.Repositories
     public class FileModuleRepository : IModuleRepository
     {
         private readonly string _moduleFilePath;
+
         public FileModuleRepository(string filePath)
         {
             _moduleFilePath = filePath;

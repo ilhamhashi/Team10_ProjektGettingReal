@@ -9,7 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="MVVM\Model\Files\" />
+    <None Remove="MVVM\Model\Files\modules.txt.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="bin\Debug\net9.0-windows\DATApp.MVVM.Model.Files.modules.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +26,10 @@
     <Compile Update="MVVM\View\Controls\EmailTextBox.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="MVVM\Model\Files\" />
   </ItemGroup>
 
 </Project>
