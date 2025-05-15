@@ -17,41 +17,15 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition/>
-            <RowDefinition/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-
-        <StackPanel Orientation="Horizontal">
-            <controls:ClearableTextBox Grid.Row="0" Width="200" Height="35" HorizontalAlignment="Left" Margin="20,0,0,0" Placeholder="Søg"/>
-            <Button Grid.Row="0" Command="{Binding SearchModuleCommand}"  Width="35" Height="35" Content="Søg"/>
-        </StackPanel>
+        <TextBox Height="35" Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" Margin="20,10,30,0"/>
 
         <!-- Results List with ScrollViewer -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <ListBox ItemsSource="{Binding Modules}"
+            <ListBox ItemsSource="{Binding ModulesCollectionView}"
                      SelectedItem="{Binding SelectedModule}"
-                     HorizontalAlignment="Stretch"
-                     Margin="20,10,30,0">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Margin="5" Orientation="Vertical">
-                            <TextBlock Text="{Binding Name}" FontWeight="Bold" />
-                            <TextBlock Text="{Binding Description}" FontStyle="Italic" FontSize="12" />
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Nummer: " FontSize="12" />
-                                <TextBlock Text="{Binding ModuleNumber}" FontSize="12" />
-                            </StackPanel>
-                     </StackPanel>
-
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </ScrollViewer>
-
-        <!-- Results List with ScrollViewer -->
-        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
-            <ListBox ItemsSource="{Binding SearchResults}"
                      HorizontalAlignment="Stretch"
                      Margin="20,10,30,0">
                 <ListBox.ItemTemplate>
@@ -69,7 +43,7 @@
             </ListBox>
         </ScrollViewer>
 
-        <StackPanel Grid.Row="3" Orientation="Horizontal">
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
         <Label Content = "Navn:" />
         <TextBox Width="200" Height="35" Text = "{Binding SelectedModule.Name, UpdateSourceTrigger=PropertyChanged}" />
         <Label Content = "Description:" />
@@ -77,10 +51,10 @@
         </StackPanel>
         
 
-        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Save Module" Command="{Binding SaveModuleCommand, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="30"/>
             <Button Content="Delete Module" Command="{Binding DeleteModuleCommand, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="30"/>
-            <Button Content="Add Module" Command="{Binding OpenAddModuleCommand, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="30"/>
+            <Button Content="Add Module" Command="{Binding OpenAddModuleCommand}" Width="100" Height="30"/>
         </StackPanel>
 
     </Grid>

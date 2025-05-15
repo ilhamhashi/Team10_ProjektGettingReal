@@ -9,6 +9,5 @@ namespace DATApp.MVVM.Model.Repositories
         void AddModule(Module module);
         void UpdateModule(Module module);
         void DeleteModule(Module module);
-        List<Module> SearchModule(string searchTerm);
     }
 }

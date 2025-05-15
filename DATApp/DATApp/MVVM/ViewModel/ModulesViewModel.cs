@@ -5,6 +5,8 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using DATApp.MVVM.View;
 using System.Windows;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace DATApp.MVVM.ViewModel
 {
@@ -15,13 +17,19 @@ namespace DATApp.MVVM.ViewModel
         private string name;
         private string description;
         private Module selectedModule;
-
-        private string searchTerm;
+        private string searchTerm = string.Empty;
+        private readonly ObservableCollection<Module> Modules;
+        public ICollectionView ModulesCollectionView { get; }
 
         public string SearchTerm
         {
             get { return searchTerm; }
-            set { searchTerm = value; OnPropertyChanged(); }
+            set
+            {
+                searchTerm = value;
+                OnPropertyChanged(nameof(ModulesFilter));
+                ModulesCollectionView.Refresh();
+            }
         }
 
         public int ModuleNumber
@@ -48,9 +56,6 @@ namespace DATApp.MVVM.ViewModel
             set { selectedModule = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<Module> Modules { get; }
-        public ObservableCollection<Module> SearchResults { get; set; }
-
         public ICommand OpenAddModuleCommand { get; }
         public ICommand SaveModuleCommand { get; }
         public ICommand AddModuleCommand { get; }
@@ -60,11 +65,13 @@ namespace DATApp.MVVM.ViewModel
         public ModulesViewModel()
         {
             Modules = new ObservableCollection<Module>(moduleRepository.GetAllModules());
+            ModulesCollectionView = CollectionViewSource.GetDefaultView(Modules);
+            ModulesCollectionView.Filter = ModulesFilter;
+
             AddModuleCommand = new RelayCommandUser(AddModule, CanAddModule);
             SaveModuleCommand = new RelayCommandUser(SaveModule, CanSaveModule);
             OpenAddModuleCommand = new RelayCommandUser(OpenAddModule, CanOpenAddModule);
             DeleteModuleCommand = new RelayCommandUser(DeleteModule, CanDeleteModule);
-            SearchModuleCommand = new RelayCommandUser(SearchModule, CanSearchModule);;
         }
 
         private void AddModule()
@@ -103,9 +110,15 @@ namespace DATApp.MVVM.ViewModel
             SelectedModule = null;
         }
 
-        private void SearchModule()
+        private bool ModulesFilter(object obj)
         {
-            SearchResults = new ObservableCollection<Module>(moduleRepository.SearchModule(SearchTerm));
+            if (obj is Module module)
+            {
+                return module.Name.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
+                    module.Description.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase);
+            }
+
+            return false;
         }
 
         private bool CanAddModule() => !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Description);

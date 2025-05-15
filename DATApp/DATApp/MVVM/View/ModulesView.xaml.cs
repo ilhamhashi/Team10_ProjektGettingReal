@@ -25,9 +25,10 @@ namespace DATApp.MVVM.View
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+            AddModuleView addModuleView = new AddModuleView();
+            addModuleView.Show();
         }
     }
 }

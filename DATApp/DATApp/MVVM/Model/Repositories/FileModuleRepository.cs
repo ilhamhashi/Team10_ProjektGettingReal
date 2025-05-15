@@ -69,28 +69,6 @@ namespace DATApp.MVVM.Model.Repositories
             }
         }
 
-        public List<Module> SearchModule(string searchTerm = null)
-        {
-            var result = GetAllModules().ToList().AsQueryable();
-
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-                result = result.Where(s => s.ModuleNumber.Equals(int.Parse(searchTerm)));
-            }
-
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-                result = result.Where(s => s.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
-            }
-
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-                result = result.Where(s => s.Description.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
-            }
-
-            return result.ToList();
-        }
-
         private void RewriteFile(List<Module> modules)
         {
             try
