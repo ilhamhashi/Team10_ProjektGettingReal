@@ -13,9 +13,19 @@
     </UserControl.DataContext>
 
     <Grid>
-        
-        <Grid Background="White" >
-            <ListView x:Name="UserList" ItemsSource="{Binding Users, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedUser}" BorderBrush="#cdcdcd" Margin="25,70,399,125" Padding="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <controls:ClearableTextBox Grid.Row="0" Width="200" Height="35" HorizontalAlignment="Left" Margin="20,0,0,0" Placeholder="Søg"/>
+            <Button Grid.Row="0" Width="35" Height="35" Content="Søg"/>
+        </StackPanel>
+
+        <ListView Grid.Row="1" x:Name="UserList" ItemsSource="{Binding Users, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedUser}" BorderBrush="#cdcdcd">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name"/>
@@ -25,20 +35,21 @@
                 </ListView.View>
             </ListView>
 
-        </Grid>
-        <Label Content = "Navn:" Margin="453,143,16,281" />
-        <TextBox Text = "{Binding SelectedUser.Name, UpdateSourceTrigger=PropertyChanged}" Margin="453,169,16,263" />
-        <Label Content = "E-mail:" Margin="453,187,16,237" />
-        <TextBox Text = "{Binding SelectedUser.Email, UpdateSourceTrigger=PropertyChanged}" Margin="453,213,16,219" />
-        <Label Content = "Adgangskode:" Margin="453,231,16,195" />
-        <TextBox Text = "{Binding SelectedUser.Password, UpdateSourceTrigger=PropertyChanged}" Margin="453,260,16,172"/>
-        <TextBlock Text="Brugertype" Margin="453,279,16,156" />
-        <ComboBox x:Name="BrugerTypeDropDown" SelectedValue="{Binding SelectedUser.IsAdmin, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Tag" Padding="2" Margin="453,300,16,0" Height="22" VerticalAlignment="Top">
-            <ComboBoxItem Content="Klient bruger" Tag="False"/>
-            <ComboBoxItem Content="Admin bruger" Tag="True"/>
-        </ComboBox>
-
-        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Label Content = "Navn:" />
+            <TextBox Width="150" Height="35" Text = "{Binding SelectedUser.Name, UpdateSourceTrigger=PropertyChanged}" />
+            <Label Content = "E-mail:" />
+            <TextBox Width="150" Height="35" Text = "{Binding SelectedUser.Email, UpdateSourceTrigger=PropertyChanged}" />
+            <Label Content = "Adgangskode:" />
+            <TextBox Width="150" Height="35" Text = "{Binding SelectedUser.Password, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Brugertype" Margin="453,279,16,156" />
+            <ComboBox x:Name="BrugerTypeDropDown" SelectedValue="{Binding SelectedUser.IsAdmin, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Tag" Padding="2" VerticalAlignment="Top">
+                <ComboBoxItem Content="Klient bruger" Tag="False"/>
+                <ComboBoxItem Content="Admin bruger" Tag="True"/>
+            </ComboBox>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Save User" Command="{Binding SaveUserCommand, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="30"/>
             <Button Content="Delete User" Command="{Binding DeleteUserCommand, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="30"/>
             <Button Content="Add User" Command="{Binding OpenAddUserCommand, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="30"/>

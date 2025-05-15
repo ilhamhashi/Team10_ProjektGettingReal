@@ -18,22 +18,26 @@
     </Window.DataContext>
 
     <Border Background="AliceBlue"
-        CornerRadius="20">
+            CornerRadius="20">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="400"/>
+                <RowDefinition Height="130"/>
+                <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <controls:EmailTextBox 
-                Margin="0,116,0,232"/>
-            <controls:AdgangskodeTextBox Margin="0,172,0,172"/>
 
-            <Label Content="Log ind" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0" FontFamily="Leelawadee UI Semilight" FontSize="24" Foreground="#FF18025F"/>
-            <Label Content="Kontakt klinikken for oprettelse af bruger" HorizontalAlignment="Center" Margin="0,228,0,148" FontFamily="Calibri Light" Foreground="#FF18025F" FontSize="10"/>
+            <Label Grid.Row="0" Content="Log ind" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0" FontFamily="Leelawadee UI Semilight" FontSize="24" Foreground="#FF18025F"/>
 
-            <Button Name = "CloseButton" Content = "Luk" Click = "CloseButton_Click" Margin = "130,349,130,21"/>
-            <Button x:Name = "FortsætLogin" Content = "Fortsæt" Command="{Binding ValidateUserLoginCommand}" Margin = "118,281,118,89"/>
-
+            <StackPanel Grid.Row="1">
+                <controls:EmailTextBox Grid.Row="1" Margin="0,0,0,20"/>
+                <controls:AdgangskodeTextBox Grid.Row="2"/>
+            </StackPanel>
+            
+            <StackPanel Grid.Row="2">
+                <Label Content="Kontakt klinikken for oprettelse af bruger" HorizontalAlignment="Center" FontFamily="Calibri Light" Foreground="#FF18025F" FontSize="10"  Margin="0,0,0,20"/>
+                <Button Name = "CloseButton" Content = "Luk" Click = "CloseButton_Click" Width="150" Margin="0,0,0,10"/>
+                <Button x:Name = "FortsætLogin" Content = "Fortsæt" Command="{Binding ValidateUserLoginCommand}" Width="150"/>
+            </StackPanel>
         </Grid>
     </Border>
 </Window>

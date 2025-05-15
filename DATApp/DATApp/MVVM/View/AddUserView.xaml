@@ -6,25 +6,36 @@
         xmlns:local="clr-namespace:DATApp.MVVM.View"
         xmlns:viewModel="clr-namespace:DATApp.MVVM.ViewModel"
         mc:Ignorable="d"
+        Width="300"
+        Height="350"
         >
     
     <Window.DataContext>
         <viewModel:UsersViewModel/>
     </Window.DataContext>
     
-    <Grid>
-        <Label Content = "Navn:" Margin="234,93,234,315" />
-        <TextBox Text = "{Binding Name}" Margin="234,119,234,297" />
-        <Label Content = "E-mail:" Margin="234,137,234,271" />
-        <TextBox Text = "{Binding Email}" Margin="234,163,234,253" />
-        <Label Content = "Adgangskode:" Margin="234,181,234,229" />
-        <TextBox Text = "{Binding Password}" Margin="234,210,234,206"/>
-        <TextBlock Text="Brugertype" Margin="234,229,234,190" />
-        <ComboBox x:Name="BrugerTypeDropDown" SelectedValue="{Binding IsAdmin}" SelectedValuePath="Tag" Padding="2" Margin="234,250,234,0" Height="22" VerticalAlignment="Top">
-            <ComboBoxItem Content="Klient bruger" Tag="False"/>
-            <ComboBoxItem Content="Admin bruger" Tag="True"/>
-        </ComboBox>
-        <Button Content="Add User" Command="{Binding AddUserCommand}" Margin="350,319,350,85"/>
+    <Grid Margin="20,20,20,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height=" 200"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" HorizontalAlignment="Stretch">
+            <Label Content = "Navn:" />
+            <TextBox Text = "{Binding Name}" />
+            <Label Content = "E-mail:" />
+            <TextBox Text = "{Binding Email}" />
+            <Label Content = "Adgangskode:" />
+            <TextBox Text = "{Binding Password}" />
+            <TextBlock Text="Brugertype"  />
+            <ComboBox x:Name="BrugerTypeDropDown" SelectedValue="{Binding IsAdmin}" SelectedValuePath="Tag" Padding="2" VerticalAlignment="Top">
+                <ComboBoxItem Content="Klient bruger" Tag="False"/>
+                <ComboBoxItem Content="Admin bruger" Tag="True"/>
+            </ComboBox>
+
+        </StackPanel>
+
+        <Button Grid.Row="1" Height="25" Width="25" Content="Add User" Command="{Binding AddUserCommand}"/>
 
     </Grid>
 </Window>

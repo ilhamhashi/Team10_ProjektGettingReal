@@ -16,6 +16,14 @@ namespace DATApp.MVVM.ViewModel
         private string description;
         private Module selectedModule;
 
+        private string searchTerm;
+
+        public string SearchTerm
+        {
+            get { return searchTerm; }
+            set { searchTerm = value; OnPropertyChanged(); }
+        }
+
         public int ModuleNumber
         {
             get => moduleNumber;
@@ -41,11 +49,13 @@ namespace DATApp.MVVM.ViewModel
         }
 
         public ObservableCollection<Module> Modules { get; }
+        public ObservableCollection<Module> SearchResults { get; set; }
 
         public ICommand OpenAddModuleCommand { get; }
         public ICommand SaveModuleCommand { get; }
         public ICommand AddModuleCommand { get; }
         public ICommand DeleteModuleCommand { get; }
+        public ICommand SearchModuleCommand { get; }
 
         public ModulesViewModel()
         {
@@ -54,11 +64,14 @@ namespace DATApp.MVVM.ViewModel
             SaveModuleCommand = new RelayCommandUser(SaveModule, CanSaveModule);
             OpenAddModuleCommand = new RelayCommandUser(OpenAddModule, CanOpenAddModule);
             DeleteModuleCommand = new RelayCommandUser(DeleteModule, CanDeleteModule);
+            SearchModuleCommand = new RelayCommandUser(SearchModule, CanSearchModule);;
         }
 
         private void AddModule()
         {
+            int modulescount = Modules.Count();
             var module = new Module { ModuleNumber = moduleNumber, Name = name, Description = description};
+            
             Modules.Add(module);
             moduleRepository.AddModule(module);
 
@@ -90,10 +103,16 @@ namespace DATApp.MVVM.ViewModel
             SelectedModule = null;
         }
 
+        private void SearchModule()
+        {
+            SearchResults = new ObservableCollection<Module>(moduleRepository.SearchModule(SearchTerm));
+        }
+
         private bool CanAddModule() => !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Description);
         private bool CanOpenAddModule() => true;
         private bool CanSaveModule() => SelectedModule != null;
         private bool CanDeleteModule() => SelectedModule != null;
+        private bool CanSearchModule() => true;
 
     }
 }

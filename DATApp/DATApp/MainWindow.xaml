@@ -9,10 +9,7 @@
         xmlns:controls="clr-namespace:DATApp.MVVM.View.Controls"   
         mc:Ignorable="d"
         Height="700" Width="920"
-        WindowStyle="None"
-        ResizeMode="NoResize"
-        Background="Transparent"
-        AllowsTransparency="True">
+        Background="Transparent">
 
     <Window.DataContext>
         <viewmodel:MainWindowViewModel />

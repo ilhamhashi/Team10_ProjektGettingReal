@@ -1,5 +1,7 @@
 ﻿
+using System.Configuration;
 using System.IO;
+using System.Xml.Linq;
 using DATApp.MVVM.Model.Classes;
 
 namespace DATApp.MVVM.Model.Repositories
@@ -7,7 +9,6 @@ namespace DATApp.MVVM.Model.Repositories
     public class FileModuleRepository : IModuleRepository
     {
         private readonly string _moduleFilePath;
-        private int _nextNumber = 0;
         public FileModuleRepository(string filePath)
         {
             _moduleFilePath = filePath;
@@ -19,8 +20,6 @@ namespace DATApp.MVVM.Model.Repositories
 
         public void AddModule(Module module)
         {
-            int modulescount = GetAllModules().Count();
-            module.ModuleNumber = modulescount++;
             try
             {
                 File.AppendAllText(_moduleFilePath, module.ToString() + Environment.NewLine);
@@ -69,6 +68,29 @@ namespace DATApp.MVVM.Model.Repositories
                 RewriteFile(modules);
             }
         }
+
+        public List<Module> SearchModule(string searchTerm = null)
+        {
+            var result = GetAllModules().ToList().AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                result = result.Where(s => s.ModuleNumber.Equals(int.Parse(searchTerm)));
+            }
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                result = result.Where(s => s.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                result = result.Where(s => s.Description.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+            }
+
+            return result.ToList();
+        }
+
         private void RewriteFile(List<Module> modules)
         {
             try

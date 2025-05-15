@@ -4,34 +4,80 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DATApp.MVVM.View"
-             xmlns:viewModel="clr-namespace:DATApp.MVVM.ViewModel"
+             xmlns:viewModel="clr-namespace:DATApp.MVVM.ViewModel"            
+             xmlns:controls="clr-namespace:DATApp.MVVM.View.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             Background="White">
+             d:DesignHeight="450" d:DesignWidth="800">
     
     <UserControl.DataContext>
         <viewModel:ModulesViewModel/>
     </UserControl.DataContext>
 
     <Grid>
-        <Grid>
-            <ListView x:Name="ModuleList" ItemsSource="{Binding Modules, UpdateSourceTrigger=Explicit}" SelectedItem="{Binding SelectedModule}" BorderBrush="#cdcdcd" Margin="25,70,399,125" Padding="0">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
 
-        </Grid>
-        <Label Content = "Navn:" Margin="453,143,16,281" />
-        <TextBox Text = "{Binding SelectedModule.Name, UpdateSourceTrigger=PropertyChanged}" Margin="453,169,16,263" />
-        <Label Content = "Description:" Margin="453,187,16,237" />
-        <TextBox Text = "{Binding SelectedModule.Description, UpdateSourceTrigger=PropertyChanged}" Margin="453,213,16,219" />
+        <StackPanel Orientation="Horizontal">
+            <controls:ClearableTextBox Grid.Row="0" Width="200" Height="35" HorizontalAlignment="Left" Margin="20,0,0,0" Placeholder="Søg"/>
+            <Button Grid.Row="0" Command="{Binding SearchModuleCommand}"  Width="35" Height="35" Content="Søg"/>
+        </StackPanel>
+
+        <!-- Results List with ScrollViewer -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <ListBox ItemsSource="{Binding Modules}"
+                     SelectedItem="{Binding SelectedModule}"
+                     HorizontalAlignment="Stretch"
+                     Margin="20,10,30,0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="5" Orientation="Vertical">
+                            <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                            <TextBlock Text="{Binding Description}" FontStyle="Italic" FontSize="12" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Nummer: " FontSize="12" />
+                                <TextBlock Text="{Binding ModuleNumber}" FontSize="12" />
+                            </StackPanel>
+                     </StackPanel>
+
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ScrollViewer>
+
+        <!-- Results List with ScrollViewer -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <ListBox ItemsSource="{Binding SearchResults}"
+                     HorizontalAlignment="Stretch"
+                     Margin="20,10,30,0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="5" Orientation="Vertical">
+                            <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                            <TextBlock Text="{Binding Description}" FontStyle="Italic" FontSize="12" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Nummer: " FontSize="12" />
+                                <TextBlock Text="{Binding ModuleNumber}" FontSize="12" />
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
+        <Label Content = "Navn:" />
+        <TextBox Width="200" Height="35" Text = "{Binding SelectedModule.Name, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Content = "Description:" />
+        <TextBox Width="200" Height="35" Text = "{Binding SelectedModule.Description, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
         
 
-        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Save Module" Command="{Binding SaveModuleCommand, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="30"/>
             <Button Content="Delete Module" Command="{Binding DeleteModuleCommand, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="30"/>
             <Button Content="Add Module" Command="{Binding OpenAddModuleCommand, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="30"/>
