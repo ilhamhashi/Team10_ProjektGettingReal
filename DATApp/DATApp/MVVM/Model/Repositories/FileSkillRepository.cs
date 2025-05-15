@@ -44,14 +44,14 @@ namespace DATApp.MVVM.Model.Repositories
             try
             {
                 return File.ReadAllLines(_skillFilePath)
-                           .Where(line => !string.IsNullOrEmpty(line)) // Undgå tomme linjer
+                           .Where(line => !string.IsNullOrEmpty(line)) // Avoid empty lines
                            .Select(Skill.FromString)
                            .ToList();
             }
             catch (IOException ex)
             {
-                Console.WriteLine($"Fejl ved læsning af fil: {ex.Message}");
-                return [];
+                Console.WriteLine($"Error reading file: {ex.Message}");
+                return new List<Skill>(); // Return an empty list if there is an error
             }
         }
 

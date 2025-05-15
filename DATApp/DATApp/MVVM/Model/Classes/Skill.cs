@@ -25,7 +25,6 @@ namespace DATApp.MVVM.Model.Classes
         {
             string[] parts = input.Split(',');
 
-            // Guard clause
             if (parts.Length < 7)
                 throw new FormatException("Invalid skill string format");
 
@@ -40,7 +39,6 @@ namespace DATApp.MVVM.Model.Classes
                 Module = new Module { ModuleNumber = int.Parse(parts[6]) }
             };
 
-            // Handle optional EmotionsMatch
             if (parts.Length > 7)
             {
                 string[] emotionParts = parts[7].Split(';', StringSplitOptions.RemoveEmptyEntries);

@@ -93,6 +93,7 @@ namespace DATApp.MVVM.ViewModel
                 EmotionsMatch = SelectedEmotions.ToList()
             };
 
+
             var currentSkills = _skillSearcher.Search("").Select(sr => sr.OriginatingSkill).ToList();
             currentSkills.Add(newSkill);
             _skillSearcher.SetSkills(currentSkills);
@@ -104,6 +105,7 @@ namespace DATApp.MVVM.ViewModel
                 SearchResults.Add(result);
             }
 
+
             NewSkillName = "";
             NewSkillDescription = "";
             SelectedEmotions.Clear();
@@ -111,6 +113,7 @@ namespace DATApp.MVVM.ViewModel
             OnPropertyChanged(nameof(NewSkillDescription));
             OnPropertyChanged(nameof(SelectedEmotions));
         }
+
 
         // INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
