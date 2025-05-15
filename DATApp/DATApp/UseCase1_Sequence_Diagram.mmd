@@ -1,0 +1,13 @@
+﻿sequenceDiagram
+    actor Client
+    participant UI as ClientUI
+    participant VM as SkillsViewModel
+    participant Searcher as SkillSearcher
+    participant Repo as FileSkillRepository
+
+    Client->>UI: Select EmotionalState + Level
+    UI->>VM: Update SelectedEmotions
+    UI->>VM: SearchCommand.Execute()
+    VM->>Searcher: Search(emotion/term)
+    Searcher->>VM: Return matching skills
+    VM->>UI: Update SearchResults

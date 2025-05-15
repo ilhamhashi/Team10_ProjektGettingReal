@@ -1,0 +1,14 @@
+﻿sequenceDiagram
+    actor Client
+    participant NotesViewModel
+    participant FileNoteRepository
+    participant FileSystem as "File System"
+
+    Client->>NotesViewModel: AddNoteCommand.Execute()
+    NotesViewModel->>NotesViewModel: Create new Note object
+    NotesViewModel->>FileNoteRepository: Add(note)
+    FileNoteRepository->>FileNoteRepository: Set ID and NoteClient
+    FileNoteRepository->>FileSystem: Append note to notes.txt
+    FileSystem-->>FileNoteRepository: Write success/failure
+    FileNoteRepository-->>NotesViewModel: Return
+    NotesViewModel->>NotesViewModel: Add note to ObservableCollection
