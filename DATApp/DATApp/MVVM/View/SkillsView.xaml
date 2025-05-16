@@ -22,6 +22,55 @@
 
         <!-- Search Section -->
 
+        <StackPanel Orientation="Horizontal" Margin="0,10" Grid.Row="1">
+            <TextBox Width="300"
+                     Height="30"
+                     VerticalContentAlignment="Center"
+                     Margin="0,0,10,0"
+                     Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Button Content="Search"
+                    Width="100"
+                    Height="30"
+                    Command="{Binding SearchCommand}" />
+        </StackPanel>
+
+        <!-- Add Section -->
+        <GroupBox Header="Tilføj Færdighed" Margin="0,10,0,10" Grid.Row="2">
+            <StackPanel Margin="10" Orientation="Vertical">
+                <TextBlock Text="Navn" />
+                <TextBox Text="{Binding NewSkillName}" Margin="0,5,0,10" />
+
+                <TextBlock Text="Beskrivelse" />
+                <TextBox Text="{Binding NewSkillDescription}" Margin="0,5,0,10" />
+
+                <!-- Der er noget galt her, NewSkillLevel binding burde være noget andet!!!! -->
+                <!-- Der er noget galt her, NewSkillLevel binding burde være noget andet!!!! -->
+                <!-- Der er noget galt her, NewSkillLevel binding burde være noget andet!!!! -->
+                <!-- Der er noget galt her, NewSkillLevel binding burde være noget andet!!!! -->
+                <!-- Der er noget galt her, NewSkillLevel binding burde være noget andet!!!! -->
+                <!-- Der er noget galt her, NewSkillLevel binding burde være noget andet!!!! -->
+                <TextBlock Text="Følelse" />
+                <ComboBox SelectedItem="{Binding NewSkillLevel}" 
+          ItemsSource="{Binding EmotionalStates}" 
+          Margin="0,5,0,10" />
+
+                <TextBlock Text="Niveau" />
+                <ComboBox SelectedItem="{Binding NewSkillLevel}" 
+          ItemsSource="{Binding Levels}" 
+          Margin="0,5,0,10" />
+
+
+                <Button Content="Add Skill"
+                        Width="120"
+                        Margin="0,10,0,0"
+                        Command="{Binding AddCommand}" />
+            </StackPanel>
+        </GroupBox>
+
+        <TextBox Grid.Row="0" Height="35" Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" Margin="20,10,30,0"/>
+
+
         <!-- Results List with ScrollViewer -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <ListBox ItemsSource="{Binding SkillsCollectionView, UpdateSourceTrigger=PropertyChanged}"
