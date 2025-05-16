@@ -5,13 +5,13 @@ namespace DATApp.MVVM.Model.Classes
 {
     public class Module
     {
-        public int ModuleNumber { get; set; }
+        public int Number { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 
         public override string ToString()
         {
-            return $"{ModuleNumber},{Name},{Description}";
+            return $"{Number},{Name},{Description}";
         }
 
         public static Module FromString(string input)
@@ -19,9 +19,9 @@ namespace DATApp.MVVM.Model.Classes
             string[] parts = input.Split(','); // Opdeler strengen baseret på kommategn
             return new Module
             {
-                ModuleNumber = int.Parse(parts[0]),
+                Number = int.Parse(parts[0]),
                 Name = parts[1],
-                Description = parts[2],
+                Description = parts[2]
             };
         }
     }

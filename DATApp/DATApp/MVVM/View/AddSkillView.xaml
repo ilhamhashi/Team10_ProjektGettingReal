@@ -1,4 +1,4 @@
-﻿<Window x:Class="DATApp.MVVM.View.AddModuleView"
+﻿<Window x:Class="DATApp.MVVM.View.AddSkillView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,7 +10,7 @@
         Height="350">
     
     <Window.DataContext>
-        <viewModel:ModulesViewModel/>
+        <viewModel:SkillsViewModel/>
     </Window.DataContext>
     
     <Grid Margin="20,20,20,20">
@@ -26,7 +26,7 @@
             <TextBox Text = "{Binding Description}" />
         </StackPanel>
 
-        <Button Grid.Row="1" Height="30" Width="100" Content="Add Module" Command="{Binding AddModuleCommand}" />
+        <Button Grid.Row="1" Height="30" Width="100" Content="Add Module" Command="{Binding AddSkillCommand}" />
 
     </Grid>
    

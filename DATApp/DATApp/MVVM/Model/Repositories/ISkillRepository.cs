@@ -8,6 +8,6 @@ namespace DATApp.MVVM.Model.Repositories
         Skill GetSkill(int skillNumber);
         void AddSkill(Skill skill);
         void UpdateSkill(Skill skill);
-        void DeleteSkill(int skillNumber);
+        void DeleteSkill(Skill skill);
     } 
 }

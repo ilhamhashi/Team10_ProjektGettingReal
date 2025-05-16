@@ -13,7 +13,7 @@ namespace DATApp.MVVM.ViewModel
     class ModulesViewModel : ViewModelBase
     {
         private readonly FileModuleRepository moduleRepository = new FileModuleRepository("modules.txt");
-        private int moduleNumber;
+        private int number;
         private string name;
         private string description;
         private Module selectedModule;
@@ -32,10 +32,10 @@ namespace DATApp.MVVM.ViewModel
             }
         }
 
-        public int ModuleNumber
+        public int Number
         {
-            get => moduleNumber;
-            set { moduleNumber = value; OnPropertyChanged(); }
+            get => number;
+            set { number = value; OnPropertyChanged(); }
         }
 
         public string Name
@@ -60,7 +60,6 @@ namespace DATApp.MVVM.ViewModel
         public ICommand SaveModuleCommand { get; }
         public ICommand AddModuleCommand { get; }
         public ICommand DeleteModuleCommand { get; }
-        public ICommand SearchModuleCommand { get; }
 
         public ModulesViewModel()
         {
@@ -76,8 +75,7 @@ namespace DATApp.MVVM.ViewModel
 
         private void AddModule()
         {
-            int modulescount = Modules.Count();
-            var module = new Module { ModuleNumber = moduleNumber, Name = name, Description = description};
+            var module = new Module { Number = number, Name = name, Description = description};
             
             Modules.Add(module);
             moduleRepository.AddModule(module);
@@ -98,7 +96,7 @@ namespace DATApp.MVVM.ViewModel
         private void SaveModule()
         {
             moduleRepository.UpdateModule(SelectedModule);
-            MessageBox.Show($"Module '{SelectedModule.Name}' Rettet!", "Redigeret", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show($"Modul '{SelectedModule.Name}' Rettet!", "Redigeret", MessageBoxButton.OK, MessageBoxImage.Information);
             SelectedModule = null;
         }
 
@@ -106,7 +104,7 @@ namespace DATApp.MVVM.ViewModel
         {
             moduleRepository.DeleteModule(SelectedModule);
             Modules.Remove(SelectedModule);
-            MessageBox.Show($"Bruger '{Name}' slettet!", "Fjernet", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show($"Modul '{Name}' slettet!", "Fjernet", MessageBoxButton.OK, MessageBoxImage.Information);
             SelectedModule = null;
         }
 
@@ -121,7 +119,7 @@ namespace DATApp.MVVM.ViewModel
             return false;
         }
 
-        private bool CanAddModule() => !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Description);
+        private bool CanAddModule() => !string.IsNullOrWhiteSpace(Name);
         private bool CanOpenAddModule() => true;
         private bool CanSaveModule() => SelectedModule != null;
         private bool CanDeleteModule() => SelectedModule != null;

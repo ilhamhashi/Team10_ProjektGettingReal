@@ -20,22 +20,23 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
+        
         <TextBox Height="35" Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" Margin="20,10,30,0"/>
 
         <!-- Results List with ScrollViewer -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <ListBox ItemsSource="{Binding ModulesCollectionView}"
-                     SelectedItem="{Binding SelectedModule}"
+            <ListBox ItemsSource="{Binding ModulesCollectionView, UpdateSourceTrigger=PropertyChanged}"
+                     SelectedItem="{Binding SelectedModule, UpdateSourceTrigger=PropertyChanged}"
                      HorizontalAlignment="Stretch"
                      Margin="20,10,30,0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Margin="5" Orientation="Vertical">
-                            <TextBlock Text="{Binding Name}" FontWeight="Bold" />
-                            <TextBlock Text="{Binding Description}" FontStyle="Italic" FontSize="12" />
+                            <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" />
+                            <TextBlock Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" FontStyle="Italic" FontSize="12" />
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Nummer: " FontSize="12" />
-                                <TextBlock Text="{Binding ModuleNumber}" FontSize="12" />
+                                <TextBlock Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}" FontSize="12" />
                             </StackPanel>
                         </StackPanel>
                     </DataTemplate>
@@ -54,7 +55,7 @@
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Save Module" Command="{Binding SaveModuleCommand, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="30"/>
             <Button Content="Delete Module" Command="{Binding DeleteModuleCommand, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="30"/>
-            <Button Content="Add Module" Command="{Binding OpenAddModuleCommand}" Width="100" Height="30"/>
+            <Button Content="Add Module" Command="{Binding OpenAddModuleCommand, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="30"/>
         </StackPanel>
 
     </Grid>

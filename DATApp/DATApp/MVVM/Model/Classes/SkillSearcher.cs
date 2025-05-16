@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace DATApp.MVVM.Model.Classes
 {
+    /*
     public class SkillSearcher
     {
         private List<Skill> Skills { get; set; } = new List<Skill>();
@@ -56,4 +57,6 @@ namespace DATApp.MVVM.Model.Classes
             };
         }
     }
+
+    */
 }
