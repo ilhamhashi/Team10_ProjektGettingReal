@@ -1,0 +1,41 @@
+﻿sequenceDiagram
+    title Add or Edit a Skill
+
+    actor Administrator
+    participant UI as View (XAML/Bindings)
+    participant VM as SkillsViewModel
+    participant Repo as FileSkillRepository
+    participant File as skills.txt
+
+    Administrator->>UI: Opens skill overview
+    UI->>VM: Loads skill list
+    VM->>Repo: GetAllSkills()
+    Repo->>File: Read skills.txt
+    File-->>Repo: Return skill data
+    Repo-->>VM: Return skill objects
+    VM-->>UI: Display skills
+
+    alt Add New Skill
+        Administrator->>UI: Clicks "Add Skill"
+        UI->>VM: OpenAddSkillCommand
+        VM->>UI: Show AddSkillView
+        Administrator->>UI: Fills skill fields
+        UI->>VM: AddSkillCommand
+        VM->>Repo: AddSkill(skill)
+        Repo->>File: Append skill to skills.txt
+        File-->>Repo: Confirm write
+        Repo-->>VM: Confirm saved
+        VM-->>UI: Show success message
+    end
+
+    alt Edit Existing Skill
+        Administrator->>UI: Selects skill from list
+        UI->>VM: Set SelectedSkill
+        Administrator->>UI: Edits fields
+        UI->>VM: SaveSkillCommand
+        VM->>Repo: UpdateSkill(skill)
+        Repo->>File: Rewrite all skills to file
+        File-->>Repo: Confirm write
+        Repo-->>VM: Confirm update
+        VM-->>UI: Show update success message
+    end
