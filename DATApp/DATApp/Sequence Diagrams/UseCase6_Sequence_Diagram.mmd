@@ -1,0 +1,34 @@
+﻿sequenceDiagram
+    title Search for Skills and Modules
+
+    actor Client
+    participant UI as View
+    participant VM as ViewModel (SearchViewModel)
+    participant SkillRepo as SkillFileRepository
+    participant ModuleRepo as ModuleFileRepository
+    participant SkillFile as skills.txt
+    participant ModuleFile as modules.txt
+
+    Client->>UI: Search (name, description, emotions)
+    UI->>VM: Trigger SearchCommand
+
+    alt Search for Skills
+        VM->>SkillRepo: GetAllSkills()
+        SkillRepo->>SkillFile: Read skills.txt
+        SkillFile-->>SkillRepo: Return skill data
+        SkillRepo-->>VM: Return skills
+        VM->>VM: Filter skills by criteria
+        VM-->>UI: Display filtered skill results
+    end
+
+    alt Search for Modules
+        VM->>ModuleRepo: GetAllModules()
+        ModuleRepo->>ModuleFile: Read modules.txt
+        ModuleFile-->>ModuleRepo: Return module data
+        ModuleRepo-->>VM: Return modules
+        VM->>VM: Filter modules by criteria
+        VM-->>UI: Display filtered module results
+    end
+
+    Client->>UI: Selects a skill or module
+    UI->>VM: Display detailed information

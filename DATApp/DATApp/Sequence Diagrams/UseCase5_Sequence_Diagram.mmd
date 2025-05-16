@@ -1,0 +1,41 @@
+﻿sequenceDiagram
+    title Add or Edit a Module
+
+    actor Administrator
+    participant UI as View (ModulesView.xaml)
+    participant VM as ModulesViewModel
+    participant Repo as FileModuleRepository
+    participant File as modules.txt
+
+    Administrator->>UI: Opens module overview
+    UI->>VM: Loads module list
+    VM->>Repo: GetAllModules()
+    Repo->>File: Read modules.txt
+    File-->>Repo: Return module data
+    Repo-->>VM: Return module objects
+    VM-->>UI: Display modules
+
+    alt Add New Module
+        Administrator->>UI: Clicks "Add Module"
+        UI->>VM: OpenAddModuleCommand
+        VM->>UI: Show AddModuleView
+        Administrator->>UI: Fills name and description
+        UI->>VM: AddModuleCommand
+        VM->>Repo: AddModule(module)
+        Repo->>File: Append new module to modules.txt
+        File-->>Repo: Confirm write
+        Repo-->>VM: Module added
+        VM-->>UI: Show success message
+    end
+
+    alt Edit Existing Module
+        Administrator->>UI: Selects module from list
+        UI->>VM: Sets SelectedModule
+        Administrator->>UI: Edits name or description
+        UI->>VM: SaveModuleCommand
+        VM->>Repo: UpdateModule(module)
+        Repo->>File: Rewrite all modules to modules.txt
+        File-->>Repo: Confirm write
+        Repo-->>VM: Module updated
+        VM-->>UI: Show update success message
+    end
