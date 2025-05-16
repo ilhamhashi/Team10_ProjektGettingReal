@@ -21,8 +21,7 @@
         </Grid.RowDefinitions>
 
         <!-- Search Section -->
-        <TextBox Grid.Row="0" Height="35" Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" Margin="20,10,30,0"/>
-    
+
         <!-- Results List with ScrollViewer -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <ListBox ItemsSource="{Binding SkillsCollectionView, UpdateSourceTrigger=PropertyChanged}"
