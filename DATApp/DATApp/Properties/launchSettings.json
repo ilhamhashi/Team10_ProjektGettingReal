@@ -1,8 +1,7 @@
 {
   "profiles": {
     "DATApp": {
-      "commandName": "Project",
-      "workingDirectory": "C:\\Users\\ilham\\source\\repos\\Team10_ProjektGettingReal\\DATApp\\DATApp\\MVVM\\Model\\Files"
+      "commandName": "Project"
     }
   }
 }
