@@ -1,0 +1,25 @@
+﻿sequenceDiagram
+    title Rediger et notat
+
+    actor Client
+    participant UI as View (XAML/Bindings)
+    participant VM as NotesViewModel
+    participant Repo as FileNoteRepository
+    participant File as notes.txt (file)
+
+    Client->>UI: Selects a note
+    UI->>VM: Sets SelectedNote
+
+    Client->>UI: Edits note content
+    UI->>VM: Updates SelectedNote properties
+    VM-->>UI: OnPropertyChanged()
+
+    Client->>UI: Clicks "Save"
+    UI->>VM: Trigger SaveNoteCommand
+    VM->>Repo: Update(note)
+
+    Repo->>Repo: Find existing note by ID
+    Repo->>File: Write all notes to notes.txt
+    File-->>Repo: File updated
+    Repo-->>VM: Update confirmed
+    VM-->>UI: Notify save success
