@@ -17,7 +17,18 @@ namespace DATApp.MVVM.Model.Classes
         public IEnumerable<SearchResult> Search(string searchTerm)
         {
             if (string.IsNullOrWhiteSpace(searchTerm))
-                return Enumerable.Empty<SearchResult>();
+            {
+                return Skills
+                    .Select(p => new SearchResult
+                    {
+                        Category = "Skill",
+                        Description = p.Name,
+                        ID = p.SkillNumber,
+                        OriginatingSkill = p,
+                        SkillInformation = GetSkillInfo(p.SkillNumber)
+                    })
+                    .ToList();
+            }
 
             var results = Skills
                 .Where(p =>
