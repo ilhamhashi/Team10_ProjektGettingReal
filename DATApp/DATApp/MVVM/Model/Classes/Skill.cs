@@ -6,23 +6,36 @@ namespace DATApp.MVVM.Model.Classes
 {
     public class Skill
     {
-        public int SkillNumber { get; set; }
+        public int Number { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Goal { get; set; }
-        public string ValidationText { get; set; }
+        //public string Goal { get; set; }
+        //public string ValidationText { get; set; }
         public Level Level { get; set; }
         public Module Module { get; set; }
-        public List<EmotionalState> EmotionsMatch { get; set; }
+        public List<string> EmotionMatches { get; set; }
 
         public override string ToString()
         {
-            string emotions = EmotionsMatch != null ? string.Join(";", EmotionsMatch.Select(e => e.ToString())) : "";
-            return $"{SkillNumber},{Name},{Description},{Goal},{ValidationText},{Level},{Module?.ModuleNumber},{emotions}";
+            return $"{Number},{Name},{Description},{Level}";
         }
 
         public static Skill FromString(string input)
         {
+
+            string[] parts = input.Split(','); // Opdeler strengen baseret på kommategn
+            return new Skill
+            {
+                Number = int.Parse(parts[0]),
+                Name = parts[1],
+                Description = parts[2],
+                Level = Enum.Parse<Level>(parts[3])
+            };
+            //Module = parts[4],
+            //EmotionMatches = parts[5]
+
+            /*
+
             string[] parts = input.Split(',');
 
             // Guard clause
@@ -31,7 +44,7 @@ namespace DATApp.MVVM.Model.Classes
 
             var skill = new Skill
             {
-                SkillNumber = int.Parse(parts[0]),
+                Number = int.Parse(parts[0]),
                 Name = parts[1],
                 Description = parts[2],
                 Goal = parts[3],
@@ -52,6 +65,9 @@ namespace DATApp.MVVM.Model.Classes
             }
 
             return skill;
+
+            */
+
         }
     }
 }

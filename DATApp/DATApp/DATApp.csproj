@@ -9,14 +9,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="bin\**" />
+    <Compile Remove="Properties\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <EmbeddedResource Remove="Properties\**" />
+    <None Remove="bin\**" />
+    <None Remove="Properties\**" />
+    <Page Remove="bin\**" />
+    <Page Remove="Properties\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="MVVM\Model\Files\modules.txt.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="bin\Debug\net9.0-windows\DATApp.MVVM.Model.Files.modules.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Compile Update="MVVM\View\AddSkillView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="MVVM\View\AddModuleView .xaml.cs">
       <SubType>Code</SubType>
     </Compile>
