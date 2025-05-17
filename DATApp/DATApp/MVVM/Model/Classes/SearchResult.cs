@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DATApp.MVVM.Model.Classes
 {
-
+    /*
     public class SearchResult
     {
 
@@ -13,6 +13,7 @@ namespace DATApp.MVVM.Model.Classes
         public Skill OriginatingSkill { get; set; }
         public Dictionary<string, string> SkillInformation { get; set; }
     }
+    */
 }
 
 //Anna

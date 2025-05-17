@@ -20,7 +20,7 @@
             <!-- This row takes the remaining space for ListBox -->
         </Grid.RowDefinitions>
 
-        <!-- Search Section -->
+        <!-- Search Section 
 
         <StackPanel Orientation="Horizontal" Margin="0,10" Grid.Row="1">
             <TextBox Width="300"
@@ -35,7 +35,7 @@
                     Command="{Binding SearchCommand}" />
         </StackPanel>
 
-        <!-- Add Section -->
+        Add Section 
         <GroupBox Header="Tilføj Færdighed" Margin="0,10,0,10" Grid.Row="2">
             <StackPanel Margin="10" Orientation="Vertical">
                 <TextBlock Text="Navn" />
@@ -44,12 +44,8 @@
                 <TextBlock Text="Beskrivelse" />
                 <TextBox Text="{Binding NewSkillDescription}" Margin="0,5,0,10" />
 
-                <!-- Der er noget galt her, NewSkillLevel binding burde være noget andet!!!! -->
-                <!-- Der er noget galt her, NewSkillLevel binding burde være noget andet!!!! -->
-                <!-- Der er noget galt her, NewSkillLevel binding burde være noget andet!!!! -->
-                <!-- Der er noget galt her, NewSkillLevel binding burde være noget andet!!!! -->
-                <!-- Der er noget galt her, NewSkillLevel binding burde være noget andet!!!! -->
-                <!-- Der er noget galt her, NewSkillLevel binding burde være noget andet!!!! -->
+                Der er noget galt her, NewSkillLevel binding burde være noget andet!!!!
+
                 <TextBlock Text="Følelse" />
                 <ComboBox SelectedItem="{Binding NewSkillLevel}" 
           ItemsSource="{Binding EmotionalStates}" 
@@ -66,8 +62,9 @@
                         Margin="0,10,0,0"
                         Command="{Binding AddCommand}" />
             </StackPanel>
-        </GroupBox>
+        </GroupBox> -->
 
+        <!-- Search TextBox -->
         <TextBox Grid.Row="0" Height="35" Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" Margin="20,10,30,0"/>
 
 
