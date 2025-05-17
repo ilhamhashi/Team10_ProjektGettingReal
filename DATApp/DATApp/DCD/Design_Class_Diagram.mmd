@@ -1,0 +1,145 @@
+﻿classDiagram
+    class Note {
+        int NoteNumber
+        string NoteContent
+        bool IsAdmin
+        int Id
+        string Name
+        +string ToString()
+        +static Note FromString(string input)
+    }
+
+    class User {
+        string Name
+        string Email
+        string Password
+        bool IsAdmin
+        +string ToString()
+        +static User FromString(string input)
+    }
+
+    class Module {
+        int Number
+        string Name
+        string Description
+        +string ToString()
+        +static Module FromString(string input)
+    }
+
+    class Skill {
+        int Number
+        string Name
+        string Description
+        Level Level
+        Module Module
+        List~string~ EmotionMatches
+        +string ToString()
+        +static Skill FromString(string input)
+    }
+
+    class Session {
+        <<static>>
+        +User CurrentUser
+    }
+
+    class INoteRepository {
+        <<interface>>
+        +Note GetByID(int id)
+        +IEnumerable~Note~ GetAll()
+        +void Add(Note note)
+        +void Update(Note note)
+        +void Delete(Note note)
+    }
+
+    class IUserRepository {
+        <<interface>>
+        +IEnumerable~User~ GetAllUsers()
+        +User GetUser(string email)
+        +void AddUser(User user)
+        +void UpdateUser(User user)
+        +void DeleteUser(User user)
+        +bool ValidateUserLogin(string email, string password)
+    }
+
+    class IModuleRepository {
+        <<interface>>
+        +IEnumerable~Module~ GetAllModules()
+        +Module GetModule(int moduleNumber)
+        +void AddModule(Module module)
+        +void UpdateModule(Module module)
+        +void DeleteModule(Module module)
+    }
+
+    class ISkillRepository {
+        <<interface>>
+        +IEnumerable~Skill~ GetAllSkills()
+        +Skill GetSkill(int skillNumber)
+        +void AddSkill(Skill skill)
+        +void UpdateSkill(Skill skill)
+        +void DeleteSkill(Skill skill)
+    }
+
+    class FileNoteRepository {
+        -List~Note~ _notes
+        -int _nextId
+        -string _noteFilePath
+        -bool _isLoggedIn
+        +FileNoteRepository(string filePath)
+        +void Add(Note note)
+        +void Delete(Note note)
+        +IEnumerable~Note~ GetAll()
+        +Note GetByID(int id)
+        +void Update(Note note)
+    }
+
+    class FileUserRepository {
+        -string _userFilePath
+        -bool _isLoggedIn
+        +FileUserRepository(string filePath)
+        +void AddUser(User user)
+        +void DeleteUser(User user)
+        +IEnumerable~User~ GetAllUsers()
+        +User GetUser(string email)
+        +void UpdateUser(User user)
+        +bool ValidateUserLogin(string email, string password)
+        -void RewriteFile(List~User~ users)
+    }
+
+    class FileModuleRepository {
+        -string _moduleFilePath
+        +FileModuleRepository(string filePath)
+        +void AddModule(Module module)
+        +void DeleteModule(Module module)
+        +IEnumerable~Module~ GetAllModules()
+        +Module GetModule(int number)
+        +void UpdateModule(Module module)
+        -void RewriteFile(List~Module~ modules)
+    }
+
+    class FileSkillRepository {
+        -string _skillFilePath
+        +FileSkillRepository(string filePath)
+        +void AddSkill(Skill skill)
+        +void DeleteSkill(Skill skill)
+        +IEnumerable~Skill~ GetAllSkills()
+        +Skill GetSkill(int skillNumber)
+        +void UpdateSkill(Skill skill)
+        -void RewriteFile(List~Skill~ skills)
+    }
+
+    FileNoteRepository ..|> INoteRepository
+    FileNoteRepository --> Note
+    FileNoteRepository --> Session
+    Session --> User : CurrentUser
+    Note --> User : NoteClient
+    Note --> Skill : NoteSkill
+
+    FileUserRepository ..|> IUserRepository
+    FileUserRepository --> User
+
+    FileModuleRepository ..|> IModuleRepository
+    FileModuleRepository --> Module
+
+    FileSkillRepository ..|> ISkillRepository
+    FileSkillRepository --> Skill
+    Skill --> Module
