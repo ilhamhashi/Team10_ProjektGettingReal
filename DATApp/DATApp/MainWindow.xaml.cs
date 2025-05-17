@@ -15,15 +15,9 @@ namespace DATApp
             InitializeComponent();
         }
 
-    private void CloseButton_Click(object sender, RoutedEventArgs e)
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
-        }
-
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
-        {
-            LoginView loginView = new LoginView();
-            loginView.Show();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿
 using DATApp.Core;
 using DATApp.MVVM.View;
+using DATApp.MVVM.View.Controls;
 
 namespace DATApp.MVVM.ViewModel
 {
@@ -14,6 +15,9 @@ namespace DATApp.MVVM.ViewModel
         public RelayCommand MyAccountViewCommand { get; set; }
         public RelayCommand NotesViewCommand { get; set; }
         public RelayCommand LoginViewCommand { get; set; }
+        public RelayCommand BaseMenuViewCommand { get; set; }
+        public RelayCommand ClientMenuViewCommand { get; set; }
+        public RelayCommand AdminMenuViewCommand { get; set; }
 
         public HomeViewModel HomeVM { get; set; }
         public UsersViewModel UsersVM { get; set; }
@@ -22,7 +26,10 @@ namespace DATApp.MVVM.ViewModel
         public DatMatchViewModel DatMatchVM { get; set; }
         public NotesViewModel NotesVM { get; set; }
         public MyAccountViewModel MyAccountVM { get; set; }
-        public LoginViewModel LoginVM { get; set; }
+        public LoginView LoginView { get; set; }
+        public BaseMenuBar BaseMenuView { get; set; }
+        public ClientMenuBar ClientMenuView { get; set; }
+        public AdminMenuBar AdminMenuView { get; set; }
 
         private object _currentView;
 
@@ -36,6 +43,18 @@ namespace DATApp.MVVM.ViewModel
             }
         }
 
+        private object _currentMenu;
+
+        public object CurrentMenu
+        {
+            get { return _currentMenu; }
+            set
+            {
+                _currentMenu= value;
+                OnPropertyChanged();
+            }
+        }
+
         public MainWindowViewModel()
         {
             HomeVM = new HomeViewModel();
@@ -45,10 +64,15 @@ namespace DATApp.MVVM.ViewModel
             DatMatchVM = new DatMatchViewModel();
             NotesVM = new NotesViewModel();
             MyAccountVM = new MyAccountViewModel();
-            LoginVM = new LoginViewModel();
+            LoginView = new LoginView();
+            BaseMenuView = new BaseMenuBar();
+            ClientMenuView = new ClientMenuBar();
+            AdminMenuView = new AdminMenuBar();
 
 
             CurrentView = HomeVM;
+            CurrentMenu = BaseMenuView;
+
 
             HomeViewCommand = new RelayCommand(o =>
             {
@@ -83,6 +107,26 @@ namespace DATApp.MVVM.ViewModel
             MyAccountViewCommand = new RelayCommand(o =>
             {
                 CurrentView = MyAccountVM;
+            });
+
+            LoginViewCommand = new RelayCommand(o =>
+            {
+                LoginView.Show();
+            });
+
+            BaseMenuViewCommand = new RelayCommand(o =>
+            {
+                CurrentMenu = BaseMenuView;
+            });
+
+            ClientMenuViewCommand = new RelayCommand(o =>
+            {
+                CurrentMenu = ClientMenuView;
+            });
+
+            AdminMenuViewCommand = new RelayCommand(o =>
+            {
+                CurrentMenu = AdminMenuView;
             });
 
         }

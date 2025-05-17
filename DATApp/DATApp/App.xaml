@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:DATApp"
              xmlns:viewmodel="clr-namespace:DATApp.MVVM.ViewModel"
              xmlns:view="clr-namespace:DATApp.MVVM.View"
+             xmlns:controls="clr-namespace:DATApp.MVVM.View.Controls"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -44,6 +45,18 @@
 
             <DataTemplate DataType="{x:Type viewmodel:LoginViewModel}">
                 <view:LoginView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type controls:BaseMenuBar}">
+                <controls:BaseMenuBar/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type controls:ClientMenuBar}">
+                <controls:ClientMenuBar/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type controls:AdminMenuBar}">
+                <controls:AdminMenuBar/>
             </DataTemplate>
 
         </ResourceDictionary>

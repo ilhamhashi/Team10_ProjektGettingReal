@@ -15,7 +15,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
             <RowDefinition />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="60" />
             <RowDefinition Height="50" />
             <!-- This row takes the remaining space for ListBox -->
         </Grid.RowDefinitions>
