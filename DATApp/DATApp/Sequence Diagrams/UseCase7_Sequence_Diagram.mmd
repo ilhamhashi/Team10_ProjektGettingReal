@@ -1,0 +1,41 @@
+﻿sequenceDiagram
+    title Create and Manage Clients
+
+    participant Admin as Administrator
+    participant UI as UsersView (UI)
+    participant VM as UsersViewModel
+    participant Repo as FileUserRepository
+    participant File as Users.txt
+
+    Note over Admin: Creating a new client
+    Admin->>UI: Open user list view
+    UI->>VM: Initialize and load users
+    VM->>Repo: GetAllUsers()
+    Repo->>File: Read user data file
+    File-->>Repo: Return all users
+    Repo-->>VM: List of users
+    VM-->>UI: Display user list
+
+    Admin->>UI: Fill client name, email, and password
+    Admin->>UI: Select "Client User" (IsAdmin = false)
+    Admin->>UI: Click "Add User"
+    UI->>VM: Execute OpenAddUserCommand
+    VM->>Repo: AddUser(user)
+    Repo->>File: Append user data
+    File-->>Repo: Confirm write
+    Repo-->>VM: User added
+    VM-->>UI: Refresh user list
+
+    Note over Admin: Deleting a client
+    Admin->>UI: Select client in list
+    Admin->>UI: Click "Delete User"
+    UI->>VM: Execute DeleteUserCommand
+    VM->>Repo: DeleteUser(user)
+    Repo->>Repo: GetAllUsers()
+    Repo->>File: Read user data file
+    File-->>Repo: All users
+    Repo->>Repo: Remove matching user
+    Repo->>File: Rewrite updated user list
+    File-->>Repo: Confirm write
+    Repo-->>VM: User deleted
+    VM-->>UI: Refresh user list
