@@ -1,10 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using DATApp.Core;
 using DATApp.MVVM.Model.Classes;
 using DATApp.MVVM.Model.Repositories;
-using System.Windows.Input;
-using System.Windows;
-using DATApp.Core;
 using DATApp.MVVM.View;
+using DATApp.MVVM.View.Controls;
+using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Input;
 
 
 namespace DATApp.MVVM.ViewModel
@@ -17,7 +18,6 @@ namespace DATApp.MVVM.ViewModel
         private string password;
         private bool isAdmin;
         private User selectedUser;
-
         public string Name
         {
             get => name;
@@ -63,6 +63,14 @@ namespace DATApp.MVVM.ViewModel
             OpenAddUserCommand = new RelayCommandUser(OpenAddUser, CanOpenAddUser);
             ValidateUserLoginCommand = new RelayCommandUser(ValidateUserLogin, CanLoginUser);
             DeleteUserCommand = new RelayCommandUser(DeleteUser,CanDeleteUser);
+
+            /*
+            User test1 = new User { Name = "admin", Email = "admin", Password = "admin", IsAdmin = true };
+            userRepository.AddUser(test1);
+            User test2 = new User { Name = "client", Email = "client", Password = "client", IsAdmin = false };
+            Users.Add(test2); userRepository.AddUser(test2);
+            */
+
         }
 
         private void AddUser()
@@ -101,20 +109,25 @@ namespace DATApp.MVVM.ViewModel
                 SelectedUser = null;
         }
 
-        private void ValidateUserLogin()
+        public void ValidateUserLogin()
         {
             bool loginValye = userRepository.ValidateUserLogin(Email, Password);
-            if (loginValye && IsAdmin)
-            {
-                MessageBox.Show($"Login Succesful. You are signed in as Admin", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+            MainWindowViewModel.CurrentUser = userRepository.GetUser(Email);
+
+            if (loginValye && MainWindowViewModel.CurrentUser.IsAdmin)
+            { 
+                
+                MessageBox.Show($"Login valideret. Tryk på fortsæt.", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
+
             }
-            else if (loginValye && IsAdmin == false)
+            else if (loginValye && MainWindowViewModel.CurrentUser.IsAdmin == false)
             {
-                MessageBox.Show($"Login Succesful. You are signed in as Client", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                MessageBox.Show($"Login valideret. Tryk på fortsæt.", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                MessageBox.Show($"Login invalid. Try again", "Failed", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show($"E-mail og/eller adgangskode er forkert. Prøv venligst igen", "Ugyldig", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
 

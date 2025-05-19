@@ -13,24 +13,28 @@ namespace DATApp.MVVM.Model.Classes
         //public string ValidationText { get; set; }
         public Level Level { get; set; }
         public Module Module { get; set; }
-        public List<string> EmotionMatches { get; set; }
+        public string EmotionMatch { get; set; }
 
         public override string ToString()
         {
-            return $"{Number},{Name},{Description},{Level}";
+            return $"{Number},{Name},{Description},{Level},{Module},{EmotionMatch}";
         }
 
         public static Skill FromString(string input)
         {
 
             string[] parts = input.Split(','); // Opdeler strengen baseret på kommategn
-            return new Skill
+            var skill = new Skill 
             {
                 Number = int.Parse(parts[0]),
                 Name = parts[1],
                 Description = parts[2],
-                Level = Enum.Parse<Level>(parts[3])
+                Level = Enum.Parse<Level>(parts[3]),
+                Module = new Module { Number = int.Parse(parts[4]), Name = parts[5], Description = parts[6] },
+                EmotionMatch = parts[7]
             };
+            return skill;
+
             //Module = parts[4],
             //EmotionMatches = parts[5]
 

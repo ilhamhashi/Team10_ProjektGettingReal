@@ -61,11 +61,12 @@ namespace DATApp.MVVM.ViewModel
         public ICommand AddModuleCommand { get; }
         public ICommand DeleteModuleCommand { get; }
 
+
         public ModulesViewModel()
         {
             Modules = new ObservableCollection<Module>(moduleRepository.GetAllModules());
             ModulesCollectionView = CollectionViewSource.GetDefaultView(Modules);
-            ModulesCollectionView.Filter = ModulesFilter;
+            ModulesCollectionView.Filter = ModulesFilter; 
 
             AddModuleCommand = new RelayCommandUser(AddModule, CanAddModule);
             SaveModuleCommand = new RelayCommandUser(SaveModule, CanSaveModule);

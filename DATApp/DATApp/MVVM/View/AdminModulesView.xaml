@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="DATApp.MVVM.View.ModulesView"
+﻿<UserControl x:Class="DATApp.MVVM.View.AdminModulesView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -18,6 +18,11 @@
             <RowDefinition Height="100"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70*"/>
+            <ColumnDefinition Width="30*"/>
+        </Grid.ColumnDefinitions>
 
         <TextBox Height="35" Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" Margin="20,10,30,0"/>
 
@@ -42,6 +47,11 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </ScrollViewer>
+
+        <controls:AdminEditModulePanel
+            Grid.Row="1"
+            Grid.Column="1"/>
+
 
     </Grid>
 </UserControl>

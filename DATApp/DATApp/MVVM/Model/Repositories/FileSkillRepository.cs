@@ -1,15 +1,17 @@
 ﻿using System.IO;
+using System.Runtime.CompilerServices;
 using DATApp.MVVM.Model.Classes;
 
 namespace DATApp.MVVM.Model.Repositories
 {
-    public class FileSkillRepository : ISkillRepository
+    public class FileSkillRepository
     {
         private readonly string _skillFilePath;
 
         public FileSkillRepository(string filePath)
         {
             _skillFilePath = filePath;
+
             if (!File.Exists(_skillFilePath))
             {
                 File.Create(_skillFilePath).Close();
@@ -64,6 +66,8 @@ namespace DATApp.MVVM.Model.Repositories
             return GetAllSkills().FirstOrDefault(s => s.Number == skillNumber);
         }
 
+
+
         public void UpdateSkill(Skill skill)
         {
             List<Skill> skills = GetAllSkills().ToList();
@@ -73,7 +77,6 @@ namespace DATApp.MVVM.Model.Repositories
                 skills[index] = skill;
                 RewriteFile(skills);
             }
-
         }
 
         private void RewriteFile(List<Skill> skills)

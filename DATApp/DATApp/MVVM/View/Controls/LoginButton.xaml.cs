@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DATApp.MVVM.View
+namespace DATApp.MVVM.View.Controls
 {
     /// <summary>
-    /// Interaction logic for SkillsView.xaml
+    /// Interaction logic for LoginButton.xaml
     /// </summary>
-    public partial class SkillsView : UserControl
+    public partial class LoginButton : UserControl
     {
-        public SkillsView()
+        public LoginButton()
         {
             InitializeComponent();
         }

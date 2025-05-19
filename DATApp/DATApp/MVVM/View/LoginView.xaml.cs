@@ -1,5 +1,6 @@
-﻿using System.Windows;
-using DATApp.MVVM.Model.Repositories;
+﻿using DATApp.MVVM.Model.Repositories;
+using System.Windows;
+using System.Windows.Controls;
 
 
 namespace DATApp.MVVM.View
@@ -7,16 +8,19 @@ namespace DATApp.MVVM.View
     /// <summary>
     /// Interaction logic for LoginView.xaml
     /// </summary>
-    public partial class LoginView : Window
+    public partial class LoginView : UserControl
     {
         public LoginView()
         {
             InitializeComponent();
+            ValidateButton = this.validateButton;
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        public static Button ValidateButton;
+
+        private void validateButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Close();
+            MainWindow.FortsætButton.Visibility = System.Windows.Visibility.Visible;
         }
     }
 }

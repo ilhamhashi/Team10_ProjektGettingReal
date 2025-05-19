@@ -33,7 +33,7 @@ namespace DATApp.MVVM.View.Controls
         public string Placeholder
         {
             get { return _placeholder; }
-            set { _placeholder = value; tbPlaceholder.Text = _placeholder; }
+            set { _placeholder = value; OnPropertyChanged(tbPlaceholder.Text); }
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)

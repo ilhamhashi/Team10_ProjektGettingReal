@@ -11,16 +11,57 @@
         <viewModel:SkillsViewModel />
     </UserControl.DataContext>
 
-    <Grid Margin="20">
+    <Grid Margin="20,0,20,20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100" />
-            <RowDefinition />
-            <RowDefinition Height="60" />
-            <RowDefinition Height="50" />
-            <!-- This row takes the remaining space for ListBox -->
+            <RowDefinition Height="35*" />
+            <RowDefinition Height="65*" />
         </Grid.RowDefinitions>
 
-        <!-- Search Section 
+        <!-- Search TextBox -->
+            <Label Content="Vælg en følelse og intensitet"/>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top"  Margin="0,30,0,50">
+                <ComboBox Width="100" SelectedItem="{Binding EmotionMatch}" ItemsSource="{Binding Emotions, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,20,0"/>
+                <ComboBox Width="100" SelectedItem="{Binding Level}" ItemsSource="{Binding Levels, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,20,0" />
+            </StackPanel>
+
+        <StackPanel Grid.Row="0" VerticalAlignment="Bottom" Margin="0,0,0,15">
+            <Label Content="...Eller søg"/>
+            <TextBox Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+
+            <!-- Results List with ScrollViewer -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <ListBox ItemsSource="{Binding SkillsCollectionView, UpdateSourceTrigger=PropertyChanged}"
+                     SelectedItem="{Binding SelectedSkill, UpdateSourceTrigger=PropertyChanged}"
+                     HorizontalAlignment="Stretch">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="5" Orientation="Vertical">
+                            <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" />
+                            <TextBlock Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" FontStyle="Italic" FontSize="12" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Number: " FontSize="12" />
+                                <TextBlock Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}" FontSize="12" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Module: " FontSize="12" />
+                                <TextBlock Text="{Binding Module.Name, UpdateSourceTrigger=PropertyChanged}" FontSize="12" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Level: " FontSize="12" />
+                                <TextBlock Text="{Binding Level, UpdateSourceTrigger=PropertyChanged}" FontSize="12" />
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
+
+
+<!-- Search Section 
 
         <StackPanel Orientation="Horizontal" Margin="0,10" Grid.Row="1">
             <TextBox Width="300"
@@ -63,44 +104,3 @@
                         Command="{Binding AddCommand}" />
             </StackPanel>
         </GroupBox> -->
-
-        <!-- Search TextBox -->
-        <TextBox Grid.Row="0" Height="35" Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" Margin="20,10,30,0"/>
-
-
-        <!-- Results List with ScrollViewer -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <ListBox ItemsSource="{Binding SkillsCollectionView, UpdateSourceTrigger=PropertyChanged}"
-                     SelectedItem="{Binding SelectedSkill, UpdateSourceTrigger=PropertyChanged}"
-                     HorizontalAlignment="Stretch"
-                     Margin="20,10,30,0">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Margin="5" Orientation="Vertical">
-                            <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" />
-                            <TextBlock Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" FontStyle="Italic" FontSize="12" />
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Nummer: " FontSize="12" />
-                                <TextBlock Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}" FontSize="12" />
-                            </StackPanel>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </ScrollViewer>
-
-        <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <Label Content = "Navn:" />
-            <TextBox Width="200" Height="35" Text = "{Binding SelectedSkill.Name, UpdateSourceTrigger=PropertyChanged}" />
-            <Label Content = "Beskrivelse:" />
-            <TextBox Width="200" Height="35" Text = "{Binding SelectedSkill.Description, UpdateSourceTrigger=PropertyChanged}" />
-        </StackPanel>
-
-
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Gem færdighed" Command="{Binding SaveSkillCommand, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="30"/>
-            <Button Content="Slet færdighed" Command="{Binding DeleteSkillCommand, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="30"/>
-            <Button Content="Tilføj Færdighed" Command="{Binding OpenAddSkillCommand, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="30"/>
-        </StackPanel>
-    </Grid>
-</UserControl>

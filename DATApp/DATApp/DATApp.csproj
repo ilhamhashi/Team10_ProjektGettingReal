@@ -24,6 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="bin\Debug\net9.0-windows\users.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="MVVM\View\AddSkillView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

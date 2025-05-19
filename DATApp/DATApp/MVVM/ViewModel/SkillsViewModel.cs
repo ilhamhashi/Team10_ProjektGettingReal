@@ -13,16 +13,24 @@ namespace DATApp.MVVM.ViewModel
     class SkillsViewModel : ViewModelBase
     {
         private readonly FileSkillRepository skillRepository = new FileSkillRepository("skills.txt");
+        private readonly FileModuleRepository moduleRepository = new FileModuleRepository("modules.txt");
         private int number;
         private string name;
         private string description;
         private Module module;
-        private List<string> emotionMatches;
+        private string emotionMatch;
         private Level level;
         private Skill selectedSkill;
         private string searchTerm = string.Empty;
         private readonly ObservableCollection<Skill> Skills;
         public ICollectionView SkillsCollectionView { get; }
+        public List<string> Emotions { get; } = new List<string> { "Vrede", "Aggression", "Nedtrykthed", "Angst", "Skyld" };
+        private readonly ObservableCollection<Module> Modules;
+        public ICollectionView ModulesCollectionView { get; }
+        public IEnumerable<Level> Levels { get
+            {
+                return Enum.GetValues(typeof(Level)).Cast<Level>();
+            }}
 
         public int Number
         {
@@ -54,10 +62,10 @@ namespace DATApp.MVVM.ViewModel
             set { level = value; OnPropertyChanged(); }
         }
 
-        public List<string> EmotionMatches
+        public string EmotionMatch
         {
-            get { return emotionMatches; }
-            set { emotionMatches = value; OnPropertyChanged(); }
+            get { return emotionMatch; }
+            set { emotionMatch = value; OnPropertyChanged(); }
         }
 
         public Skill SelectedSkill
@@ -88,6 +96,10 @@ namespace DATApp.MVVM.ViewModel
             SkillsCollectionView = CollectionViewSource.GetDefaultView(Skills);
             SkillsCollectionView.Filter = SkillsFilter;
 
+            Modules = new ObservableCollection<Module>(moduleRepository.GetAllModules());
+            ModulesCollectionView = CollectionViewSource.GetDefaultView(Modules);
+
+
             OpenAddSkillCommand = new RelayCommandUser(OpenAddSkill, CanOpenAddSkill);
             AddSkillCommand = new RelayCommandUser(AddSkill, CanAddSkill);
             SaveSkillCommand = new RelayCommandUser(SaveSkill, CanSaveSkill);
@@ -95,23 +107,22 @@ namespace DATApp.MVVM.ViewModel
 
         }
 
-
         private void AddSkill()
         {
-            var skill = new Skill { Number = number, Name = name, Description = description, Level = level};
+            var skill = new Skill { Number = number, Name = name, Description = description, Module = module, Level = level, EmotionMatch = emotionMatch};
 
             Skills.Add(skill);
             skillRepository.AddSkill(skill);
 
             // Simpel dialogboks som bekræftelse
-            MessageBox.Show($"Færdighed '{skill.Name}' oprettet!", "Tilføjet", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show($"Færdighed '{skill.Name}' oprettet!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
 
             Name = string.Empty;
             Description = string.Empty;
             Module = null;
             Description = string.Empty;
             Level = 0;
-            EmotionMatches = null;
+            EmotionMatch = string.Empty;
         }
 
         private void OpenAddSkill()
@@ -123,7 +134,7 @@ namespace DATApp.MVVM.ViewModel
         private void SaveSkill()
         {
             skillRepository.UpdateSkill(SelectedSkill);
-            MessageBox.Show($"Færdighed '{SelectedSkill.Name}' Rettet!", "Redigeret", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show($"Færdighed '{SelectedSkill.Name}' Rettet!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
             SelectedSkill = null;
         }
 
@@ -131,7 +142,7 @@ namespace DATApp.MVVM.ViewModel
         {
             skillRepository.DeleteSkill(SelectedSkill);
             Skills.Remove(SelectedSkill);
-            MessageBox.Show($"Færdighed '{Name}' slettet!", "Fjernet", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show($"Færdighed '{Name}' slettet!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
             SelectedSkill = null;
         }
 
@@ -140,7 +151,11 @@ namespace DATApp.MVVM.ViewModel
             if (obj is Skill skill)
             {
                 return skill.Name.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
-                    skill.Description.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase);
+                    skill.Description.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
+                    skill.EmotionMatch.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
+                    skill.Module.Name.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
+                    skill.Module.Description.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
+                    skill.Level.ToString().Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase);
             }
 
             return false;
@@ -149,111 +164,6 @@ namespace DATApp.MVVM.ViewModel
         private bool CanAddSkill() => !string.IsNullOrWhiteSpace(Name);
         private bool CanOpenAddSkill() => true;
         private bool CanSaveSkill() => SelectedSkill != null;
-        private bool CanDeleteSkill() => SelectedSkill != null;
-        private bool CanSearchSkill() => true;
-
-
-
-
-        /*
-        private string searchTerm;
-        private ObservableCollection<SearchResult> _searchResults;
-        private SkillSearcher _skillSearcher;
-        public string NewSkillName { get; set; }
-        public string NewSkillDescription { get; set; }
-        public Level NewSkillLevel { get; set; }
-        public List<Level> Levels => Enum.GetValues(typeof(Level)).Cast<Level>().ToList();
-
-        public List<EmotionalState> EmotionalStates => Enum.GetValues(typeof(EmotionalState)).Cast<EmotionalState>().ToList();
-        public List<EmotionalState> SelectedEmotions { get; set; } = new List<EmotionalState>();
-
-        public ObservableCollection<SearchResult> SearchResults
-        {
-            get => _searchResults;
-            set
-            {
-                if (_searchResults != value)
-                {
-                    _searchResults = value;
-                    OnPropertyChanged(nameof(SearchResults));
-                }
-            }
-        }
-
-        public ICommand SearchCommand { get; }
-        public ICommand AddCommand { get; }
-
-        private void Search(object parameter)
-        {
-            var results = _skillSearcher.Search(SearchTerm);
-
-            SearchResults.Clear();
-            foreach (var result in results)
-            {
-                SearchResults.Add(result);
-            }
-        }
-
-        private void AddSkill(object parameter)
-        {
-            var newSkill = new Skill
-            {
-                SkillNumber = _skillSearcher.Search("").Count() + 1,
-                Name = NewSkillName,
-                Description = NewSkillDescription,
-                Level = NewSkillLevel,
-                EmotionsMatch = SelectedEmotions.ToList()
-            };
-
-
-            var currentSkills = _skillSearcher.Search("").Select(sr => sr.OriginatingSkill).ToList();
-            currentSkills.Add(newSkill);
-            _skillSearcher.SetSkills(currentSkills);
-
-            var updatedResults = _skillSearcher.Search(SearchTerm);
-            SearchResults.Clear();
-            foreach (var result in updatedResults)
-            {
-                SearchResults.Add(result);
-            }
-
-
-            NewSkillName = "";
-            NewSkillDescription = "";
-            SelectedEmotions.Clear();
-            OnPropertyChanged(nameof(NewSkillName));
-            OnPropertyChanged(nameof(NewSkillDescription));
-            OnPropertyChanged(nameof(SelectedEmotions));
-        }
-
-
-        // INotifyPropertyChanged implementation
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-                   
-            _searchResults = new ObservableCollection<SearchResult>();
-            _skillSearcher = new SkillSearcher();
-
-            // Sample skills for testing
-            var skills = new List<Skill>
-            {
-                new Skill { SkillNumber = 1, Name = "Angst", Description = "Anxiety-related skill" },
-                new Skill { SkillNumber = 2, Name = "Vrede", Description = "Anger-related skill" },
-                new Skill { SkillNumber = 3, Name = "Stress", Description = "Stress-related skill" },
-                new Skill { SkillNumber = 4, Name = "Depression", Description = "Depression-related skill" }
-            };
-            _skillSearcher.SetSkills(skills);
-
-            // Define commands
-            SearchCommand = new RelayCommand(Search);
-            AddCommand = new RelayCommand(AddSkill);
-            */
-
-       
+        private bool CanDeleteSkill() => SelectedSkill != null;       
     }
 }

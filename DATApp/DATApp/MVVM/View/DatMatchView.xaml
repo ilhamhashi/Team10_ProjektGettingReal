@@ -7,16 +7,22 @@
              xmlns:viewModel="clr-namespace:DATApp.MVVM.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Background="White">
+             Background="AliceBlue">
     <UserControl.DataContext>
-        <viewModel:DatMatchViewModel/>
+        <viewModel:SkillsViewModel/>
     </UserControl.DataContext>
     <Grid>
-        <Label Content="DAT-MATCH" FontSize=" 24" VerticalAlignment="Top" Foreground="Black" Margin="327,30,327,0"/>
-        <TextBlock Text="Vælg en følelse" Margin="234,229,234,190" />
-        <ComboBox x:Name="FølelseDropDown" SelectedValue="{Binding EmotionalState}" SelectedValuePath="Tag" Padding="2" Margin="234,250,234,0" Height="22" VerticalAlignment="Top">
-            <ComboBoxItem Content="Klient bruger" Tag="False"/>
-            <ComboBoxItem Content="Admin bruger" Tag="True"/>
-        </ComboBox>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel Margin="30,0,30,0">
+            <Label Content="DAT-MATCH" FontSize=" 24" VerticalAlignment="Top" Foreground="Black"/>
+            <TextBlock Text="Vælg en følelse" />
+            <ComboBox SelectedItem="{Binding EmotionMatch}" ItemsSource="{Binding Emotions, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,10" />
+            <TextBlock Text="Vælg en intensitet" />
+            <ComboBox SelectedItem="{Binding Level}" ItemsSource="{Binding Levels, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,10" />
+        </StackPanel>
     </Grid>
 </UserControl>

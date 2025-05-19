@@ -8,7 +8,7 @@
         xmlns:controls="clr-namespace:DATApp.MVVM.View.Controls"   
         mc:Ignorable="d"
         WindowStyle="None"
-        Height="800" Width="600"
+        Height="600" Width="600"
         Background="Transparent">
 
     <Window.DataContext>
@@ -19,37 +19,34 @@
         CornerRadius="20"
             BorderBrush="LightGray"
             BorderThickness="2">
-        
+
         <Grid Margin="20,10,20,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="75"/>
-                <RowDefinition Height="75"/>
-                <RowDefinition />
+                <RowDefinition Height="45"/>
+                <RowDefinition/>
                 <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="DAT-linien.dk"
+            <TextBlock
+                Text="DAT-linien.dk"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Left"
                        Foreground="Black"
-                       FontSize="22" /> 
-
-            <ContentControl Grid.Row="0"
-                            Margin="10"
-                            Content="{Binding SessionUser}"/>
+                       FontSize="22" />
 
             <ContentControl Grid.Row="1"
                             Margin="-18,0,-18,0"
-                            Content="{Binding CurrentMenu}"/>
+                            Content="{Binding CurrentMenuView}"/>
 
             <ContentControl Grid.Row="2"
-                            Margin="10,10,10,10"
-                            Content="{Binding CurrentView}"/>
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            Margin="10,0,10,0"
+                            Content="{Binding CurrentView}" Height="381"/>
 
-            <Button Width="35" Height="35" x:Name = "CloseButton" Content = "X" HorizontalAlignment="Right" Click = "CloseButton_Click"/>
-            <Button Width="45" Height="35" x:Name = "LoginButton" Content = "Log ind" HorizontalAlignment="Right" Command="{Binding LoginViewCommand}" Margin="0,0,50,0"/>
-            
-            
+            <Button Width="35" Height="35" x:Name = "CloseButton" Content = "X" HorizontalAlignment="Right" Command="{Binding CloseMainWindowCommand}" />
+            <Button x:Name="fortsætButton" Content = "Fortsæt" Command="{Binding MenuViewCommand}" Height="20"  Width="150" VerticalAlignment="Bottom" Margin="0,0,0,45" Visibility="Collapsed" Click="Button_Click" Grid.Row="2"/>
             
         </Grid>
     </Border>

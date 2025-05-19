@@ -31,8 +31,21 @@
                 <view:ModulesView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewmodel:AdminModulesViewModel}">
+                <view:AdminModulesView/>
+            </DataTemplate>
+
+
+            <DataTemplate DataType="{x:Type viewmodel:AdminSkillsViewModel}">
+                <view:AdminSkillsView/>
+            </DataTemplate>
+
             <DataTemplate DataType="{x:Type viewmodel:DatMatchViewModel}">
                 <view:DatMatchView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodel:LoginViewModel}">
+                <view:LoginView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewmodel:MyAccountViewModel}">
@@ -43,9 +56,6 @@
                 <view:NotesView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewmodel:LoginViewModel}">
-                <view:LoginView/>
-            </DataTemplate>
 
             <DataTemplate DataType="{x:Type controls:BaseMenuBar}">
                 <controls:BaseMenuBar/>
@@ -58,6 +68,7 @@
             <DataTemplate DataType="{x:Type controls:AdminMenuBar}">
                 <controls:AdminMenuBar/>
             </DataTemplate>
+
 
         </ResourceDictionary>
     </Application.Resources>

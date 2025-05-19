@@ -10,7 +10,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
-        <Menu>
+
+        <Menu Background="LightBlue">
             <MenuItem Header="Forside"
             Height="50"
             Foreground="Black"
@@ -29,23 +30,30 @@
             FontSize="14"
             Command="{Binding SkillsViewCommand}"/>
 
+
             <MenuItem Header="Moduler"
             Height="50"
             Foreground="Black"
             FontSize="14"
             Command="{Binding ModulesViewCommand}"/>
 
-            <MenuItem Header="Min Konto"
+            <MenuItem Header="{Binding CurrentUser.Name, UpdateSourceTrigger=PropertyChanged}"
                       Height="50"
                       Foreground="Black"
                       FontSize="14">
-                <MenuItem Header="Client Client"
-                          Command="{Binding MyAccountViewCommand}"/>
                 <MenuItem Header="Administrer Noter"
+                          Background="LightBlue"
+                          BorderThickness="0"
                           Command="{Binding NotesViewCommand}"/>
+                <MenuItem Header="Log ud"
+                      Foreground="Black"
+                      Background="LightBlue"
+                      BorderThickness="0"
+                      FontSize="14"                      
+                      Command="{Binding LogoutViewCommand}"/>
             </MenuItem>
 
         </Menu>
     </Grid>
-    
+
 </UserControl>

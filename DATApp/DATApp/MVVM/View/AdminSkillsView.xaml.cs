@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DATApp.MVVM.View.Controls
+namespace DATApp.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for BaseSidePanel.xaml
+    /// Interaction logic for SkillsView.xaml
     /// </summary>
-    public partial class BaseSidePanel : UserControl
+    public partial class AdminSkillsView : UserControl
     {
-        public BaseSidePanel()
+        public AdminSkillsView()
         {
             InitializeComponent();
         }

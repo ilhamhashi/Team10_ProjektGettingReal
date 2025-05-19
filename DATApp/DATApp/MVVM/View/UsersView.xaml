@@ -50,7 +50,7 @@
         </StackPanel>
         
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Save User" Command="{Binding SaveUserCommand, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="30"/>
+            <Button Content="Save Changes" Command="{Binding SaveUserCommand, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="30"/>
             <Button Content="Delete User" Command="{Binding DeleteUserCommand, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="30"/>
             <Button Content="Add User" Command="{Binding OpenAddUserCommand, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="30"/>
         </StackPanel>

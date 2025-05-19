@@ -5,32 +5,42 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DATApp.MVVM.View.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="45" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="800">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
-        <Menu>
+        <Menu Background="LightBlue">
             <MenuItem Header="Forside"
                       Foreground="Black"
                       FontSize="14"
+                      Height="50"                      
                       Command="{Binding HomeViewCommand}"/>
 
             <MenuItem Header="DAT-Match"
                       Foreground="Black"
                       FontSize="14"
+                      Height="50"                        
                       Command="{Binding DatMatchViewCommand}"/>
 
             <MenuItem Header="Færdigheder"
                       Foreground="Black"
                       FontSize="14"
+                      Height="50"  
                       Command="{Binding SkillsViewCommand}"/>
 
             <MenuItem Header="Moduler"
                       Foreground="Black"
                       FontSize="14"
+                      Height="50"                        
                       Command="{Binding ModulesViewCommand}"/>
+
+            <MenuItem Header="Log ind"
+                      Foreground="Black"
+                      FontSize="14"
+                      Height="50"
+                      Command="{Binding LoginViewCommand}"/>
 
         </Menu>
     </Grid>

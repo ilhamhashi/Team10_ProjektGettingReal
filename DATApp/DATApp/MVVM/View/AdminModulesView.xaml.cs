@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DATApp.MVVM.View.Controls;
+using DATApp.MVVM.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,11 +18,11 @@ using System.Windows.Shapes;
 namespace DATApp.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for SkillsView.xaml
+    /// Interaction logic for ModulesView.xaml
     /// </summary>
-    public partial class SkillsView : UserControl
+    public partial class AdminModulesView : UserControl
     {
-        public SkillsView()
+        public AdminModulesView()
         {
             InitializeComponent();
         }

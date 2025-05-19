@@ -33,7 +33,7 @@ namespace DATApp.MVVM.ViewModel
         public NotesViewModel()
         {
             //Determines who user and if they can see all notes or not.
-            Session.CurrentUser = new User { Email = "test@example.com", IsAdmin = true };
+            //MainWindowViewModel.CurrentUser = new User { Email = "test@example.com", IsAdmin = true };
 
             noteRepository = new FileNoteRepository("notes.txt");
 
@@ -53,12 +53,11 @@ namespace DATApp.MVVM.ViewModel
 
         private void DeleteNote()
         {
-            if (SelectedNote != null)
-            {
+            
                 noteRepository.Delete(SelectedNote);
                 Notes.Remove(SelectedNote);
                 SelectedNote = null;
-            }
+            
         }
 
         private void SaveNote()

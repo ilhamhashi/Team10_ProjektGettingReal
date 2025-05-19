@@ -1,7 +1,10 @@
-﻿using System.Windows;
-using DATApp.MVVM.View;
-using DATApp.Core;
+﻿using DATApp.Core;
 using DATApp.MVVM.Model.Classes;
+using DATApp.MVVM.View;
+using DATApp.MVVM.View.Controls;
+using DATApp.MVVM.ViewModel;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace DATApp
 {
@@ -13,11 +16,19 @@ namespace DATApp
         public MainWindow()
         {
             InitializeComponent();
+            FortsætButton = this.fortsætButton;
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        public static Button FortsætButton;
+
+        public void Button_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            if (MainWindowViewModel.CurrentUser.Name != null)
+            {
+                FortsætButton.Visibility = Visibility.Collapsed;
+            }
+            else
+                FortsætButton.Visibility = Visibility.Visible;
         }
     }
 }

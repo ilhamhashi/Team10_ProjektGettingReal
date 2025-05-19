@@ -9,7 +9,7 @@
                     <ControlTemplate TargetType="MenuItem">
                         <Grid VerticalAlignment="Stretch"
                               HorizontalAlignment="Stretch"
-                              Background="{TemplateBinding Background}">
+                              Background="White">
 
                             <TextBlock Text="{TemplateBinding Property=Header}"
                                        VerticalAlignment="Center"
