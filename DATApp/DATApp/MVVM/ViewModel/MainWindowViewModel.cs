@@ -1,16 +1,7 @@
-﻿
-using DATApp.Core;
+﻿using DATApp.Core;
 using DATApp.MVVM.Model.Classes;
-using DATApp.MVVM.Model.Repositories;
 using DATApp.MVVM.View;
 using DATApp.MVVM.View.Controls;
-using System.ComponentModel;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq.Expressions;
-using System.Timers;
-using System.Windows;
-using System.Windows.Automation;
-using System.Windows.Input;
 
 namespace DATApp.MVVM.ViewModel
 {
@@ -20,7 +11,6 @@ namespace DATApp.MVVM.ViewModel
         public RelayCommand UsersViewCommand { get; set; }
         public RelayCommand ModulesViewCommand { get; set; }
         public RelayCommand SkillsViewCommand { get; set; }
-        public RelayCommand DatMatchViewCommand { get; set; }
         public RelayCommand MyAccountViewCommand { get; set; }
         public RelayCommand NotesViewCommand { get; set; }
         public RelayCommand LoginViewCommand { get; set; }
@@ -37,7 +27,6 @@ namespace DATApp.MVVM.ViewModel
         public AdminModulesViewModel AdminModulesVM { get; set; }
         public AdminSkillsViewModel AdminSkillsVM { get; set; }
         public SkillsViewModel SkillsVM { get; set; }
-        public DatMatchViewModel DatMatchVM { get; set; }
         public LoginViewModel LoginVM { get; set; }
         public NotesViewModel NotesVM { get; set; }
         public MyAccountViewModel MyAccountVM { get; set; }
@@ -92,7 +81,6 @@ namespace DATApp.MVVM.ViewModel
             AdminModulesVM = new AdminModulesViewModel();
             AdminSkillsVM = new AdminSkillsViewModel();
             SkillsVM = new SkillsViewModel();
-            DatMatchVM = new DatMatchViewModel();
             LoginVM = new LoginViewModel();
             NotesVM = new NotesViewModel();
             MyAccountVM = new MyAccountViewModel();
@@ -128,11 +116,6 @@ namespace DATApp.MVVM.ViewModel
                     CurrentView = SkillsVM;
                 else
                     CurrentView = AdminSkillsVM;
-            });
-
-            DatMatchViewCommand = new RelayCommand(o =>
-            {
-                CurrentView = DatMatchVM;
             });
 
             LoginViewCommand = new RelayCommand(o =>

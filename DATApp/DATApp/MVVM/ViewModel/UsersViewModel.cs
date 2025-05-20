@@ -2,7 +2,6 @@
 using DATApp.MVVM.Model.Classes;
 using DATApp.MVVM.Model.Repositories;
 using DATApp.MVVM.View;
-using DATApp.MVVM.View.Controls;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -63,13 +62,6 @@ namespace DATApp.MVVM.ViewModel
             OpenAddUserCommand = new RelayCommandUser(OpenAddUser, CanOpenAddUser);
             ValidateUserLoginCommand = new RelayCommandUser(ValidateUserLogin, CanLoginUser);
             DeleteUserCommand = new RelayCommandUser(DeleteUser,CanDeleteUser);
-
-            /*
-            User test1 = new User { Name = "admin", Email = "admin", Password = "admin", IsAdmin = true };
-            userRepository.AddUser(test1);
-            User test2 = new User { Name = "client", Email = "client", Password = "client", IsAdmin = false };
-            Users.Add(test2); userRepository.AddUser(test2);
-            */
 
         }
 

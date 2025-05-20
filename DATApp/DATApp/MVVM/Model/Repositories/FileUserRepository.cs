@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.IO;
+﻿using System.IO;
 using DATApp.MVVM.Model.Classes;
 
 namespace DATApp.MVVM.Model.Repositories
@@ -7,12 +6,6 @@ namespace DATApp.MVVM.Model.Repositories
     public class FileUserRepository : IUserRepository
     {
         private readonly string _userFilePath;
-
-        private static readonly JsonSerializerOptions options = new()
-        {
-            WriteIndented = true,
-            IncludeFields = true
-        };
 
         public FileUserRepository(string filePath)
         {

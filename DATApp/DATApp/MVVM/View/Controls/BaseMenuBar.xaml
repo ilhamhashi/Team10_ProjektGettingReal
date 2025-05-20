@@ -13,28 +13,27 @@
         </Grid.RowDefinitions>
         <Menu Background="LightBlue">
             <MenuItem Header="Forside"
-                      Foreground="Black"
-                      FontSize="14"
-                      Height="50"                      
-                      Command="{Binding HomeViewCommand}"/>
-
-            <MenuItem Header="DAT-Match"
-                      Foreground="Black"
-                      FontSize="14"
-                      Height="50"                        
-                      Command="{Binding DatMatchViewCommand}"/>
+            Height="50"
+            Foreground="Black"
+            FontSize="14"
+            Margin="0,0,15,0"
+            Command="{Binding HomeViewCommand}"/>
 
             <MenuItem Header="Færdigheder"
-                      Foreground="Black"
-                      FontSize="14"
-                      Height="50"  
-                      Command="{Binding SkillsViewCommand}"/>
+            Height="50"
+            Foreground="Black"
+            FontSize="14"
+            BorderThickness="0"
+            Margin="0,0,15,0"
+            Command="{Binding SkillsViewCommand}"/>
 
             <MenuItem Header="Moduler"
-                      Foreground="Black"
-                      FontSize="14"
-                      Height="50"                        
-                      Command="{Binding ModulesViewCommand}"/>
+            Height="50"
+            Foreground="Black"
+            FontSize="14"
+            BorderThickness="0"
+            Margin="0,0,15,0"
+            Command="{Binding ModulesViewCommand}" />
 
             <MenuItem Header="Log ind"
                       Foreground="Black"
