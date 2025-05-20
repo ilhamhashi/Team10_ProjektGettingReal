@@ -8,19 +8,49 @@ using DATApp.Core;
 
 namespace DATApp.MVVM.ViewModel
 {
-    public class NotesViewModel : INotifyPropertyChanged
+    class NotesViewModel : ViewModelBase
     {
-        private readonly INoteRepository noteRepository;
+        private readonly INoteRepository noteRepository = new FileNoteRepository("notes.txt");
+        private string _name;
+        private int _noteNumber;
+        private string _noteContent;
+        private User _noteClient;
+        private Skill _noteSkill;
+
+        public string Name
+        {
+            get => _name;
+            set { _name = value; OnPropertyChanged(); }
+        }
+
+        public int NoteNumber
+        {
+            get => _noteNumber;
+            set { _noteNumber = value; OnPropertyChanged(); }
+        }
+
+        public User NoteClient
+        {
+            get => _noteClient;
+            set { _noteClient = value; OnPropertyChanged(); }
+        }
+        public Skill NoteSkill
+        {
+            get => _noteSkill;
+            set { _noteSkill = value; OnPropertyChanged(); }
+        }
+
+        public string NoteContent
+        {
+            get => _noteContent;
+            set { _noteContent = value; OnPropertyChanged(); }
+        }
 
         private Note _selectedNote;
         public Note SelectedNote
         {
             get => _selectedNote;
-            set
-            {
-                _selectedNote = value;
-                OnPropertyChanged();
-            }
+            set { _selectedNote = value; OnPropertyChanged(); }
         }
 
         public ObservableCollection<Note> Notes { get; }
@@ -32,11 +62,6 @@ namespace DATApp.MVVM.ViewModel
 
         public NotesViewModel()
         {
-            //Determines who user and if they can see all notes or not.
-            //MainWindowViewModel.CurrentUser = new User { Email = "test@example.com", IsAdmin = true };
-
-            noteRepository = new FileNoteRepository("notes.txt");
-
             Notes = new ObservableCollection<Note>(noteRepository.GetAll());
 
             AddNoteCommand = new RelayCommand(_ => AddNote());
@@ -46,18 +71,16 @@ namespace DATApp.MVVM.ViewModel
 
         private void AddNote()
         {
-            var newNote = new Note { Name = "Ny note", NoteContent = "Note indhold" };
-            noteRepository.Add(newNote);
-            Notes.Add(newNote);
+            var note = new Note { Name = _name, NoteNumber = _noteNumber, NoteContent = NoteContent, NoteClient = _noteClient, NoteSkill = _noteSkill };
+            noteRepository.Add(note);
+            Notes.Add(note);
         }
 
         private void DeleteNote()
         {
-            
-                noteRepository.Delete(SelectedNote);
-                Notes.Remove(SelectedNote);
-                SelectedNote = null;
-            
+            noteRepository.Delete(SelectedNote);
+            Notes.Remove(SelectedNote);
+            SelectedNote = null;
         }
 
         private void SaveNote()
@@ -66,12 +89,6 @@ namespace DATApp.MVVM.ViewModel
             {
                 noteRepository.Update(SelectedNote);
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

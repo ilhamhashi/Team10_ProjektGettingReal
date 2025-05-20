@@ -2,16 +2,13 @@
 using DATApp.MVVM.Model.Classes;
 using DATApp.MVVM.ViewModel;
 using System.IO;
+using System.Windows.Shapes;
 
 namespace DATApp.MVVM.Model.Repositories
 {
     internal class FileNoteRepository : INoteRepository
     {
-        private readonly List<Note> _notes = new List<Note>();
-        private int _nextId = 0;
-
         private readonly string _noteFilePath;
-        private readonly bool _isLoggedIn;
 
         public FileNoteRepository(string filePath)
         {
@@ -21,30 +18,21 @@ namespace DATApp.MVVM.Model.Repositories
             {
                 File.Create(_noteFilePath).Close();
             }
-
-            var lines = File.ReadAllLines(_noteFilePath);
-            foreach (var line in lines)
-            {
-                var note = Note.FromString(line);
-                if (note != null)
-                {
-                    _notes.Add(note);
-                }
-            }
         }
 
         public void Add(Note note)
         {
-            if (GetAll().ToList().Count == 0)
+            var notes = GetAll().ToList();
+            if (notes.Count == 0)
             {
-                note.Id = 1;
+                note.NoteNumber  = 1;
             }
             else
             {
-                note.Id = GetAll().Max(n => n.Id) + 1;
+                note.NoteNumber = notes.Max(n => n.NoteNumber) + 1;
             }
             note.NoteClient = MainWindowViewModel.CurrentUser;
-            _notes.Add(note);
+            notes.Add(note);
 
             try
             {
@@ -58,42 +46,40 @@ namespace DATApp.MVVM.Model.Repositories
 
         public void Delete(Note note)
         {
-            _notes.RemoveAll(n => n.Id == note.Id);
-            File.WriteAllLines(_noteFilePath, _notes.Select(n => n.ToString()));
+            List<Note> notes = GetAll().ToList();
+            notes.RemoveAll(n => n.NoteNumber == note.NoteNumber);
+            File.WriteAllLines(_noteFilePath, notes.Select(n => n.ToString()));
         }
 
         public IEnumerable<Note> GetAll()
         {
+            List<Note> notes = File.ReadAllLines(_noteFilePath).Where(line => !string.IsNullOrEmpty(line)).Select(Note.FromString).ToList();
+
             if (MainWindowViewModel.CurrentUser == null)
             {
-                //Konsol? Console.WriteLine("No user logged in.");
-                return Enumerable.Empty<Note>();
+                return [];
             }
 
             else if (MainWindowViewModel.CurrentUser.IsAdmin)
             {
-                //Konsol? Console.WriteLine("Admin user: loading all notes.");
-                return _notes;
+                return notes;
             }
             else
             {
-                var userNotes = _notes
-                    .Where(n => n.NoteClient != null && n.NoteClient.Email == MainWindowViewModel.CurrentUser.Email)
-                    .ToList();
-
-                Console.WriteLine($"User {MainWindowViewModel.CurrentUser.Email}: loading {userNotes.Count} notes.");
+                var userNotes = notes
+                    .Where(n => n.NoteClient != null && n.NoteClient.Email == MainWindowViewModel.CurrentUser.Email);
                 return userNotes;
             }
         }
 
-        public Note GetByID(int id)
+        public Note GetByID(int number)
         {
-            return _notes.FirstOrDefault(n => n.Id == id);
+            return GetAll().FirstOrDefault(n => n.NoteNumber == number);
         }
 
         public void Update(Note note)
         {
-            var existingNote = _notes.FirstOrDefault(n => n.Id == note.Id);
+            var existingNote = GetAll().ToList().FirstOrDefault(n => n.NoteNumber == note.NoteNumber);
             if (existingNote != null)
             {
                 existingNote.Name = note.Name;
@@ -102,7 +88,7 @@ namespace DATApp.MVVM.Model.Repositories
                
                 try
                 {
-                    File.WriteAllLines(_noteFilePath, _notes.Select(n => n.ToString()));
+                    File.WriteAllLines(_noteFilePath, GetAll().Select(n => n.ToString()));
                 }
                 catch (Exception ex)
                 {
