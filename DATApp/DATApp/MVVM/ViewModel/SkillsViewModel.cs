@@ -2,133 +2,154 @@
 using DATApp.MVVM.Model.Classes;
 using DATApp.MVVM.Model.Repositories;
 using DATApp.MVVM.View;
+using System;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
-using System.Windows;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace DATApp.MVVM.ViewModel
 {
-    class SkillsViewModel : ViewModelBase
+    public class SkillsViewModel : ViewModelBase
     {
-        private readonly FileSkillRepository skillRepository = new FileSkillRepository("skills.txt");
-        private readonly FileModuleRepository moduleRepository = new FileModuleRepository("modules.txt");
-        private int number;
-        private string name;
-        private string description;
-        private Module module;
-        private string emotionMatch;
-        private Level level;
-        private Skill selectedSkill;
-        private string searchTerm = string.Empty;
-        private readonly ObservableCollection<Skill> Skills;
-        public ICollectionView SkillsCollectionView { get; }
-        public List<string> Emotions { get; } = new List<string> { "Vrede", "Aggression", "Nedtrykthed", "Angst", "Skyld" };
-        private readonly ObservableCollection<Module> Modules;
-        public ICollectionView ModulesCollectionView { get; }
-        public IEnumerable<Level> Levels { get
-            {
-                return Enum.GetValues(typeof(Level)).Cast<Level>();
-            }}
+        internal static FileSkillRepository skillRepository = new FileSkillRepository("skills.txt");
+        public ObservableCollection<Skill> Skills;
 
-        public int Number
+        public  ObservableCollection<Model.Classes.Match> Matches;
+        public static IEnumerable<string> Emotions { get; } = HomeViewModel.Emotions;
+        public IEnumerable<Level> Levels { get; } = HomeViewModel.Levels;
+        public ICollectionView ModulesCollectionView { get; }
+        public static ICollectionView SkillsCollectionView { get; set; }
+
+        private string _number;
+        public string Number
         {
-            get => number;
-            set { number = value; OnPropertyChanged(); }
+            get => _number;
+            set { _number = value; OnPropertyChanged(); }
         }
 
+        private string _name;
         public string Name
         {
-            get => name;
-            set { name = value; OnPropertyChanged(); }
+            get => _name;
+            set { _name = value; OnPropertyChanged(); }
         }
 
+        private string _purpose;
+        public string Purpose
+        {
+            get => _purpose;
+            set { _purpose = value; OnPropertyChanged(); }
+        }
+
+        private string _description;
         public string Description
         {
-            get => description;
-            set { description = value; OnPropertyChanged(); }
+            get => _description;
+            set { _description = value; OnPropertyChanged(); }
         }
 
+        private Module _module;
         public Module Module
         {
-            get => module;
-            set { module = value; OnPropertyChanged(); }
+            get => _module;
+            set { _module = value; OnPropertyChanged(); }
         }
 
-        public Level Level
-        {
-            get { return level; }
-            set { level = value; OnPropertyChanged(); }
-        }
-
-        public string EmotionMatch
-        {
-            get { return emotionMatch; }
-            set { emotionMatch = value; OnPropertyChanged(); }
-        }
-
+        private Skill _selectedSkill;
         public Skill SelectedSkill
         {
-            get => selectedSkill;
-            set { selectedSkill = value; OnPropertyChanged(); }
-        }
+            get => _selectedSkill;
+            set { _selectedSkill = value; OnPropertyChanged(); }
+        }        
 
+        private string _searchTerm = string.Empty;
         public string SearchTerm
         {
-            get { return searchTerm; }
+            get { return _searchTerm; }
             set
             {
-                searchTerm = value;
+                _searchTerm = value;
                 OnPropertyChanged(nameof(SkillsFilter));
                 SkillsCollectionView.Refresh();
             }
         }
 
+        private string _matchNumber;
+        public string MatchNumber
+        {
+            get { return _matchNumber; }
+            set { _matchNumber = value; OnPropertyChanged(); }
+        }
+
+        private string _emotion;
+        public string Emotion
+        {
+            get { return _emotion; }
+            set { _emotion = value; OnPropertyChanged(); }
+        }
+
+
+        private Level _level;
+        public Level Level
+        {
+            get { return _level; }
+            set { _level = value; OnPropertyChanged(); }
+        }
+
         public ICommand OpenAddSkillCommand { get; }
+        public ICommand OpenAddNoteCommand { get; }
         public ICommand AddSkillCommand { get; }
         public ICommand SaveSkillCommand { get; }
         public ICommand DeleteSkillCommand { get; }
+        public ICommand AddMatchToSkillCommand { get; }
+
 
         public SkillsViewModel()
         {
-            Skills = new ObservableCollection<Skill>(skillRepository.GetAllSkills());
+            Skills = new ObservableCollection<Skill>(skillRepository.GetAll());
+            Matches = new ObservableCollection<Model.Classes.Match>(HomeViewModel.matchRepository.GetAll());
+
             SkillsCollectionView = CollectionViewSource.GetDefaultView(Skills);
             SkillsCollectionView.Filter = SkillsFilter;
 
-            Modules = new ObservableCollection<Module>(moduleRepository.GetAllModules());
-            ModulesCollectionView = CollectionViewSource.GetDefaultView(Modules);
+            ModulesCollectionView = ModulesViewModel.ModulesCollectionView;
 
 
             OpenAddSkillCommand = new RelayCommandUser(OpenAddSkill, CanOpenAddSkill);
+            OpenAddNoteCommand = new RelayCommandUser(OpenAddNote, CanOpenAddNote);
             AddSkillCommand = new RelayCommandUser(AddSkill, CanAddSkill);
             SaveSkillCommand = new RelayCommandUser(SaveSkill, CanSaveSkill);
             DeleteSkillCommand = new RelayCommandUser(DeleteSkill, CanDeleteSkill);
-
+            AddMatchToSkillCommand = new RelayCommandUser(AddMatchToSkill, CanAddMatchToSkill);
         }
 
         private void AddSkill()
         {
-            var skill = new Skill { Number = number, Name = name, Description = description, Module = module, Level = level, EmotionMatch = emotionMatch};
+            var skill = new Skill { Number = _number, Name = _name, Purpose = _purpose, Description = _description, Module = _module};
 
             Skills.Add(skill);
             skillRepository.AddSkill(skill);
-
             // Simpel dialogboks som bekræftelse
             MessageBox.Show($"Færdighed '{skill.Name}' oprettet!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
 
             Name = string.Empty;
+            Purpose = string.Empty;
             Description = string.Empty;
             Module = null;
-            Description = string.Empty;
-            Level = 0;
-            EmotionMatch = string.Empty;
         }
 
         private void OpenAddSkill()
         {
             AddSkillView addSkillView = new AddSkillView();
             addSkillView.Show();
+        }
+
+        private void OpenAddNote()
+        {
+            AddNoteView addNoteView = new AddNoteView();
+            addNoteView.Show();
         }
 
         private void SaveSkill()
@@ -150,20 +171,32 @@ namespace DATApp.MVVM.ViewModel
         {
             if (obj is Skill skill)
             {
-                return skill.Name.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
+                return skill.Name.Equals(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
+                    skill.Purpose.Equals(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
                     skill.Description.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
-                    skill.EmotionMatch.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
                     skill.Module.Name.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
-                    skill.Module.Description.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
-                    skill.Level.ToString().Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase);
+                    skill.Module.Description.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase);
             }
-
             return false;
         }
 
-        private bool CanAddSkill() => !string.IsNullOrWhiteSpace(Name);
+        private void AddMatchToSkill()
+        {
+            var match = new Model.Classes.Match { Number = _matchNumber, Skill = _selectedSkill, Emotion = _emotion, Level = _level };
+
+            Matches.Add(match);
+            HomeViewModel.matchRepository.AddMatch(match);
+
+            // Simpel dialogboks som bekræftelse
+            MessageBox.Show($"Match tilknyttet {match.Skill.Name}!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private bool CanAddMatchToSkill() => SelectedSkill != null;
         private bool CanOpenAddSkill() => true;
+        private bool CanOpenAddNote() => MainWindowViewModel.CurrentUser != null;
+        private bool CanAddSkill() => !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Purpose) && !string.IsNullOrWhiteSpace(Description);
         private bool CanSaveSkill() => SelectedSkill != null;
-        private bool CanDeleteSkill() => SelectedSkill != null;       
+
+        private bool CanDeleteSkill() => SelectedSkill != null;
     }
 }

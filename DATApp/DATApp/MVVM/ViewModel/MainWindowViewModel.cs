@@ -5,23 +5,44 @@ using DATApp.MVVM.View.Controls;
 
 namespace DATApp.MVVM.ViewModel
 {
-    class MainWindowViewModel : ViewModelBase
+    internal class MainWindowViewModel : ViewModelBase
     {
+        private static User _currentUser;
+        public static User CurrentUser
+        {
+            get { return _currentUser; }
+            set { _currentUser = value; }
+        }
+
+        private object _currentView;
+        public object CurrentView
+        {
+            get { return _currentView; }
+            set { _currentView = value; OnPropertyChanged(); }
+        }
+
+        private object _currentMenuView;
+        public object CurrentMenuView
+        {
+            get { return _currentMenuView; }
+            set { _currentMenuView = value; OnPropertyChanged(); }
+        }
+
         public RelayCommand HomeViewCommand {  get; set; }
+        public RelayCommand AdminHomeViewCommand { get; set; }
         public RelayCommand UsersViewCommand { get; set; }
         public RelayCommand ModulesViewCommand { get; set; }
         public RelayCommand SkillsViewCommand { get; set; }
-        public RelayCommand MyAccountViewCommand { get; set; }
         public RelayCommand NotesViewCommand { get; set; }
         public RelayCommand LoginViewCommand { get; set; }
         public RelayCommand LogoutViewCommand { get; set; }
-
         public RelayCommand BaseViewCommand { get; set; }
         public RelayCommand MenuViewCommand { get; set; }
         public RelayCommand ClientViewCommand { get; set; }
         public RelayCommand CloseMainWindowCommand { get; set; }
 
         public HomeViewModel HomeVM { get; set; }
+        public AdminMatchViewModel AdminMatchVM { get; set; }
         public UsersViewModel UsersVM { get; set; }
         public ModulesViewModel ModulesVM { get; set; }
         public AdminModulesViewModel AdminModulesVM { get; set; }
@@ -29,53 +50,16 @@ namespace DATApp.MVVM.ViewModel
         public SkillsViewModel SkillsVM { get; set; }
         public LoginViewModel LoginVM { get; set; }
         public NotesViewModel NotesVM { get; set; }
-        public MyAccountViewModel MyAccountVM { get; set; }
         public LoginView LoginView { get; set; }
-
-
         public BaseMenuBar BaseMenuView { get; set; }
         public ClientMenuBar ClientMenuView { get; set; }
         public AdminMenuBar AdminMenuView { get; set; }
 
 
-        private static User _currentUser;
-
-        public static User CurrentUser
-        {
-            get { return _currentUser; }
-            set
-            {
-                _currentUser = value; 
-            }
-        }
-
-        private object _currentView;
-
-        public object CurrentView
-        {
-            get { return _currentView; }
-            set
-            {
-                _currentView = value;
-                OnPropertyChanged();
-            }
-        }
-        private object _currentMenuView;
-
-        public object CurrentMenuView
-        {
-            get { return _currentMenuView; }
-            set
-            {
-                _currentMenuView = value;
-                OnPropertyChanged();
-            }
-        }
-
-
         public MainWindowViewModel()
         {
             HomeVM = new HomeViewModel();
+            AdminMatchVM = new AdminMatchViewModel();
             UsersVM = new UsersViewModel();
             ModulesVM = new ModulesViewModel();
             AdminModulesVM = new AdminModulesViewModel();
@@ -83,18 +67,30 @@ namespace DATApp.MVVM.ViewModel
             SkillsVM = new SkillsViewModel();
             LoginVM = new LoginViewModel();
             NotesVM = new NotesViewModel();
-            MyAccountVM = new MyAccountViewModel();
             BaseMenuView = new BaseMenuBar();
             ClientMenuView  = new ClientMenuBar();
             AdminMenuView  = new AdminMenuBar();
             CurrentUser = new User();
+            CurrentUser = null;
 
             CurrentMenuView = BaseMenuView;
-            CurrentView = HomeVM;
+
+            if (CurrentUser == null || CurrentUser.IsAdmin == false)
+                CurrentView = HomeVM;
+            else
+                CurrentView = AdminMatchVM;
 
             HomeViewCommand = new RelayCommand(o =>
             {
-                CurrentView = HomeVM;
+                if (CurrentUser == null || CurrentUser.IsAdmin == false)
+                    CurrentView = HomeVM;
+                else
+                    CurrentView = AdminMatchVM;
+            });
+
+            AdminHomeViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = AdminMatchVM;
             });
 
             UsersViewCommand = new RelayCommand(o =>
@@ -130,12 +126,10 @@ namespace DATApp.MVVM.ViewModel
                 CurrentMenuView = BaseMenuView;
             });
 
-
             NotesViewCommand = new RelayCommand(o =>
             {
                 CurrentView = NotesVM;
             });
-
 
             MenuViewCommand = new RelayCommand(o =>
             {
@@ -153,8 +147,7 @@ namespace DATApp.MVVM.ViewModel
                 {
                     CurrentMenuView = ClientMenuView;
                     CurrentView = HomeVM;
-                }
-                
+                }                
             });
 
             ClientViewCommand = new RelayCommand(o =>
