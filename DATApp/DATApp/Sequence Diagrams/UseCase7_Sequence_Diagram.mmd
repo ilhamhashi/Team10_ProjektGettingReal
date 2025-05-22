@@ -10,7 +10,7 @@
     Note over Admin: Creating a new client
     Admin->>UI: Open user list view
     UI->>VM: Initialize and load users
-    VM->>Repo: GetAllUsers()
+    VM->>Repo: GetAll()
     Repo->>File: Read user data file
     File-->>Repo: Return all users
     Repo-->>VM: List of users
@@ -31,7 +31,7 @@
     Admin->>UI: Click "Delete User"
     UI->>VM: Execute DeleteUserCommand
     VM->>Repo: DeleteUser(user)
-    Repo->>Repo: GetAllUsers()
+    Repo->>Repo: GetAll()
     Repo->>File: Read user data file
     File-->>Repo: All users
     Repo->>Repo: Remove matching user

@@ -13,7 +13,8 @@
     UI->>VM: Trigger SearchCommand
 
     alt Search for Skills
-        VM->>SkillRepo: GetAllSkills()
+        VM->>SkillRepo: 
+        ()
         SkillRepo->>SkillFile: Read skills.txt
         SkillFile-->>SkillRepo: Return skill data
         SkillRepo-->>VM: Return skills
@@ -22,7 +23,7 @@
     end
 
     alt Search for Modules
-        VM->>ModuleRepo: GetAllModules()
+        VM->>ModuleRepo: GetAll()
         ModuleRepo->>ModuleFile: Read modules.txt
         ModuleFile-->>ModuleRepo: Return module data
         ModuleRepo-->>VM: Return modules

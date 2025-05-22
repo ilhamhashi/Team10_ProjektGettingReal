@@ -9,7 +9,7 @@
 
     Administrator->>UI: Opens module overview
     UI->>VM: Loads module list
-    VM->>Repo: GetAllModules()
+    VM->>Repo: GetAll()
     Repo->>File: Read modules.txt
     File-->>Repo: Return module data
     Repo-->>VM: Return module objects

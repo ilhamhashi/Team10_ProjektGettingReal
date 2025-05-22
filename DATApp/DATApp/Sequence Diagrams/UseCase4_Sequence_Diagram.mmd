@@ -9,7 +9,7 @@
 
     Administrator->>UI: Opens skill overview
     UI->>VM: Loads skill list
-    VM->>Repo: GetAllSkills()
+    VM->>Repo: GetAll()
     Repo->>File: Read skills.txt
     File-->>Repo: Return skill data
     Repo-->>VM: Return skill objects
