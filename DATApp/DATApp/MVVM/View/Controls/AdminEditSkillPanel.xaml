@@ -5,24 +5,36 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DATApp.MVVM.View.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="150">
+             d:DesignHeight="350" d:DesignWidth="150">
     <Grid Margin="10,0,5,0">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="0,0,0,20">
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Stretch">
             <Label Content = "Name:"/>
-            <TextBox Height="25" Text = "{Binding SelectedSkill.Name, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Text = "{Binding SelectedSkill.Name, UpdateSourceTrigger=PropertyChanged}" />
+            <Label Content = "Purpose:" />
+            <TextBox Text = "{Binding SelectedSkill.Purpose, UpdateSourceTrigger=PropertyChanged}" />
             <Label Content = "Description:" />
-            <TextBox Height="25" Text = "{Binding SelectedSkill.Description, UpdateSourceTrigger=PropertyChanged}" />
-        </StackPanel>
+            <TextBox Text = "{Binding SelectedSkill.Description, UpdateSourceTrigger=PropertyChanged}" />
 
-        <StackPanel Grid.Row="1" VerticalAlignment="Top">
             <Button Content="Save Changes" Command="{Binding SaveSkillCommand, UpdateSourceTrigger=PropertyChanged}" Height="25"/>
             <Button Content="Delete Skill" Command="{Binding DeleteSkillCommand, UpdateSourceTrigger=PropertyChanged}" Height="25"/>
             <Button Content="Add Skill" Command="{Binding OpenAddSkillCommand, UpdateSourceTrigger=PropertyChanged}" Height="25"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" VerticalAlignment="Center">
+            
+            <TextBlock Text="Vælg følelse for match" />
+            <ComboBox SelectedItem="{Binding Emotion}" ItemsSource="{Binding Emotions, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,10" />
+
+            <TextBlock Text="Vælg Behandlingshierarki for match" />
+            <ComboBox SelectedItem="{Binding Level}" ItemsSource="{Binding Levels, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,10" />
+
+            <Button Content="Add Match" Command="{Binding AddMatchToSkillCommand, UpdateSourceTrigger=PropertyChanged}" Height="25"/>
+
         </StackPanel>
     </Grid>
 </UserControl>

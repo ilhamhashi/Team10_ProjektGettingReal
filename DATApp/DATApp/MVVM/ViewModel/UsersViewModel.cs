@@ -9,44 +9,45 @@ using System.Windows.Input;
 
 namespace DATApp.MVVM.ViewModel
 {
-    class UsersViewModel : ViewModelBase
+    public class UsersViewModel : ViewModelBase
     {
         private readonly IUserRepository userRepository = new FileUserRepository("users.txt");
+        public ObservableCollection<User> Users { get; }
+
         private string name;
-        private string email;
-        private string password;
-        private bool isAdmin;
-        private User selectedUser;
         public string Name
         {
             get => name;
             set { name = value; OnPropertyChanged(); }
         }
 
+        private string email;
         public string Email
         {
             get => email;
             set { email = value; OnPropertyChanged(); }
         }
 
+        private string password;
         public string Password
         {
             get => password;
             set { password = value; OnPropertyChanged(); }
         }
+
+        private bool isAdmin;
         public bool IsAdmin
         {
             get => isAdmin;
             set { isAdmin = value; OnPropertyChanged(); }
         }
 
+        private User selectedUser;
         public User SelectedUser
         {
             get => selectedUser;
             set { selectedUser = value; OnPropertyChanged(); }
         }
-
-        public ObservableCollection<User> Users { get; }
 
         public ICommand OpenAddUserCommand { get; }
         public ICommand SaveUserCommand { get; }
@@ -56,13 +57,12 @@ namespace DATApp.MVVM.ViewModel
 
         public UsersViewModel()
         {
-            Users = new ObservableCollection<User>(userRepository.GetAllUsers());
+            Users = new ObservableCollection<User>(userRepository.GetAll());
             AddUserCommand = new RelayCommandUser(AddUser, CanAddUser);
             SaveUserCommand = new RelayCommandUser(SaveUser, CanSaveUser);
             OpenAddUserCommand = new RelayCommandUser(OpenAddUser, CanOpenAddUser);
             ValidateUserLoginCommand = new RelayCommandUser(ValidateUserLogin, CanLoginUser);
             DeleteUserCommand = new RelayCommandUser(DeleteUser,CanDeleteUser);
-
         }
 
         private void AddUser()
@@ -71,7 +71,7 @@ namespace DATApp.MVVM.ViewModel
             Users.Add(user);
             userRepository.AddUser(user);
 
-            // Simpel dialogboks som bekræftelse
+            // Dialogboks som bekræftelse
             MessageBox.Show($"Bruger '{user.Name}' oprettet!", "Tilføjet", MessageBoxButton.OK, MessageBoxImage.Information);
 
             Name = string.Empty;
@@ -103,26 +103,21 @@ namespace DATApp.MVVM.ViewModel
 
         public void ValidateUserLogin()
         {
-            bool loginValye = userRepository.ValidateUserLogin(Email, Password);
+            bool loginValue = userRepository.ValidateUserLogin(Email, Password);
             MainWindowViewModel.CurrentUser = userRepository.GetUser(Email);
 
-            if (loginValye && MainWindowViewModel.CurrentUser.IsAdmin)
-            { 
-                
-                MessageBox.Show($"Login valideret. Tryk på fortsæt.", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
-
-            }
-            else if (loginValye && MainWindowViewModel.CurrentUser.IsAdmin == false)
+            if (loginValue && MainWindowViewModel.CurrentUser.IsAdmin)
             {
-
+                MessageBox.Show($"Login valideret. Tryk på fortsæt.", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else if (loginValue && MainWindowViewModel.CurrentUser.IsAdmin == false)
+            {
                 MessageBox.Show($"Login valideret. Tryk på fortsæt.", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
                 MessageBox.Show($"E-mail og/eller adgangskode er forkert. Prøv venligst igen", "Ugyldig", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-
-
         }
 
         private bool CanAddUser() => !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Password);

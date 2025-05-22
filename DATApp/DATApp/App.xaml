@@ -19,6 +19,10 @@
                 <view:HomeView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewmodel:AdminMatchViewModel}">
+                <view:AdminMatchesView/>
+            </DataTemplate>
+
             <DataTemplate DataType="{x:Type viewmodel:UsersViewModel}">
                 <view:UsersView/>
             </DataTemplate>
@@ -42,10 +46,6 @@
 
             <DataTemplate DataType="{x:Type viewmodel:LoginViewModel}">
                 <view:LoginView/>
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type viewmodel:MyAccountViewModel}">
-                <view:MyAccountView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewmodel:NotesViewModel}">

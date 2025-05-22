@@ -2,7 +2,7 @@
 
 namespace DATApp.Core
 {
-    class RelayCommandUser : ICommand
+    internal class RelayCommandUser : ICommand
     {
         private readonly Action execute;
         private readonly Func<bool> canExecute;

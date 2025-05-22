@@ -20,30 +20,34 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" HorizontalAlignment="Stretch">
-            <Label Content = "Navn:" />
+            <Label Content = "Navn" />
             <TextBox Text = "{Binding Name}" />
 
-            <Label Content="Description:" />
-            <TextBox Text = "{Binding Description}" />
+            <Label Content="Purpose" />
+            <TextBox Text = "{Binding Purpose}" />
 
-            <TextBlock Text="Level" />
-            <ComboBox SelectedItem="{Binding Level}" ItemsSource="{Binding Levels, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,10" />
+            <Label Content="Description" />
+            <TextBox Text = "{Binding Description}" />
 
             <TextBlock Text="Module" />
             <ComboBox SelectedItem="{Binding Module}" ItemsSource="{Binding ModulesCollectionView, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,10" />
 
+
+            <!-- Checkboxes            
+            
+            <TextBlock Text="Level" />
+            <ComboBox SelectedItem="{Binding Level}" ItemsSource="{Binding Levels, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,10" />
+
             <TextBlock Text="Emotion" />
             <ComboBox SelectedItem="{Binding EmotionMatch}" ItemsSource="{Binding Emotions, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,10" />
 
-            
-            <!-- Checkboxes
+           
 
             <CheckBox Content="Vrede" x:Name="VredeCheckbox"/>
             <CheckBox Content="Aggreession" x:Name="AggressionCheckbox"/>
             <CheckBox Content="Nedtrykthed" x:Name="NedtrykthedCheckbox"/>
             <CheckBox Content="Angst" x:Name="AngstCheckbox"/>
             <CheckBox Content="Skyld" x:Name="SkyldCheckbox"/>
-            
              -->
 
         </StackPanel>

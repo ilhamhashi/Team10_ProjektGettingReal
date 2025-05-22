@@ -23,10 +23,14 @@
         <Grid Margin="20,10,20,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="75"/>
-                <RowDefinition Height="45"/>
                 <RowDefinition/>
                 <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
             <TextBlock
                 Text="DAT-linien.dk"
@@ -36,17 +40,14 @@
                        FontSize="22" />
 
             <ContentControl Grid.Row="1"
-                            Margin="-18,0,-18,0"
                             Content="{Binding CurrentMenuView}"/>
 
-            <ContentControl Grid.Row="2"
-                            VerticalAlignment="Center"
-                            HorizontalContentAlignment="Center"
-                            Margin="10,0,10,0"
-                            Content="{Binding CurrentView}" Height="381"/>
+            <ContentControl Grid.Row="1"
+                            Grid.Column="1"
+                            Content="{Binding CurrentView}" />
 
-            <Button Width="35" Height="35" x:Name = "CloseButton" Content = "X" HorizontalAlignment="Right" Command="{Binding CloseMainWindowCommand}" />
-            <Button x:Name="fortsætButton" Content = "Fortsæt" Command="{Binding MenuViewCommand}" Height="20"  Width="150" VerticalAlignment="Bottom" Margin="0,0,0,45" Visibility="Collapsed" Click="Button_Click" Grid.Row="2"/>
+            <Button Grid.Column="1" Width="35" Height="35" x:Name = "CloseButton" Content = "X" HorizontalAlignment="Right" Command="{Binding CloseMainWindowCommand}" />
+            <Button x:Name="fortsætButton" Content = "Fortsæt" Command="{Binding MenuViewCommand}" Height="20"  Width="150" VerticalAlignment="Bottom" Margin="0,0,0,25" Visibility="Collapsed" Click="Button_Click" Grid.Row="1" Grid.Column="1"/>
             
         </Grid>
     </Border>

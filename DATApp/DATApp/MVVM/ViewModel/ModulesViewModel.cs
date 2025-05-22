@@ -10,17 +10,40 @@ using System.Windows.Data;
 
 namespace DATApp.MVVM.ViewModel
 {
-    class ModulesViewModel : ViewModelBase
+    public class ModulesViewModel : ViewModelBase
     {
         private readonly FileModuleRepository moduleRepository = new FileModuleRepository("modules.txt");
-        private int number;
-        private string name;
-        private string description;
-        private Module selectedModule;
-        private string searchTerm = string.Empty;
-        private readonly ObservableCollection<Module> Modules;
-        public ICollectionView ModulesCollectionView { get; }
+        public ObservableCollection<Module> Modules;
 
+        private string number;
+        public string Number
+        {
+            get => number;
+            set { number = value; OnPropertyChanged(); }
+        }
+
+        private string name;
+        public string Name
+        {
+            get => name;
+            set { name = value; OnPropertyChanged(); }
+        }
+
+        private string description;
+        public string Description
+        {
+            get => description;
+            set { description = value; OnPropertyChanged(); }
+        }
+
+        private Module selectedModule;
+        public Module SelectedModule
+        {
+            get => selectedModule;
+            set { selectedModule = value; OnPropertyChanged(); }
+        }
+
+        private string searchTerm = string.Empty;
         public string SearchTerm
         {
             get { return searchTerm; }
@@ -32,41 +55,16 @@ namespace DATApp.MVVM.ViewModel
             }
         }
 
-        public int Number
-        {
-            get => number;
-            set { number = value; OnPropertyChanged(); }
-        }
-
-        public string Name
-        {
-            get => name;
-            set { name = value; OnPropertyChanged(); }
-        }
-
-        public string Description
-        {
-            get => description;
-            set { description = value; OnPropertyChanged(); }
-        }
-
-        public Module SelectedModule
-        {
-            get => selectedModule;
-            set { selectedModule = value; OnPropertyChanged(); }
-        }
-
         public ICommand OpenAddModuleCommand { get; }
         public ICommand SaveModuleCommand { get; }
         public ICommand AddModuleCommand { get; }
         public ICommand DeleteModuleCommand { get; }
-
+        public static ICollectionView ModulesCollectionView { get; set; }
 
         public ModulesViewModel()
         {
-            Modules = new ObservableCollection<Module>(moduleRepository.GetAllModules());
+            Modules = new ObservableCollection<Module>(moduleRepository.GetAll());
             ModulesCollectionView = CollectionViewSource.GetDefaultView(Modules);
-            ModulesCollectionView.Filter = ModulesFilter; 
 
             AddModuleCommand = new RelayCommandUser(AddModule, CanAddModule);
             SaveModuleCommand = new RelayCommandUser(SaveModule, CanSaveModule);
@@ -81,9 +79,9 @@ namespace DATApp.MVVM.ViewModel
             Modules.Add(module);
             moduleRepository.AddModule(module);
 
-            // Simpel dialogboks som bekræftelse
+            // Dialogboks som bekræftelse
             MessageBox.Show($"Modul '{module.Name}' oprettet!", "Tilføjet", MessageBoxButton.OK, MessageBoxImage.Information);
-
+            // Tekstfelter ryddes for indhold
             Name = string.Empty;
             Description = string.Empty;            
         }
@@ -97,7 +95,9 @@ namespace DATApp.MVVM.ViewModel
         private void SaveModule()
         {
             moduleRepository.UpdateModule(SelectedModule);
+            // Dialogboks som bekræftelse
             MessageBox.Show($"Modul '{SelectedModule.Name}' Rettet!", "Redigeret", MessageBoxButton.OK, MessageBoxImage.Information);
+            // Tekstfelter ryddes for indhold
             SelectedModule = null;
         }
 
@@ -105,7 +105,9 @@ namespace DATApp.MVVM.ViewModel
         {
             moduleRepository.DeleteModule(SelectedModule);
             Modules.Remove(SelectedModule);
+            // Dialogboks som bekræftelse
             MessageBox.Show($"Modul '{Name}' slettet!", "Fjernet", MessageBoxButton.OK, MessageBoxImage.Information);
+            // Tekstfelter ryddes for indhold
             SelectedModule = null;
         }
 
@@ -116,7 +118,6 @@ namespace DATApp.MVVM.ViewModel
                 return module.Name.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
                     module.Description.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase);
             }
-
             return false;
         }
 
@@ -124,7 +125,5 @@ namespace DATApp.MVVM.ViewModel
         private bool CanOpenAddModule() => true;
         private bool CanSaveModule() => SelectedModule != null;
         private bool CanDeleteModule() => SelectedModule != null;
-        private bool CanSearchModule() => true;
-
     }
 }

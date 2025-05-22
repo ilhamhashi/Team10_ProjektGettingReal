@@ -1,49 +1,46 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
+﻿using DATApp.Core;
 using DATApp.MVVM.Model.Classes;
 using DATApp.MVVM.Model.Repositories;
-using DATApp.Core;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Xml.Linq;
 
 namespace DATApp.MVVM.ViewModel
 {
-    class NotesViewModel : ViewModelBase
+    public class NotesViewModel : ViewModelBase
     {
         private readonly INoteRepository noteRepository = new FileNoteRepository("notes.txt");
-        private string _name;
-        private int _noteNumber;
-        private string _noteContent;
-        private User _noteClient;
-        private Skill _noteSkill;
+        public ObservableCollection<Note> Notes;
 
-        public string Name
+        private string _number;
+        public string Number
         {
-            get => _name;
-            set { _name = value; OnPropertyChanged(); }
+            get => _number;
+            set { _number = value; OnPropertyChanged(); }
         }
 
-        public int NoteNumber
+        private DateTime _dateTime;
+        public DateTime DateTime
         {
-            get => _noteNumber;
-            set { _noteNumber = value; OnPropertyChanged(); }
+            get => _dateTime;
+            set { _dateTime = value; OnPropertyChanged(); }
         }
 
-        public User NoteClient
+        private string _content;
+        public string Content
         {
-            get => _noteClient;
-            set { _noteClient = value; OnPropertyChanged(); }
-        }
-        public Skill NoteSkill
-        {
-            get => _noteSkill;
-            set { _noteSkill = value; OnPropertyChanged(); }
+            get => _content;
+            set { _content = value; OnPropertyChanged(); }
         }
 
-        public string NoteContent
+        private Skill _skill;
+        public Skill Skill
         {
-            get => _noteContent;
-            set { _noteContent = value; OnPropertyChanged(); }
+            get => _skill;
+            set { _skill = value; OnPropertyChanged(); }
         }
 
         private Note _selectedNote;
@@ -53,27 +50,37 @@ namespace DATApp.MVVM.ViewModel
             set { _selectedNote = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<Note> Notes { get; }
-
         public ICommand AddNoteCommand { get; }
         public ICommand DeleteNoteCommand { get; }
         public ICommand SaveNoteCommand { get; }
+        public ICollectionView NotesCollectionView { get; set; }
+        public ICollectionView SkillsCollectionView { get; }
 
+        private bool CanAddNote() => !string.IsNullOrWhiteSpace(Content) && Skill != null;
+        private bool CanSaveNote() => SelectedNote != null && MainWindowViewModel.CurrentUser.Email == SelectedNote.Client.Email;
+        private bool CanDeleteNote() => SelectedNote != null && MainWindowViewModel.CurrentUser.Email == SelectedNote.Client.Email;
 
         public NotesViewModel()
         {
             Notes = new ObservableCollection<Note>(noteRepository.GetAll());
+            NotesCollectionView = CollectionViewSource.GetDefaultView(Notes);
 
-            AddNoteCommand = new RelayCommand(_ => AddNote());
-            DeleteNoteCommand = new RelayCommand(_ => DeleteNote(), _ => SelectedNote != null);
-            SaveNoteCommand = new RelayCommand(_ => SaveNote(), _ => SelectedNote != null);
+            SkillsCollectionView = SkillsViewModel.SkillsCollectionView;
+
+            AddNoteCommand = new RelayCommand(_ => AddNote(), _ => CanAddNote());
+            DeleteNoteCommand = new RelayCommand(_ => DeleteNote(), _ => CanDeleteNote());
+            SaveNoteCommand = new RelayCommand(_ => SaveNote(), _ => CanSaveNote());
         }
 
         private void AddNote()
         {
-            var note = new Note { Name = _name, NoteNumber = _noteNumber, NoteContent = NoteContent, NoteClient = _noteClient, NoteSkill = _noteSkill };
+            var note = new Note { Number = _number, Content = _content, DateTime = _dateTime, Client = MainWindowViewModel.CurrentUser, Skill = _skill };
             noteRepository.Add(note);
             Notes.Add(note);
+            MessageBox.Show($"Note oprettet!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            Content = string.Empty;
+            Skill = null;
         }
 
         private void DeleteNote()
@@ -85,10 +92,11 @@ namespace DATApp.MVVM.ViewModel
 
         private void SaveNote()
         {
-            if (SelectedNote != null)
-            {
-                noteRepository.Update(SelectedNote);
-            }
+            noteRepository.Update(SelectedNote);
+            // Dialogboks som bekræftelse
+            MessageBox.Show($"Ændringer Gemt!", "Redigeret", MessageBoxButton.OK, MessageBoxImage.Information);
+            // Tekstfelter ryddes for indhold
+            SelectedNote = null;
         }
     }
 }

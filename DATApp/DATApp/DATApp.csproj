@@ -10,24 +10,23 @@
 
   <ItemGroup>
     <Compile Remove="bin\**" />
+    <Compile Remove="MVVM\Model\Files\**" />
     <Compile Remove="Properties\**" />
     <EmbeddedResource Remove="bin\**" />
+    <EmbeddedResource Remove="MVVM\Model\Files\**" />
     <EmbeddedResource Remove="Properties\**" />
     <None Remove="bin\**" />
+    <None Remove="MVVM\Model\Files\**" />
     <None Remove="Properties\**" />
     <Page Remove="bin\**" />
+    <Page Remove="MVVM\Model\Files\**" />
     <Page Remove="Properties\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="MVVM\Model\Files\modules.txt.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="bin\Debug\net9.0-windows\users.json" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Compile Update="MVVM\View\AddNoteView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="MVVM\View\AddSkillView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -43,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MVVM\Model\Files\" />
+    <Folder Include="bin\Debug\net9.0-windows\" />
   </ItemGroup>
 
 </Project>

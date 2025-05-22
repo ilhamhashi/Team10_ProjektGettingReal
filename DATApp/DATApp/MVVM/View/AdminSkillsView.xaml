@@ -4,8 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModel="clr-namespace:DATApp.MVVM.ViewModel"
-             xmlns:controls="clr-namespace:DATApp.MVVM.View.Controls"
-             
+             xmlns:controls="clr-namespace:DATApp.MVVM.View.Controls"             
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -24,53 +23,12 @@
             <ColumnDefinition Width="30*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Search Section 
-
-        <StackPanel Orientation="Horizontal" Margin="0,10" Grid.Row="1">
-            <TextBox Width="300"
-                     Height="30"
-                     VerticalContentAlignment="Center"
-                     Margin="0,0,10,0"
-                     Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" />
-
-            <Button Content="Search"
-                    Width="100"
-                    Height="30"
-                    Command="{Binding SearchCommand}" />
-        </StackPanel>
-
-        Add Section 
-        <GroupBox Header="Tilføj Færdighed" Margin="0,10,0,10" Grid.Row="2">
-            <StackPanel Margin="10" Orientation="Vertical">
-                <TextBlock Text="Navn" />
-                <TextBox Text="{Binding NewSkillName}" Margin="0,5,0,10" />
-
-                <TextBlock Text="Beskrivelse" />
-                <TextBox Text="{Binding NewSkillDescription}" Margin="0,5,0,10" />
-
-                Der er noget galt her, NewSkillLevel binding burde være noget andet!!!!
-
-                <TextBlock Text="Følelse" />
-                <ComboBox SelectedItem="{Binding NewSkillLevel}" 
-          ItemsSource="{Binding EmotionalStates}" 
-          Margin="0,5,0,10" />
-
-                <TextBlock Text="Niveau" />
-                <ComboBox SelectedItem="{Binding NewSkillLevel}" 
-          ItemsSource="{Binding Levels}" 
-          Margin="0,5,0,10" />
-
-
-                <Button Content="Add Skill"
-                        Width="120"
-                        Margin="0,10,0,0"
-                        Command="{Binding AddCommand}" />
-            </StackPanel>
-        </GroupBox> -->
-
         <!-- Search TextBox -->
-        <TextBox Grid.Row="0" Height="35" Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" Margin="20,10,30,0"/>
-
+        <StackPanel>
+            <Button Content="Tilføj Note" Command="{Binding OpenAddNoteCommand, UpdateSourceTrigger=PropertyChanged}" Height="25" Width="100" HorizontalAlignment="Left"/>
+            <Label Content="Søg"/>
+            <TextBox Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"/>
+         </StackPanel>
 
         <!-- Results List with ScrollViewer -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
@@ -102,7 +60,7 @@
         </ScrollViewer>
 
         <controls:AdminEditSkillPanel
-            Grid.Row="1"
+            Grid.RowSpan="2"
             Grid.Column="1"/>
 
         

@@ -9,10 +9,17 @@
    
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="45"/>
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
+        </Grid.ColumnDefinitions>
+
         <Menu Background="LightBlue">
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
+            
             <MenuItem Header="Forside"
             Height="50"
             Foreground="Black"
