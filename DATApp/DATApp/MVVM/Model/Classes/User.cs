@@ -1,18 +1,11 @@
-﻿using System;
-using System.Data;
-using Microsoft.VisualBasic.FileIO;
-
-
-namespace DATApp.MVVM.Model.Classes
+﻿namespace DATApp.MVVM.Model.Classes
 {
     public class User
     {
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public bool IsAdmin { get; set; }        
-        //public Roles Role { get; set; }
-
+        public bool IsAdmin { get; set; }
 
         public override string ToString()
         {
@@ -28,19 +21,7 @@ namespace DATApp.MVVM.Model.Classes
                 Email = parts[1],
                 Password = parts[2],
                 IsAdmin = bool.Parse(parts[3]),
-                //Role = Enum.Parse<Roles>(parts[5])
             };
         }
-
-
-        /*public User(string name, string email, string password, string userName, Roles role, bool isAdmin)
-    {
-        _name = name;
-        _email = email;
-        _password = password;
-        _userName = userName;
-        _role = role;
-        _isAdmin = isAdmin;
-    }*/
     }
 }

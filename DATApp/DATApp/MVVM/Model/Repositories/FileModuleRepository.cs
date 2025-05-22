@@ -19,14 +19,8 @@ namespace DATApp.MVVM.Model.Repositories
 
         public void AddModule(Module module)
         {
-            if (GetAllModules().ToList().Count == 0)
-            {
-                module.Number = 1;
-            }
-            else
-            {
-                module.Number = GetAllModules().Max(m => m.Number) + 1;
-            }
+            module.Number = Guid.NewGuid().ToString();
+
             try
             {
                 File.AppendAllText(_moduleFilePath, module.ToString() + Environment.NewLine);
@@ -39,12 +33,12 @@ namespace DATApp.MVVM.Model.Repositories
 
         public void DeleteModule(Module module)
         {
-            List<Module> modules = GetAllModules().ToList();
+            List<Module> modules = GetAll().ToList();
             modules.RemoveAll(m => m.Number == module.Number);
             RewriteFile(modules);
         }
 
-        public IEnumerable<Module> GetAllModules()
+        public IEnumerable<Module> GetAll()
         {
             try
             {
@@ -60,14 +54,14 @@ namespace DATApp.MVVM.Model.Repositories
             }
         }
 
-        public Module GetModule(int number)
+        public Module GetModule(string number)
         {
-            return GetAllModules().FirstOrDefault(m => m.Number == number);
+            return GetAll().FirstOrDefault(m => m.Number == number);
         }
 
         public void UpdateModule(Module module)
         {
-            List<Module> modules = GetAllModules().ToList();
+            List<Module> modules = GetAll().ToList();
             int index = modules.FindIndex(m => m.Number == module.Number);
             if (index != -1)
             {

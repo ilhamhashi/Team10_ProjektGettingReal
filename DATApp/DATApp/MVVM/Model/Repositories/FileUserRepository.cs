@@ -30,12 +30,12 @@ namespace DATApp.MVVM.Model.Repositories
 
         public void DeleteUser(User user)
         {
-            List<User> users = GetAllUsers().ToList();
+            List<User> users = GetAll().ToList();
             users.RemoveAll(u => u.Email == user.Email);
             RewriteFile(users);
         }
 
-        public IEnumerable<User> GetAllUsers()
+        public IEnumerable<User> GetAll()
         {
             try
             {
@@ -53,12 +53,12 @@ namespace DATApp.MVVM.Model.Repositories
 
         public User GetUser(string email)
         {
-            return GetAllUsers().FirstOrDefault(u => u.Email == email);
+            return GetAll().FirstOrDefault(u => u.Email == email);
         }
 
         public void UpdateUser(User user)
         {
-            List<User> users = GetAllUsers().ToList();
+            List<User> users = GetAll().ToList();
             int index = users.FindIndex(u => u.Email == user.Email);
             if (index != -1)
             {
@@ -71,7 +71,7 @@ namespace DATApp.MVVM.Model.Repositories
         {
             try
             {
-                foreach (User user in GetAllUsers())
+                foreach (User user in GetAll())
                 {
                     var storedEmail = user.Email;
                     var storedPassword = user.Password;

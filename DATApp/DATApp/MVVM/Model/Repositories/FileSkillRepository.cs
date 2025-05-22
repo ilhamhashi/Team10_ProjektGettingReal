@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Runtime.CompilerServices;
 using DATApp.MVVM.Model.Classes;
 
 namespace DATApp.MVVM.Model.Repositories
@@ -20,14 +19,7 @@ namespace DATApp.MVVM.Model.Repositories
 
         public void AddSkill(Skill skill)
         {
-            if (GetAllSkills().ToList().Count == 0)
-            {
-                skill.Number = 1;
-            }
-            else
-            {
-                skill.Number = GetAllSkills().Max(s => s.Number) + 1;
-            }
+            skill.Number = Guid.NewGuid().ToString();
             try
             {
                 File.AppendAllText(_skillFilePath, skill.ToString() + Environment.NewLine);
@@ -40,12 +32,12 @@ namespace DATApp.MVVM.Model.Repositories
 
         public void DeleteSkill(Skill skill)
         {
-            List<Skill> skills = GetAllSkills().ToList();
+            List<Skill> skills = GetAll().ToList();
             skills.RemoveAll(s => s.Number == skill.Number);
             RewriteFile(skills);
         }
 
-        public IEnumerable<Skill> GetAllSkills()
+        public IEnumerable<Skill> GetAll()
         {
             try
             {
@@ -61,16 +53,16 @@ namespace DATApp.MVVM.Model.Repositories
             }
         }
 
-        public Skill GetSkill(int skillNumber)
+        public Skill GetSkill(string number)
         {
-            return GetAllSkills().FirstOrDefault(s => s.Number == skillNumber);
+            return GetAll().FirstOrDefault(s => s.Number == number);
         }
 
 
 
         public void UpdateSkill(Skill skill)
         {
-            List<Skill> skills = GetAllSkills().ToList();
+            List<Skill> skills = GetAll().ToList();
             int index = skills.FindIndex(s => s.Number == skill.Number);
             if (index != -1)
             {

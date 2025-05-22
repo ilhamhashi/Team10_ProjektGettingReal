@@ -1,40 +1,37 @@
-﻿using DATApp.MVVM.Model.Classes;
-
-namespace DATApp.MVVM.Model.Classes
+﻿namespace DATApp.MVVM.Model.Classes
 {
 
     public class Note
     {
-        public int NoteNumber { get; set; }
-        public string Name { get; set; }
-        public string NoteContent { get; set; }
-        public User NoteClient { get; set; }
-        public Skill NoteSkill { get; set; }
-        public bool IsAdmin { get; set; }
+        public string Number { get; set; }
+        public string Content { get; set; }
+        public DateTime DateTime { get; set; }
+        public User Client { get; set; }
+        public Skill Skill { get; set; }
 
         public override string ToString()
         {
-            return $"{NoteNumber},{NoteContent},{Name},{NoteClient?.Email}";
+            return $"{Number},{Content},{DateTime},{Client}, {Skill}";
         }
 
         public static Note FromString(string input)
         {
             var parts = input.Split(',');
-
-            if (parts.Length < 3)
-                return null;
-
             var note = new Note
             {
-                NoteNumber = int.Parse(parts[0]),
-                NoteContent = parts[1],
-                Name = parts[2]
+                Number = parts[0],
+                Content = parts[1],
+                DateTime = DateTime.Parse(parts[2]),
+                Client = new User { Name = parts[3], Email = parts[4], Password = parts[5], IsAdmin = bool.Parse(parts[6]) },
+                Skill = new Skill
+                {
+                    Number = parts[7],
+                    Name = parts[8],
+                    Purpose = parts[9],
+                    Description = parts[10],
+                    Module = new Module { Number = parts[11], Name = parts[12], Description = parts[13] }
+                }
             };
-
-            if (parts.Length >= 4)
-            {
-                note.NoteClient = new User { Email = parts[3] };
-            }
 
             return note;
         }

@@ -4,7 +4,7 @@ namespace DATApp.MVVM.Model.Repositories
 {
     public interface IUserRepository
     {
-        IEnumerable<User> GetAllUsers();
+        IEnumerable<User> GetAll();
         User GetUser(string email);
         void AddUser(User user);
         void UpdateUser(User user);
