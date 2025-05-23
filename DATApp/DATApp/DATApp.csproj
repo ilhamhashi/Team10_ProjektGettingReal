@@ -27,12 +27,6 @@
     <Compile Update="MVVM\View\AddNoteView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="MVVM\View\AddSkillView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="MVVM\View\AddModuleView .xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="MVVM\View\Controls\AdminMenuBar .xaml.cs">
       <SubType>Code</SubType>
     </Compile>
