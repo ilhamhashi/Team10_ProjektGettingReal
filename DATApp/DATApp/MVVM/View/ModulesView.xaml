@@ -13,35 +13,37 @@
         <viewModel:ModulesViewModel/>
     </UserControl.DataContext>
 
-    <Grid>
+    <Grid Margin="20,0,20,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBox Height="35" Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" Margin="20,10,30,0"/>
-
-        <!-- Results List with ScrollViewer          <Button Grid.Column="1" Grid.Row="1" x:Name="adminEditButton" Content = "Rediger" Height="20"  Width="50" Click="AdminEditButton_Click"/>
- -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <ListBox ItemsSource="{Binding ModulesCollectionView, UpdateSourceTrigger=PropertyChanged}"
-                     SelectedItem="{Binding SelectedModule, UpdateSourceTrigger=PropertyChanged}"
-                     HorizontalAlignment="Stretch"
-                     Margin="20,10,30,0">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Margin="5" Orientation="Vertical">
-                            <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" />
-                            <TextBlock Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" FontStyle="Italic" FontSize="12" />
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Nummer: " FontSize="12" />
-                                <TextBlock Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}" FontSize="12" />
+        <!-- Søgefunktion -->
+        <GroupBox Grid.Row="0" VerticalAlignment="Top" Header="Søg" FontWeight="Light" Foreground="#272537" Margin="0,0,0,10">
+            <TextBox Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"
+                     Background="Transparent"
+                     BorderThickness="0"/>
+        </GroupBox>
+        
+        <!-- Moduler -->        
+        <GroupBox Grid.Row="1" Header="Moduler" FontWeight="Light" Foreground="#272537">
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <ListBox ItemsSource="{Binding ModulesCollectionView, UpdateSourceTrigger=PropertyChanged}"
+                         SelectedItem="{Binding SelectedModule, UpdateSourceTrigger=PropertyChanged}"
+                         HorizontalAlignment="Stretch"
+                         Background="Transparent"
+                         BorderThickness="0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="5" Orientation="Vertical">
+                                <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" />
+                                <TextBlock Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" FontStyle="Italic" FontSize="12" />
                             </StackPanel>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </ScrollViewer>
-
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+        </GroupBox>
     </Grid>
 </UserControl>

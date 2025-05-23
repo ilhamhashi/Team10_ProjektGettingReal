@@ -5,64 +5,57 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DATApp.MVVM.View.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800">
-   
+             d:DesignHeight="600" d:DesignWidth="250">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
+        <GroupBox Header="Menu">
+            <StackPanel>
+            <RadioButton Content="Forside"
+                         Height="50"
+                         Foreground="Black"
+                         FontSize="14"
+                         Style="{StaticResource MenuButtonTheme}"
+                         IsChecked="True"
+                         Command="{Binding HomeViewCommand}"/>
 
-        <Menu Background="LightBlue">
-            <Menu.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel Orientation="Vertical"/>
-                </ItemsPanelTemplate>
-            </Menu.ItemsPanel>
-            
-            <MenuItem Header="Forside"
-            Height="50"
-            Foreground="Black"
-            FontSize="14"
-            Margin="0,0,15,0"
-            Command="{Binding HomeViewCommand}"/>
+                <RadioButton Content="Færdigheder"
+                         Height="50"
+                         Foreground="Black"
+                         FontSize="14"
+                         Style="{StaticResource MenuButtonTheme}"
+                         Command="{Binding SkillsViewCommand}"/>
 
-            <MenuItem Header="Færdigheder"
-            Height="50"
-            Foreground="Black"
-            FontSize="14"
-            BorderThickness="0"
-            Margin="0,0,15,0"
-            Command="{Binding SkillsViewCommand}"/>
+                <RadioButton Content="Moduler"
+                         Height="50"
+                         Foreground="Black"
+                         FontSize="14"
+                         Style="{StaticResource MenuButtonTheme}"
+                         Command="{Binding ModulesViewCommand}" />
 
-            <MenuItem Header="Moduler"
-            Height="50"
-            Foreground="Black"
-            FontSize="14"
-            BorderThickness="0"
-            Margin="0,0,15,0"
-            Command="{Binding ModulesViewCommand}" />
+                <RadioButton Content="Administrer Brugere"
+                         Height="50"
+                         Foreground="Black"
+                         FontSize="14"
+                         Style="{StaticResource MenuButtonTheme}"
+                         Command="{Binding UsersViewCommand}"/>
 
-            <MenuItem Header="{Binding CurrentUser.Name, UpdateSourceTrigger=PropertyChanged}"
-                      Height="50"
-                      Foreground="Black"
-                      FontSize="14"
-                      BorderThickness="0">
-                <MenuItem Header="Administrer brugere"
-                          Background="LightBlue"
-                          BorderThickness="0"                          
-                          Command="{Binding UsersViewCommand}"/>
-                <MenuItem Header="Vis alle noter"
-                          Background="LightBlue"  
-                          BorderThickness="0"
-                          Command="{Binding NotesViewCommand}"/>
-                <MenuItem Header="Log ud"
-                          Background="LightBlue"
-                          BorderThickness="0"
-                          Command="{Binding LogoutViewCommand}"/>
-            </MenuItem>
-            
-        </Menu>
+                <RadioButton Content="Se Noter"
+                         Height="50"
+                         Foreground="Black"
+                         FontSize="14"
+                         Style="{StaticResource MenuButtonTheme}"
+                         Command="{Binding NotesViewCommand}"/>
+
+                <RadioButton Content="Log ud"
+                         Height="50"
+                         Foreground="Black"
+                         FontSize="14"
+                         Style="{StaticResource MenuButtonTheme}"
+                         Command="{Binding LogoutViewCommand}"/>
+            </StackPanel>
+        </GroupBox>
     </Grid>
-
 </UserControl>

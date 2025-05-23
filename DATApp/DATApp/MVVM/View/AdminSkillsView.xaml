@@ -12,57 +12,139 @@
         <viewModel:SkillsViewModel />
     </UserControl.DataContext>
 
-    <Grid Margin="20">
+    <Grid Margin="20,0,20,20">
+
+        <!-- Definerer rækker -->
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
+        <!-- Definerer kolonner -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="70*"/>
-            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="60*"/>
+            <ColumnDefinition Width="40*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Search TextBox -->
-        <StackPanel>
-            <Button Content="Tilføj Note" Command="{Binding OpenAddNoteCommand, UpdateSourceTrigger=PropertyChanged}" Height="25" Width="100" HorizontalAlignment="Left"/>
-            <Label Content="Søg"/>
-            <TextBox Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"/>
-         </StackPanel>
+        <!-- Søgefunktion -->
+        <GroupBox Grid.Row="0" VerticalAlignment="Top" Header="Søg" FontWeight="Light" Foreground="#272537" Margin="0,0,0,10">
+            <TextBox Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"
+                     Background="Transparent"
+                     BorderThickness="0"/>
+        </GroupBox>
 
-        <!-- Results List with ScrollViewer -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <ListBox ItemsSource="{Binding SkillsCollectionView, UpdateSourceTrigger=PropertyChanged}"
-                     SelectedItem="{Binding SelectedSkill, UpdateSourceTrigger=PropertyChanged}"
-                     HorizontalAlignment="Stretch"
-                     Margin="20,10,30,0">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Margin="5" Orientation="Vertical">
-                            <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" />
-                            <TextBlock Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" FontStyle="Italic" FontSize="12" />
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Number: " FontSize="12" />
-                                <TextBlock Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}" FontSize="12" />
+        <!-- Liste over Færdigheder -->
+        <GroupBox Grid.Row="1" Header="Færdigheder" FontWeight="Light" Foreground="#272537">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ListBox ItemsSource="{Binding SkillsCollectionView, UpdateSourceTrigger=PropertyChanged}"
+                         SelectedItem="{Binding SelectedSkill, UpdateSourceTrigger=PropertyChanged}"
+                         HorizontalAlignment="Stretch"
+                         Background="Transparent"
+                         BorderThickness="0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" />
+                                <TextBlock Text="{Binding Purpose, UpdateSourceTrigger=PropertyChanged}" FontSize="12" />
+                                <TextBlock Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" FontSize="12" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Module: " FontSize="12" />
+                                    <TextBlock Text="{Binding Module.Name, UpdateSourceTrigger=PropertyChanged}" FontSize="12" />
+                                </StackPanel>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Module: " FontSize="12" />
-                                <TextBlock Text="{Binding Module.Name, UpdateSourceTrigger=PropertyChanged}" FontSize="12" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Level: " FontSize="12" />
-                                <TextBlock Text="{Binding Level, UpdateSourceTrigger=PropertyChanged}" FontSize="12" />
-                            </StackPanel>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </ScrollViewer>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+        </GroupBox>
+        <StackPanel  Grid.Row="1" Grid.Column="1">
 
-        <controls:AdminEditSkillPanel
-            Grid.RowSpan="2"
-            Grid.Column="1"/>
+            <!-- Rediger valgt færdighed -->
+            <GroupBox  Grid.Row="1" Grid.Column="1"
+                   Header="Rediger oplysninger" 
+                  FontWeight="Light" 
+                  Foreground="#272537"
+                  Margin="2,2,2,2"
+                   VerticalAlignment="Top">
+                <StackPanel>
+                    <GroupBox Header="Navn">
+                        <TextBox
+                         Text = "{Binding SelectedSkill.Name, UpdateSourceTrigger=PropertyChanged}" 
+                         Background="Transparent" 
+                         BorderThickness="0"/>
+                    </GroupBox>
 
-        
+                    <GroupBox Header="Formål">
+                        <TextBox 
+                         Text = "{Binding SelectedSkill.Purpose, UpdateSourceTrigger=PropertyChanged}"
+                         Background="Transparent" 
+                         BorderThickness="0"/>
+                    </GroupBox>
+
+                    <GroupBox Header="Beskrivelse">
+                        <TextBox 
+                         Text = "{Binding SelectedSkill.Description, UpdateSourceTrigger=PropertyChanged}"
+                         Background="Transparent" 
+                         BorderThickness="0"/>
+                    </GroupBox>
+
+                    <GroupBox Header="Modul">
+                        <ComboBox SelectedItem="{Binding SelectedSkill.Module}"
+                                  ItemsSource="{Binding Path=ModulesCollectionView, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" 
+                                  Margin="0,5,0,10" />
+                    </GroupBox>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="Opdater" 
+                            Command="{Binding SaveSkillCommand, UpdateSourceTrigger=PropertyChanged}"
+                                Margin="0,0,20,0"
+                            Width="70"/>
+                        <Button Content="Slet" 
+                            Command="{Binding DeleteSkillCommand, UpdateSourceTrigger=PropertyChanged}" 
+                            Width="70"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Tilføj ny færdighed -->
+            <GroupBox  Grid.Row="1" Grid.Column="1"
+                   Header="Tilføj ny færdighed" 
+                      FontWeight="Light" 
+                      Foreground="#272537"
+                      Margin="2,2,2,2"
+                   VerticalAlignment="Bottom">
+                <StackPanel>
+                    <GroupBox Header="Navn">
+                        <TextBox Text = "{Binding Name, UpdateSourceTrigger=PropertyChanged}" 
+                         Background="Transparent" 
+                         BorderThickness="0"/>
+                    </GroupBox>
+
+                    <GroupBox Header="Formål">
+                        <TextBox Text = "{Binding Purpose, UpdateSourceTrigger=PropertyChanged}" 
+                         Background="Transparent" 
+                         BorderThickness="0"/>
+                    </GroupBox>
+
+                    <GroupBox Header="Beskrivelse">
+                        <TextBox Text = "{Binding Description, UpdateSourceTrigger=PropertyChanged}" 
+                         Background="Transparent" 
+                         BorderThickness="0"/>
+                    </GroupBox>
+
+                    <GroupBox Header="Modul">
+                        <ComboBox SelectedItem="{Binding Module}"
+                              ItemsSource="{Binding Path=ModulesCollectionView, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" 
+                              Margin="0,5,0,10" />
+                    </GroupBox>
+
+                    <Button Content="Tilføj Færdighed"
+                        Background="Transparent"
+                        Width="110"
+                        Command="{Binding AddSkillCommand, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
     </Grid>
 </UserControl>

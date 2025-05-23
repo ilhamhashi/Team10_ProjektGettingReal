@@ -12,45 +12,56 @@
         <viewModel:SkillsViewModel />
     </UserControl.DataContext>
 
-    <Grid Margin="20">
+    <Grid Margin="20,0,20,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="50"/>
             <RowDefinition/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
-        <!-- Results List with ScrollViewer -->
-        <StackPanel Grid.Row="0" VerticalAlignment="Bottom" Margin="0,0,0,15">
-            <Button Content="Tilføj Note" Command="{Binding OpenAddNoteCommand, UpdateSourceTrigger=PropertyChanged}" Height="25" Width="100" HorizontalAlignment="Left"/>
-            <Label Content="Søg"/>
-            <TextBox Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"/>
-        </StackPanel>
+        <!-- Søgefunktion -->
+        <GroupBox Grid.Row="0" VerticalAlignment="Top" Header="Søg" FontWeight="Light" Foreground="#272537" Margin="0,0,0,10">
+            <TextBox Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"
+                         Background="Transparent"
+                         BorderThickness="0"/>
+        </GroupBox>
 
+        <!-- Liste med færdigheder -->
+        <GroupBox Grid.Row="1" Header="Færdigheder" FontWeight="Light" Foreground="#272537">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ListBox ItemsSource="{Binding SkillsCollectionView, UpdateSourceTrigger=PropertyChanged}"
+                         SelectedItem="{Binding SelectedSkill, UpdateSourceTrigger=PropertyChanged}"
+                         HorizontalAlignment="Stretch"
+                         Background="Transparent"
+                         BorderThickness="0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="5" Orientation="Vertical">
+                                <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Formål: " FontSize="12" />
+                                    <TextBlock Text="{Binding Purpose, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Beskrivelse: " FontSize="12" />
+                                    <TextBlock Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Modul: " FontSize="12" />
+                                    <TextBlock Text="{Binding Module.Name, UpdateSourceTrigger=PropertyChanged}" FontSize="12" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+        </GroupBox>
 
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <ListBox ItemsSource="{Binding SkillsCollectionView, UpdateSourceTrigger=PropertyChanged}"
-                     SelectedItem="{Binding SelectedSkill, UpdateSourceTrigger=PropertyChanged}"
-                     HorizontalAlignment="Stretch">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Margin="5" Orientation="Vertical">
-                            <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" />
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Formål: " FontSize="12" />
-                                <TextBlock Text="{Binding Purpose, UpdateSourceTrigger=PropertyChanged}" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Beskrivelse: " FontSize="12" />
-                                <TextBlock Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Modul: " FontSize="12" />
-                                <TextBlock Text="{Binding Module.Name, UpdateSourceTrigger=PropertyChanged}" FontSize="12" />
-                            </StackPanel>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </ScrollViewer>
+        <!-- Tilføj en note knap -->
+        <GroupBox Grid.Row="2" Header="Skriv en note - Du skal være logget ind" FontWeight="Light" Foreground="#272537">
+            <Button Background="Transparent" BorderThickness="0" BorderBrush="Transparent"
+                    Command="{Binding OpenAddNoteCommand, UpdateSourceTrigger=PropertyChanged}" Height="25" Width="100" HorizontalAlignment="Left"/>
 
+        </GroupBox>
     </Grid>
 </UserControl>

@@ -6,10 +6,8 @@
              xmlns:local="clr-namespace:DATApp.MVVM.View"
              xmlns:viewmodel="clr-namespace:DATApp.MVVM.ViewModel"
              xmlns:controls="clr-namespace:DATApp.MVVM.View.Controls"
-
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="600"
-             Background="AliceBlue">
+             d:DesignHeight="300" d:DesignWidth="600">
 
     <UserControl.DataContext>
         <viewmodel:UsersViewModel />

@@ -5,49 +5,44 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DATApp.MVVM.View.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="250">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150" />
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        
-        <Menu Background="LightBlue">
-            <Menu.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel Orientation="Vertical"/>
-                </ItemsPanelTemplate>
-            </Menu.ItemsPanel>
-            <MenuItem Header="Forside"
-            Height="50"
-            Foreground="Black"
-            FontSize="14"
-            Margin="0,0,15,0"
-            Command="{Binding HomeViewCommand}"/>
+        <GroupBox Header="Menu">
+            <StackPanel>
 
-            <MenuItem Header="Færdigheder"
-            Height="50"
-            Foreground="Black"
-            FontSize="14"
-            BorderThickness="0"
-            Margin="0,0,15,0"
-            Command="{Binding SkillsViewCommand}"/>
+                <RadioButton Content="Forside"
+                         Height="50"
+                         Foreground="Black"
+                         FontSize="14"
+                         Style="{StaticResource MenuButtonTheme}"
+                         IsChecked="True"
+                         Command="{Binding HomeViewCommand}"/>
 
-            <MenuItem Header="Moduler"
-            Height="50"
-            Foreground="Black"
-            FontSize="14"
-            BorderThickness="0"
-            Margin="0,0,15,0"
-            Command="{Binding ModulesViewCommand}" />
+                <RadioButton Content="Færdigheder"
+                         Height="50"
+                         Foreground="Black"
+                         FontSize="14"
+                         Style="{StaticResource MenuButtonTheme}"
+                         Command="{Binding SkillsViewCommand}"/>
 
-            <MenuItem Header="Log ind"
-                      Foreground="Black"
-                      FontSize="14"
-                      Height="50"
-                      Command="{Binding LoginViewCommand}"/>
+                <RadioButton Content="Moduler"
+                         Height="50"
+                         Foreground="black"
+                         FontSize="14"
+                         Style="{StaticResource MenuButtonTheme}"
+                         Command="{Binding ModulesViewCommand}" />
 
-        </Menu>
+                <RadioButton Content="Log ind"
+                         Height="50"
+                         Foreground="Black"
+                         FontSize="14"
+                         Style="{StaticResource MenuButtonTheme}"
+                         Command="{Binding LoginViewCommand}"/>
+            </StackPanel>
+        </GroupBox>
     </Grid>
-
 </UserControl>
