@@ -10,7 +10,7 @@ namespace DATApp.MVVM.Model.Repositories
     public interface INoteRepository
     {
         IEnumerable<Note> GetAll();
-        Note GetNote(string number);
+        Note GetNote(int number);
         void Add(Note note);
         void Update(Note note);
         void Delete(Note note);

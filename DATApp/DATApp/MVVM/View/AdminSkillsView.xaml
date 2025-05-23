@@ -33,7 +33,7 @@
                      BorderThickness="0"/>
         </GroupBox>
 
-        <!-- Liste over Færdigheder -->
+        <!-- Liste over færdigheder -->
         <GroupBox Grid.Row="1" Header="Færdigheder" FontWeight="Light" Foreground="#272537">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ListBox ItemsSource="{Binding SkillsCollectionView, UpdateSourceTrigger=PropertyChanged}"
@@ -43,12 +43,18 @@
                          BorderThickness="0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Margin="5">
+                            <StackPanel Margin="5" Orientation="Vertical">
                                 <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" />
-                                <TextBlock Text="{Binding Purpose, UpdateSourceTrigger=PropertyChanged}" FontSize="12" />
-                                <TextBlock Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" FontSize="12" />
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Module: " FontSize="12" />
+                                    <TextBlock Text="Formål: " FontSize="12" />
+                                    <TextBlock Text="{Binding Purpose, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Beskrivelse: " FontSize="12" />
+                                    <TextBlock Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Modul: " FontSize="12" />
                                     <TextBlock Text="{Binding Module.Name, UpdateSourceTrigger=PropertyChanged}" FontSize="12" />
                                 </StackPanel>
                             </StackPanel>
@@ -90,7 +96,8 @@
 
                     <GroupBox Header="Modul">
                         <ComboBox SelectedItem="{Binding SelectedSkill.Module}"
-                                  ItemsSource="{Binding Path=ModulesCollectionView, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" 
+                                  ItemsSource="{Binding Path=ModulesCollectionView, UpdateSourceTrigger=PropertyChanged}" 
+                                  DisplayMemberPath="Name" 
                                   Margin="0,5,0,10" />
                     </GroupBox>
 

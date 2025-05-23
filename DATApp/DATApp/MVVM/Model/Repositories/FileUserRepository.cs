@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using DATApp.MVVM.Model.Classes;
+using DATApp.MVVM.View;
 
 namespace DATApp.MVVM.Model.Repositories
 {
@@ -13,6 +14,10 @@ namespace DATApp.MVVM.Model.Repositories
             if (!File.Exists(_userFilePath))
             {
                 File.Create(_userFilePath).Close();
+                //Load default Users if list is not created
+                User admin = new User { Name = "Shahram Wessberg", Email = "datlinien@info.dk", Password = "Admin", IsAdmin = true };
+                User client = new User { Name = "Hanne Nielsen", Email = "hanne@nielsen.dk", Password = "hannenielsen", IsAdmin = false };
+                AddUser(admin); AddUser(client);
             }
         }
 

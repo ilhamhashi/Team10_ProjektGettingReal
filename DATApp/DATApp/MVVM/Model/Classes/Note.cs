@@ -3,7 +3,7 @@
 
     public class Note
     {
-        public string Number { get; set; }
+        public int Number { get; set; }
         public string Content { get; set; }
         public DateTime DateTime { get; set; }
         public User Client { get; set; }
@@ -19,17 +19,17 @@
             var parts = input.Split(',');
             var note = new Note
             {
-                Number = parts[0],
+                Number = int.Parse(parts[0]),
                 Content = parts[1],
                 DateTime = DateTime.Parse(parts[2]),
                 Client = new User { Name = parts[3], Email = parts[4], Password = parts[5], IsAdmin = bool.Parse(parts[6]) },
                 Skill = new Skill
                 {
-                    Number = parts[7],
+                    Number = int.Parse(parts[7]),
                     Name = parts[8],
                     Purpose = parts[9],
                     Description = parts[10],
-                    Module = new Module { Number = parts[11], Name = parts[12], Description = parts[13] }
+                    Module = new Module { Number = int.Parse(parts[11]), Name = parts[12], Description = parts[13] }
                 }
             };
 

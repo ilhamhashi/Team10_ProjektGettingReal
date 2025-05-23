@@ -47,8 +47,6 @@ namespace DATApp.Tests
             viewModelTests.Name = "MyName";
             viewModelTests.Description = "MyDescription";
             viewModelTests.Module = new Module { Number = 1, Name = "ModuleName", Description = "ModuleDescription"};
-            viewModelTests.Level = Level.Low;
-            viewModelTests.EmotionMatch = "Skyld";
 
             // Act Kalder AddSkillCommand fra SkillsViewModel
             viewModelTests.AddSkillCommand.CanExecute(null);
@@ -63,9 +61,6 @@ namespace DATApp.Tests
             Assert.AreEqual(1, skillRepositoryTest.GetAll().ToList()[0].Module.Number);
             Assert.AreEqual("ModuleName", skillRepositoryTest.GetAll().ToList()[0].Module.Name);
             Assert.AreEqual("ModuleDescription", skillRepositoryTest.GetAll().ToList()[0].Module.Description);
-            Assert.AreEqual(Level.Low, skillRepositoryTest.GetAll().ToList()[0].Level);
-            Assert.AreEqual("Skyld", skillRepositoryTest.GetAll().ToList()[0].EmotionMatch);
-
         }
 
         public void AddModuleCommand_ShouldAddModuleToRepositoryAndList()
@@ -99,10 +94,10 @@ namespace DATApp.Tests
 
             // Arrange: Tildeler properties værdier
             viewModelTests.Number = 1;
-            viewModelTests.Name = "MyName";
             viewModelTests.Content = "MyContent";
+            viewModelTests.DateTime = DateTime.Today;
             viewModelTests.Client = new User { Name = "MyName", Email = "MyEmail", Password = "MyPassword", IsAdmin = false };
-            viewModelTests.Skill = new Skill { Number = 1, Name = "SkillName", Description = "SkillDescription", Module = new Module(), Level = Level.High, EmotionMatch = "Vrede" };
+            viewModelTests.Skill = new Skill { Number = 1, Name = "SkillName", Description = "SkillDescription", Module = new Module()};
 
             // Act Kalder AddNoteCommand fra NotesViewModel
             viewModelTests.AddNoteCommand.CanExecute(null);
@@ -112,7 +107,6 @@ namespace DATApp.Tests
             Assert.AreEqual(1, noteRepositoryTest.GetAll().ToList().Count);
             Assert.AreEqual(1, viewModelTests.Notes.Count);
             Assert.AreEqual(1, noteRepositoryTest.GetAll().ToList()[0].Number);
-            Assert.AreEqual("MyName", noteRepositoryTest.GetAll().ToList()[0].Name);
             Assert.AreEqual("MyContent", noteRepositoryTest.GetAll().ToList()[0].Content);
             Assert.AreEqual("MyName", noteRepositoryTest.GetAll().ToList()[0].Client.Name);
             Assert.AreEqual("MyEmail", noteRepositoryTest.GetAll().ToList()[0].Client.Email);
@@ -122,8 +116,6 @@ namespace DATApp.Tests
             Assert.AreEqual("SkillName", noteRepositoryTest.GetAll().ToList()[0].Skill.Name);
             Assert.AreEqual("SkillDescription", noteRepositoryTest.GetAll().ToList()[0].Skill.Description);
             Assert.AreEqual(null, noteRepositoryTest.GetAll().ToList()[0].Skill.Module);
-            Assert.AreEqual(Level.High, noteRepositoryTest.GetAll().ToList()[0].Skill.Level);
-            Assert.AreEqual("Vrede", noteRepositoryTest.GetAll().ToList()[0].Skill.EmotionMatch);
 
         }
     }

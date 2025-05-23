@@ -18,8 +18,8 @@ namespace DATApp.MVVM.ViewModel
         public ICollectionView ModulesCollectionView { get; }
         public static ICollectionView SkillsCollectionView { get; set; }
 
-        private string _number;
-        public string Number
+        private int _number;
+        public int Number
         {
             get => _number;
             set { _number = value; OnPropertyChanged(); }
@@ -86,10 +86,10 @@ namespace DATApp.MVVM.ViewModel
 
             ModulesCollectionView = ModulesViewModel.ModulesCollectionView;
 
-            OpenAddNoteCommand = new RelayCommandUser(OpenAddNote, CanOpenAddNote);
-            AddSkillCommand = new RelayCommandUser(AddSkill, CanAddSkill);
-            SaveSkillCommand = new RelayCommandUser(SaveSkill, CanSaveSkill);
-            DeleteSkillCommand = new RelayCommandUser(DeleteSkill, CanDeleteSkill);
+            OpenAddNoteCommand = new RelayCommand(_ => OpenAddNote(), _=> CanOpenAddNote());
+            AddSkillCommand = new RelayCommand(_ => AddSkill(), _ => CanAddSkill());
+            SaveSkillCommand = new RelayCommand(_ => SaveSkill(), _ => CanSaveSkill());
+            DeleteSkillCommand = new RelayCommand(_ => DeleteSkill(), _ => CanDeleteSkill());
         }
 
 
@@ -140,8 +140,8 @@ namespace DATApp.MVVM.ViewModel
         {
             if (obj is Skill skill)
             {
-                return skill.Name.Equals(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
-                    skill.Purpose.Equals(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
+                return skill.Name.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
+                    skill.Purpose.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
                     skill.Description.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
                     skill.Module.Name.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase) ||
                     skill.Module.Description.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase);

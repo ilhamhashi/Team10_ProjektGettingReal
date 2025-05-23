@@ -6,6 +6,7 @@ namespace DATApp.MVVM.Model.Repositories
     public class FileMatchRepository : IMatchRepository
     {
         private readonly string _matchFilePath;
+        int counter = 1;
 
         public FileMatchRepository(string filePath)
         {
@@ -14,15 +15,25 @@ namespace DATApp.MVVM.Model.Repositories
             if (!File.Exists(_matchFilePath))
             {
                 File.Create(_matchFilePath).Close();
+                //Load default Matches if list is not created
+                Module module1 = new Classes.Module { Number = FileModuleRepository.counter, Name = "Færdighed i følelsesregulering", Description = "Forstå og håndter intense følelser på en mere balanceret måde." };
+                Module module2 = new Module { Number = counter, Name = "Hold-ud færdigheder", Description = "Håndter akutte følelsesmæssige kriser uden at ty til uhensigtsmæssig adfærd." };
+                Skill skill1 = new Skill { Number = counter, Name = "Handle Modsat Følelsen", Purpose = "Ændre følelsesmæssige reaktioner", Description = "Alle følelser har en handling der er forbundet med følelsen", Module = module1 };
+                Skill skill2 = new Skill { Number = counter, Name = "STOP!", Purpose = "Overleve krisesituationer uden at gøre dem værre.", Description = "At udholde og komme igennem kriser.", Module = module2 };
+                var match1 = new Model.Classes.Match { Number = counter, Skill = skill1, Emotion = "Angst", Level = "Gul" };
+                var match2 = new Model.Classes.Match { Number = counter, Skill = skill2, Emotion = "Vrede", Level = "Rød" };
+                AddMatch(match1);AddMatch(match2);
+                
             }
         }
 
         public void AddMatch(Match match)
         {
-            match.Number = Guid.NewGuid().ToString();
+            match.Number = counter;
             try
             {
                 File.AppendAllText(_matchFilePath, match.ToString() + Environment.NewLine);
+                counter++;
             }
             catch (Exception ex)
             {
@@ -53,12 +64,10 @@ namespace DATApp.MVVM.Model.Repositories
             }
         }
 
-        public Match GetMatch(string number)
+        public Match GetMatch(int number)
         {
             return GetAll().FirstOrDefault(m => m.Number == number);
         }
-
-
 
         public void UpdateMatch(Match match)
         {

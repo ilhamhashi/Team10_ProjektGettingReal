@@ -7,6 +7,7 @@ namespace DATApp.MVVM.Model.Repositories
     public class FileModuleRepository : IModuleRepository
     {
         private readonly string _moduleFilePath;
+        public static int counter = 1;
 
         public FileModuleRepository(string filePath)
         {
@@ -14,16 +15,21 @@ namespace DATApp.MVVM.Model.Repositories
             if (!File.Exists(_moduleFilePath))
             {
                 File.Create(_moduleFilePath).Close();
+                //Load default Modules if list is not created
+                Module module1 = new Module { Number = counter, Name = "Færdighed i følelsesregulering", Description = "Forstå og håndter intense følelser på en mere balanceret måde." };
+                Module module2 = new Module { Number = counter, Name = "Hold-ud færdigheder", Description = "Håndter akutte følelsesmæssige kriser uden at ty til uhensigtsmæssig adfærd." };
+                AddModule(module1); AddModule(module2);
             }
         }
 
         public void AddModule(Module module)
         {
-            module.Number = Guid.NewGuid().ToString();
+            module.Number = counter;
 
             try
             {
                 File.AppendAllText(_moduleFilePath, module.ToString() + Environment.NewLine);
+                counter++;
             }
             catch (Exception ex)
             {
@@ -54,7 +60,7 @@ namespace DATApp.MVVM.Model.Repositories
             }
         }
 
-        public Module GetModule(string number)
+        public Module GetModule(int number)
         {
             return GetAll().FirstOrDefault(m => m.Number == number);
         }

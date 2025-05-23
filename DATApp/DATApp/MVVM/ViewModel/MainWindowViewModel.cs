@@ -73,11 +73,7 @@ namespace DATApp.MVVM.ViewModel
             CurrentUser = new User();
 
             CurrentMenuView = BaseMenuView;
-
-            if (CurrentUser == null || CurrentUser.IsAdmin == false)
-                CurrentView = MatchesVM;
-            else
-                CurrentView = AdminMatchVM;
+            CurrentView = MatchesVM;
 
             HomeViewCommand = new RelayCommand(o =>
             {
@@ -140,7 +136,7 @@ namespace DATApp.MVVM.ViewModel
                 else if (CurrentUser.IsAdmin)
                 {
                     CurrentMenuView = AdminMenuView;
-                    CurrentView = MatchesVM;
+                    CurrentView = AdminMatchVM;
                 }
                 else if (CurrentUser.IsAdmin == false)
                 {

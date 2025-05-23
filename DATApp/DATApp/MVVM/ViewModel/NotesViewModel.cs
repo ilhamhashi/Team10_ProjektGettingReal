@@ -14,8 +14,8 @@ namespace DATApp.MVVM.ViewModel
         private readonly INoteRepository noteRepository = new FileNoteRepository("notes.txt");
         public ObservableCollection<Note> Notes;
 
-        private string _number;
-        public string Number
+        private int _number;
+        public int Number
         {
             get => _number;
             set { _number = value; OnPropertyChanged(); }
@@ -34,6 +34,15 @@ namespace DATApp.MVVM.ViewModel
             get => _content;
             set { _content = value; OnPropertyChanged(); }
         }
+
+        private User _client;
+
+        public User Client
+        {
+            get { return _client; }
+            set { _client = value; }
+        }
+
 
         private Skill _skill;
         public Skill Skill
@@ -56,8 +65,9 @@ namespace DATApp.MVVM.ViewModel
         public ICollectionView SkillsCollectionView { get; }
 
         private bool CanAddNote() => !string.IsNullOrWhiteSpace(Content) && Skill != null;
-        private bool CanSaveNote() => SelectedNote != null && MainWindowViewModel.CurrentUser.Email == SelectedNote.Client.Email;
-        private bool CanDeleteNote() => SelectedNote != null && MainWindowViewModel.CurrentUser.Email == SelectedNote.Client.Email;
+
+        private bool CanSaveNote() => SelectedNote != null && MainWindowViewModel.CurrentUser?.Email == SelectedNote.Client.Email;
+        private bool CanDeleteNote() => SelectedNote != null && MainWindowViewModel.CurrentUser?.Email == SelectedNote.Client.Email;
 
         public NotesViewModel()
         {

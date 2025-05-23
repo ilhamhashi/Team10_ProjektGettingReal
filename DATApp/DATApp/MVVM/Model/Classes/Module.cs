@@ -2,7 +2,7 @@
 {
     public class Module
     {
-        public string Number { get; set; }
+        public int Number { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 
@@ -16,7 +16,7 @@
             string[] parts = input.Split(','); // Opdeler strengen baseret på kommategn
             return new Module
             {
-                Number = parts[0],
+                Number = int.Parse(parts[0]),
                 Name = parts[1],
                 Description = parts[2]
             };

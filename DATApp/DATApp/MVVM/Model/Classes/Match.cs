@@ -2,7 +2,7 @@
 {
     public class Match
     {
-        public string Number { get; set; }
+        public int Number { get; set; }
         public Skill Skill { get; set; }
         public string Emotion { get; set; }
         public string Level { get; set; }
@@ -17,14 +17,14 @@
             string[] parts = input.Split(','); // Opdeler strengen baseret på kommategn
             var match = new Match
             {
-                Number = parts[0],
+                Number = int.Parse(parts[0]),
                 Skill = new Skill
                 {
-                    Number = parts[1],
+                    Number = int.Parse(parts[1]),
                     Name = parts[2],
                     Purpose = parts[3],
                     Description = parts[4],
-                    Module = new Module { Number = parts[5], Name = parts[6], Description = parts[7] }
+                    Module = new Module { Number = int.Parse(parts[5]), Name = parts[6], Description = parts[7] }
                 },
                 Emotion = parts[8],
                 Level = parts[9]

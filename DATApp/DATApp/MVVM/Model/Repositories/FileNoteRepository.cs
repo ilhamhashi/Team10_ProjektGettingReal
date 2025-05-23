@@ -9,6 +9,7 @@ namespace DATApp.MVVM.Model.Repositories
     internal class FileNoteRepository : INoteRepository
     {
         private readonly string _noteFilePath;
+        int counter = 1;
 
         public FileNoteRepository(string filePath)
         {
@@ -23,13 +24,14 @@ namespace DATApp.MVVM.Model.Repositories
         public void Add(Note note)
         {
             var notes = GetAll().ToList();
-            note.Number = Guid.NewGuid().ToString();
+            note.Number = counter;
             note.Client = MainWindowViewModel.CurrentUser;
             note.DateTime = DateTime.Now;
             notes.Add(note);
             try
             {
                 File.AppendAllText(_noteFilePath, note.ToString() + Environment.NewLine);
+                counter++;
             }
             catch (Exception ex)
             {
@@ -65,7 +67,7 @@ namespace DATApp.MVVM.Model.Repositories
             }
         }
 
-        public Note GetNote(string number)
+        public Note GetNote(int number)
         {
             return GetAll().FirstOrDefault(n => n.Number == number);
         }

@@ -24,8 +24,8 @@ namespace DATApp.MVVM.ViewModel
         public ICommand DeleteMatchCommand { get; }
         public ICommand AddMatchToSkillCommand { get; }
 
-        private string _number;
-        public string Number
+        private int _number;
+        public int Number
         {
             get => _number;
             set { _number = value; OnPropertyChanged(); }
@@ -118,9 +118,9 @@ namespace DATApp.MVVM.ViewModel
 
             SkillsCollectionView = SkillsViewModel.SkillsCollectionView;
 
-            AddMatchToSkillCommand = new RelayCommandUser(AddMatchToSkill, CanAddMatchToSkill);
-            SaveMatchCommand = new RelayCommandUser(SaveMatch, CanSaveMatch);
-            DeleteMatchCommand = new RelayCommandUser(DeleteMatch, CanDeleteMatch);
+            AddMatchToSkillCommand = new RelayCommand(_ => AddMatchToSkill(), _ =>CanAddMatchToSkill());
+            SaveMatchCommand = new RelayCommand(_ => SaveMatch(), _=> CanSaveMatch());
+            DeleteMatchCommand = new RelayCommand(_ => DeleteMatch(), _ => CanDeleteMatch());
         }
         private void AddMatchToSkill()
         {

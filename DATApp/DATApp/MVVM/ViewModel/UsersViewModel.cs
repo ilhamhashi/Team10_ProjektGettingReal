@@ -15,7 +15,7 @@ namespace DATApp.MVVM.ViewModel
     public class UsersViewModel : ViewModelBase
     {
         private readonly IUserRepository userRepository = new FileUserRepository("users.txt");
-        private ObservableCollection<User> Users { get; }
+        public ObservableCollection<User> Users { get; }
         public ICollectionView UsersCollectionView { get; }
 
         private string name;
@@ -75,10 +75,10 @@ namespace DATApp.MVVM.ViewModel
             UsersCollectionView = CollectionViewSource.GetDefaultView(Users);
             UsersCollectionView.Filter = UsersFilter;
 
-            AddUserCommand = new RelayCommandUser(AddUser, CanAddUser);
-            SaveUserCommand = new RelayCommandUser(SaveUser, CanSaveUser);
-            ValidateUserLoginCommand = new RelayCommandUser(ValidateUserLogin, CanLoginUser);
-            DeleteUserCommand = new RelayCommandUser(DeleteUser, CanDeleteUser);
+            AddUserCommand = new RelayCommand(_ => AddUser(), _ => CanAddUser());
+            SaveUserCommand = new RelayCommand(_ => SaveUser(), _ => CanSaveUser());
+            ValidateUserLoginCommand = new RelayCommand(_ => ValidateUserLogin(), _ =>CanLoginUser());
+            DeleteUserCommand = new RelayCommand(_ => DeleteUser(), _ => CanDeleteUser());
 
         }
 

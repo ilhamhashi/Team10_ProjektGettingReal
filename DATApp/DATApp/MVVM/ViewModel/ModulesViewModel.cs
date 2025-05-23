@@ -14,8 +14,8 @@ namespace DATApp.MVVM.ViewModel
         private readonly FileModuleRepository moduleRepository = new FileModuleRepository("modules.txt");
         public ObservableCollection<Module> Modules;
 
-        private string number;
-        public string Number
+        private int number;
+        public int Number
         {
             get => number;
             set { number = value; OnPropertyChanged(); }
@@ -65,9 +65,9 @@ namespace DATApp.MVVM.ViewModel
             ModulesCollectionView = CollectionViewSource.GetDefaultView(Modules);
             ModulesCollectionView.Filter = ModulesFilter;
 
-            AddModuleCommand = new RelayCommandUser(AddModule, CanAddModule);
-            SaveModuleCommand = new RelayCommandUser(SaveModule, CanSaveModule);
-            DeleteModuleCommand = new RelayCommandUser(DeleteModule, CanDeleteModule);
+            AddModuleCommand = new RelayCommand(_ => AddModule(), _=> CanAddModule());
+            SaveModuleCommand = new RelayCommand(_ => SaveModule(), _=> CanSaveModule());
+            DeleteModuleCommand = new RelayCommand(_ => DeleteModule(), _=> CanDeleteModule());
         }
 
         private void AddModule()
