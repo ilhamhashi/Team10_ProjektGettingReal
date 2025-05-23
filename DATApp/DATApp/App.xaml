@@ -12,11 +12,10 @@
                 <ResourceDictionary Source="Theme/EmailTextBoxTheme.xaml"/>
                 <ResourceDictionary Source="Theme/AdgangskodeTextBoxTheme.xaml"/>
                 <ResourceDictionary Source="Theme/MenuButtonTheme.xaml"/>
-                <ResourceDictionary Source="Theme/SidePanelTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
-            <DataTemplate DataType="{x:Type viewmodel:HomeViewModel}">
-                <view:HomeView/>
+            <DataTemplate DataType="{x:Type viewmodel:MatchesViewModel}">
+                <view:MatchesView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewmodel:AdminMatchViewModel}">
@@ -39,7 +38,6 @@
                 <view:AdminModulesView/>
             </DataTemplate>
 
-
             <DataTemplate DataType="{x:Type viewmodel:AdminSkillsViewModel}">
                 <view:AdminSkillsView/>
             </DataTemplate>
@@ -51,7 +49,6 @@
             <DataTemplate DataType="{x:Type viewmodel:NotesViewModel}">
                 <view:NotesView/>
             </DataTemplate>
-
 
             <DataTemplate DataType="{x:Type controls:BaseMenuBar}">
                 <controls:BaseMenuBar/>

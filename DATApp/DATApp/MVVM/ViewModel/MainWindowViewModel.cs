@@ -41,7 +41,7 @@ namespace DATApp.MVVM.ViewModel
         public RelayCommand ClientViewCommand { get; set; }
         public RelayCommand CloseMainWindowCommand { get; set; }
 
-        public HomeViewModel HomeVM { get; set; }
+        public MatchesViewModel MatchesVM { get; set; }
         public AdminMatchViewModel AdminMatchVM { get; set; }
         public UsersViewModel UsersVM { get; set; }
         public ModulesViewModel ModulesVM { get; set; }
@@ -58,7 +58,7 @@ namespace DATApp.MVVM.ViewModel
 
         public MainWindowViewModel()
         {
-            HomeVM = new HomeViewModel();
+            MatchesVM = new MatchesViewModel();
             AdminMatchVM = new AdminMatchViewModel();
             UsersVM = new UsersViewModel();
             ModulesVM = new ModulesViewModel();
@@ -76,14 +76,14 @@ namespace DATApp.MVVM.ViewModel
             CurrentMenuView = BaseMenuView;
 
             if (CurrentUser == null || CurrentUser.IsAdmin == false)
-                CurrentView = HomeVM;
+                CurrentView = MatchesVM;
             else
                 CurrentView = AdminMatchVM;
 
             HomeViewCommand = new RelayCommand(o =>
             {
                 if (CurrentUser == null || CurrentUser.IsAdmin == false)
-                    CurrentView = HomeVM;
+                    CurrentView = MatchesVM;
                 else
                     CurrentView = AdminMatchVM;
             });
@@ -122,7 +122,7 @@ namespace DATApp.MVVM.ViewModel
             LogoutViewCommand = new RelayCommand(o =>
             {
                 CurrentUser = null;
-                CurrentView = HomeVM;
+                CurrentView = MatchesVM;
                 CurrentMenuView = BaseMenuView;
             });
 
@@ -141,12 +141,12 @@ namespace DATApp.MVVM.ViewModel
                 else if (CurrentUser.IsAdmin)
                 {
                     CurrentMenuView = AdminMenuView;
-                    CurrentView = HomeVM;
+                    CurrentView = MatchesVM;
                 }
                 else if (CurrentUser.IsAdmin == false)
                 {
                     CurrentMenuView = ClientMenuView;
-                    CurrentView = HomeVM;
+                    CurrentView = MatchesVM;
                 }                
             });
 

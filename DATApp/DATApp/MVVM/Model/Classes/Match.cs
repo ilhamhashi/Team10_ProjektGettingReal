@@ -5,7 +5,7 @@
         public string Number { get; set; }
         public Skill Skill { get; set; }
         public string Emotion { get; set; }
-        public Level Level { get; set; }
+        public string Level { get; set; }
 
         public override string ToString()
         {
@@ -27,7 +27,7 @@
                     Module = new Module { Number = parts[5], Name = parts[6], Description = parts[7] }
                 },
                 Emotion = parts[8],
-                Level = Enum.Parse<Level>(parts[9])
+                Level = parts[9]
             };
             return match;
         }

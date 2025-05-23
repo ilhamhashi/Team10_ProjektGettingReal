@@ -8,47 +8,70 @@
         xmlns:controls="clr-namespace:DATApp.MVVM.View.Controls"   
         mc:Ignorable="d"
         WindowStyle="None"
-        Height="600" Width="600"
+        Height="700" Width="1000"
         Background="Transparent">
 
     <Window.DataContext>
         <viewmodel:MainWindowViewModel />
     </Window.DataContext>
 
-    <Border Background="AliceBlue"
+    <Border Background="#E4EBF2"
         CornerRadius="20"
             BorderBrush="LightGray"
             BorderThickness="2">
 
         <Grid Margin="20,10,20,10">
+
+            <!-- Definerer rækker -->
             <Grid.RowDefinitions>
                 <RowDefinition Height="75"/>
                 <RowDefinition/>
                 <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
 
+            <!-- Definerer kolonner -->
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock
-                Text="DAT-linien.dk"
+            <TextBlock Text="DAT-linien.dk"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Left"
-                       Foreground="Black"
+                       Foreground="#272537"
                        FontSize="22" />
 
+            <!-- Skifter visning af Menu -->
             <ContentControl Grid.Row="1"
                             Content="{Binding CurrentMenuView}"/>
-
+            
+            <!-- Skifter visning af indhold -->
             <ContentControl Grid.Row="1"
                             Grid.Column="1"
                             Content="{Binding CurrentView}" />
 
-            <Button Grid.Column="1" Width="35" Height="35" x:Name = "CloseButton" Content = "X" HorizontalAlignment="Right" Command="{Binding CloseMainWindowCommand}" />
-            <Button x:Name="fortsætButton" Content = "Fortsæt" Command="{Binding MenuViewCommand}" Height="20"  Width="150" VerticalAlignment="Bottom" Margin="0,0,0,25" Visibility="Collapsed" Click="Button_Click" Grid.Row="1" Grid.Column="1"/>
-            
+            <!-- Knap lukker programmet -->
+            <Button Grid.Column="1" 
+                    Width="35" 
+                    Height="35" 
+                    x:Name = "CloseButton" 
+                    Content = "X" 
+                    HorizontalAlignment="Right" 
+                    Command="{Binding CloseMainWindowCommand}" />
+
+            <!-- Fortsæt knap vises efter gyldig login 
+            og indstiller CurrentMenuView efter login -->
+            <Button x:Name="fortsætButton" 
+                    Content = "Fortsæt" 
+                    Command="{Binding MenuViewCommand}" 
+                    Height="20"  
+                    Width="150" 
+                    VerticalAlignment="Bottom" 
+                    Margin="0,0,0,25" 
+                    Visibility="Collapsed" 
+                    Click="Button_Click" 
+                    Grid.Row="1" 
+                    Grid.Column="1"/>            
         </Grid>
     </Border>
 </Window>

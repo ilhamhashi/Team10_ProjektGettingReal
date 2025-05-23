@@ -15,10 +15,6 @@ namespace DATApp.MVVM.ViewModel
     {
         internal static FileSkillRepository skillRepository = new FileSkillRepository("skills.txt");
         public ObservableCollection<Skill> Skills;
-
-        public  ObservableCollection<Model.Classes.Match> Matches;
-        public static IEnumerable<string> Emotions { get; } = HomeViewModel.Emotions;
-        public IEnumerable<Level> Levels { get; } = HomeViewModel.Levels;
         public ICollectionView ModulesCollectionView { get; }
         public static ICollectionView SkillsCollectionView { get; set; }
 
@@ -76,74 +72,46 @@ namespace DATApp.MVVM.ViewModel
             }
         }
 
-        private string _matchNumber;
-        public string MatchNumber
-        {
-            get { return _matchNumber; }
-            set { _matchNumber = value; OnPropertyChanged(); }
-        }
-
-        private string _emotion;
-        public string Emotion
-        {
-            get { return _emotion; }
-            set { _emotion = value; OnPropertyChanged(); }
-        }
-
-
-        private Level _level;
-        public Level Level
-        {
-            get { return _level; }
-            set { _level = value; OnPropertyChanged(); }
-        }
-
-        public ICommand OpenAddSkillCommand { get; }
         public ICommand OpenAddNoteCommand { get; }
         public ICommand AddSkillCommand { get; }
         public ICommand SaveSkillCommand { get; }
         public ICommand DeleteSkillCommand { get; }
-        public ICommand AddMatchToSkillCommand { get; }
 
 
         public SkillsViewModel()
         {
             Skills = new ObservableCollection<Skill>(skillRepository.GetAll());
-            Matches = new ObservableCollection<Model.Classes.Match>(HomeViewModel.matchRepository.GetAll());
-
             SkillsCollectionView = CollectionViewSource.GetDefaultView(Skills);
             SkillsCollectionView.Filter = SkillsFilter;
 
             ModulesCollectionView = ModulesViewModel.ModulesCollectionView;
 
-
-            OpenAddSkillCommand = new RelayCommandUser(OpenAddSkill, CanOpenAddSkill);
             OpenAddNoteCommand = new RelayCommandUser(OpenAddNote, CanOpenAddNote);
             AddSkillCommand = new RelayCommandUser(AddSkill, CanAddSkill);
             SaveSkillCommand = new RelayCommandUser(SaveSkill, CanSaveSkill);
             DeleteSkillCommand = new RelayCommandUser(DeleteSkill, CanDeleteSkill);
-            AddMatchToSkillCommand = new RelayCommandUser(AddMatchToSkill, CanAddMatchToSkill);
         }
+
 
         private void AddSkill()
         {
-            var skill = new Skill { Number = _number, Name = _name, Purpose = _purpose, Description = _description, Module = _module};
+            var skill = new Skill { Number = _number, Name = _name, Purpose = _purpose, Description = _description, Module = _module };
+            if (Skills.Where(s => s.Name == skill.Name).Any())
+            {
+                MessageBox.Show($"Kunne ikke tilføjes. Færdighed eksisterer i forvejen", "Fejl", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                Skills.Add(skill);
+                skillRepository.AddSkill(skill);
+                // Simpel dialogboks som bekræftelse
+                MessageBox.Show($"Færdighed '{skill.Name}' oprettet!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            Skills.Add(skill);
-            skillRepository.AddSkill(skill);
-            // Simpel dialogboks som bekræftelse
-            MessageBox.Show($"Færdighed '{skill.Name}' oprettet!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
-
-            Name = string.Empty;
-            Purpose = string.Empty;
-            Description = string.Empty;
-            Module = null;
-        }
-
-        private void OpenAddSkill()
-        {
-            AddSkillView addSkillView = new AddSkillView();
-            addSkillView.Show();
+                Name = string.Empty;
+                Purpose = string.Empty;
+                Description = string.Empty;
+                Module = null;
+            }
         }
 
         private void OpenAddNote()
@@ -154,9 +122,17 @@ namespace DATApp.MVVM.ViewModel
 
         private void SaveSkill()
         {
-            skillRepository.UpdateSkill(SelectedSkill);
-            MessageBox.Show($"Færdighed '{SelectedSkill.Name}' Rettet!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
-            SelectedSkill = null;
+            if (Skills.Where(s => s.Name == SelectedSkill.Name).Any())
+            {
+                MessageBox.Show($"Kunne ikke gemmes. Færdighed eksisterer i forvejen", "Fejl", MessageBoxButton.OK, MessageBoxImage.Information);
+                SelectedSkill = null;
+            }
+            else
+            {
+                skillRepository.UpdateSkill(SelectedSkill);
+                MessageBox.Show($"Færdighed '{SelectedSkill.Name}' Rettet!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
+                SelectedSkill = null;
+            }
         }
 
         private void DeleteSkill()
@@ -180,23 +156,9 @@ namespace DATApp.MVVM.ViewModel
             return false;
         }
 
-        private void AddMatchToSkill()
-        {
-            var match = new Model.Classes.Match { Number = _matchNumber, Skill = _selectedSkill, Emotion = _emotion, Level = _level };
-
-            Matches.Add(match);
-            HomeViewModel.matchRepository.AddMatch(match);
-
-            // Simpel dialogboks som bekræftelse
-            MessageBox.Show($"Match tilknyttet {match.Skill.Name}!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private bool CanAddMatchToSkill() => SelectedSkill != null;
-        private bool CanOpenAddSkill() => true;
         private bool CanOpenAddNote() => MainWindowViewModel.CurrentUser != null;
-        private bool CanAddSkill() => !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Purpose) && !string.IsNullOrWhiteSpace(Description);
+        private bool CanAddSkill() => !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Purpose) && !string.IsNullOrWhiteSpace(Description) && Module != null;
         private bool CanSaveSkill() => SelectedSkill != null;
-
         private bool CanDeleteSkill() => SelectedSkill != null;
     }
 }

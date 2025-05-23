@@ -3,7 +3,6 @@ using DATApp.MVVM.Model.Repositories;
 using DATApp.Core;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using DATApp.MVVM.View;
 using System.Windows;
 using System.ComponentModel;
 using System.Windows.Data;
@@ -55,7 +54,6 @@ namespace DATApp.MVVM.ViewModel
             }
         }
 
-        public ICommand OpenAddModuleCommand { get; }
         public ICommand SaveModuleCommand { get; }
         public ICommand AddModuleCommand { get; }
         public ICommand DeleteModuleCommand { get; }
@@ -65,40 +63,46 @@ namespace DATApp.MVVM.ViewModel
         {
             Modules = new ObservableCollection<Module>(moduleRepository.GetAll());
             ModulesCollectionView = CollectionViewSource.GetDefaultView(Modules);
+            ModulesCollectionView.Filter = ModulesFilter;
 
             AddModuleCommand = new RelayCommandUser(AddModule, CanAddModule);
             SaveModuleCommand = new RelayCommandUser(SaveModule, CanSaveModule);
-            OpenAddModuleCommand = new RelayCommandUser(OpenAddModule, CanOpenAddModule);
             DeleteModuleCommand = new RelayCommandUser(DeleteModule, CanDeleteModule);
         }
 
         private void AddModule()
         {
             var module = new Module { Number = number, Name = name, Description = description};
-            
-            Modules.Add(module);
-            moduleRepository.AddModule(module);
+            if (Modules.Where(m => m.Name == module.Name).Any())
+            {
+                MessageBox.Show($"Kunne ikke tilføjes. Modulet eksisterer i forvejen", "Fejl", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                Modules.Add(module);
+                moduleRepository.AddModule(module);
+                MessageBox.Show($"Modul '{module.Name}' oprettet!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            // Dialogboks som bekræftelse
-            MessageBox.Show($"Modul '{module.Name}' oprettet!", "Tilføjet", MessageBoxButton.OK, MessageBoxImage.Information);
-            // Tekstfelter ryddes for indhold
-            Name = string.Empty;
-            Description = string.Empty;            
-        }
-
-        private void OpenAddModule()
-        {
-            AddModuleView addModuleView = new AddModuleView();
-            addModuleView.Show();
+                // Tekstfelter ryddes for indhold
+                Name = string.Empty;
+                Description = string.Empty;
+            }     
         }
 
         private void SaveModule()
         {
-            moduleRepository.UpdateModule(SelectedModule);
-            // Dialogboks som bekræftelse
-            MessageBox.Show($"Modul '{SelectedModule.Name}' Rettet!", "Redigeret", MessageBoxButton.OK, MessageBoxImage.Information);
-            // Tekstfelter ryddes for indhold
-            SelectedModule = null;
+            if (Modules.Where(m => m.Name == SelectedModule.Name).Any())
+            {
+                MessageBox.Show($"Kunne ikke gemmes. Modul eksisterer i forvejen", "Fejl", MessageBoxButton.OK, MessageBoxImage.Information);
+                SelectedModule = null;
+            }
+            else
+            {
+                moduleRepository.UpdateModule(SelectedModule);
+                MessageBox.Show($"Ændringer gemt!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Tekstfelter ryddes for indhold
+                SelectedModule = null;
+            }
         }
 
         private void DeleteModule()
@@ -106,7 +110,7 @@ namespace DATApp.MVVM.ViewModel
             moduleRepository.DeleteModule(SelectedModule);
             Modules.Remove(SelectedModule);
             // Dialogboks som bekræftelse
-            MessageBox.Show($"Modul '{Name}' slettet!", "Fjernet", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show($"Modul slettet!", "Udfør", MessageBoxButton.OK, MessageBoxImage.Information);
             // Tekstfelter ryddes for indhold
             SelectedModule = null;
         }
@@ -122,7 +126,6 @@ namespace DATApp.MVVM.ViewModel
         }
 
         private bool CanAddModule() => !string.IsNullOrWhiteSpace(Name);
-        private bool CanOpenAddModule() => true;
         private bool CanSaveModule() => SelectedModule != null;
         private bool CanDeleteModule() => SelectedModule != null;
     }

@@ -23,7 +23,7 @@ namespace DATApp
 
         public void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (MainWindowViewModel.CurrentUser.Name != null)
+            if (MainWindowViewModel.CurrentUser != null)
             {
                 FortsætButton.Visibility = Visibility.Collapsed;
             }
