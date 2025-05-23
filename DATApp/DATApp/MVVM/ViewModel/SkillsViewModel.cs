@@ -13,7 +13,10 @@ namespace DATApp.MVVM.ViewModel
 {
     public class SkillsViewModel : ViewModelBase
     {
+        // Instansierer et fileskillrepository
         internal static FileSkillRepository skillRepository = new FileSkillRepository("skills.txt");
+
+        //Indstiller properties, der binder til view
         public ObservableCollection<Skill> Skills;
         public ICollectionView ModulesCollectionView { get; }
         public static ICollectionView SkillsCollectionView { get; set; }
@@ -77,6 +80,10 @@ namespace DATApp.MVVM.ViewModel
         public ICommand SaveSkillCommand { get; }
         public ICommand DeleteSkillCommand { get; }
 
+        private bool CanOpenAddNote() => MainWindowViewModel.CurrentUser != null;
+        private bool CanAddSkill() => !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Purpose) && !string.IsNullOrWhiteSpace(Description) && Module != null;
+        private bool CanSaveSkill() => SelectedSkill != null;
+        private bool CanDeleteSkill() => SelectedSkill != null;
 
         public SkillsViewModel()
         {
@@ -148,10 +155,5 @@ namespace DATApp.MVVM.ViewModel
             }
             return false;
         }
-
-        private bool CanOpenAddNote() => MainWindowViewModel.CurrentUser != null;
-        private bool CanAddSkill() => !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Purpose) && !string.IsNullOrWhiteSpace(Description) && Module != null;
-        private bool CanSaveSkill() => SelectedSkill != null;
-        private bool CanDeleteSkill() => SelectedSkill != null;
     }
 }

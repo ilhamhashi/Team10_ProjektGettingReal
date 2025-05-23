@@ -13,13 +13,13 @@
         <viewmodel:MatchesViewModel />
     </UserControl.DataContext>
     <Grid Margin="20,0,20,20">
-        
+
         <!-- Definerer rækker -->
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
+
         <!-- Definerer kolonner -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="60*"/>
@@ -59,7 +59,7 @@
             <GroupBox Header="Rediger oplysninger"
                       Foreground="#272537"
                       Margin="2,2,2,2">
-                
+
                 <StackPanel>
                     <GroupBox Header="Følelse">
                         <ComboBox SelectedItem="{Binding SelectedMatch.Emotion}"
@@ -75,11 +75,11 @@
 
                     <StackPanel Orientation="Horizontal" 
                                 HorizontalAlignment="Center">
-                        
+
                         <Button Content="Opdater" 
                                 Command="{Binding SaveMatchCommand, UpdateSourceTrigger=PropertyChanged}"
                                 Margin="0,0,20,0"/>
-                        
+
                         <Button Content="Slet" 
                                 Command="{Binding DeleteMatchCommand, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
@@ -118,29 +118,4 @@
             </GroupBox>
         </StackPanel>
     </Grid>
-
-        <!-- Search 
-        <TextBox Grid.Row="0" Height="35" Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" Margin="20,10,30,0"/>
-
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <ListBox ItemsSource="{Binding MatchesCollectionView, UpdateSourceTrigger=PropertyChanged}"
-                 SelectedItem="{Binding SelectedMatch, UpdateSourceTrigger=PropertyChanged}"
-                 HorizontalAlignment="Stretch"
-                 Margin="20,10,30,0">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Margin="5" Orientation="Vertical">
-                            <TextBlock Text="{Binding Skill.Name , UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" />
-                            <TextBlock Text="{Binding Level, UpdateSourceTrigger=PropertyChanged}" FontStyle="Italic" FontSize="12" />
-                            <TextBlock Text="{Binding Emotion, UpdateSourceTrigger=PropertyChanged}" FontStyle="Italic" FontSize="12" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </ScrollViewer>
-
-        <controls:AdminMatchPanel
-        Grid.RowSpan="2"
-        Grid.Column="1"/>
-    -->
 </UserControl>

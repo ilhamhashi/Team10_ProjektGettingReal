@@ -10,12 +10,17 @@ namespace DATApp.MVVM.ViewModel
 {
     public class MatchesViewModel : ViewModelBase
     {
+        // Instansierer et filematchrepository
         private readonly FileMatchRepository matchRepository = new FileMatchRepository("matches.txt");
+
+        //Indstiller observablecollection
         public ObservableCollection<Model.Classes.Match> Matches;
 
+        //Definerer liste af følelser og intensitet
         public IEnumerable<string> Emotions { get; } = ["Vrede", "Aggression", "Nedtrykthed", "Angst", "Skyld"];
         public IEnumerable<string> Levels { get; } = ["Rød", "Gul", "Grøn"];
 
+        //Indstiller ICollectionViews, der binder til listerne i view. 
         public ICollectionView MatchesSearchCollectionView { get; }
         public ICollectionView MatchesFilterCollectionView { get; }
         public ICollectionView SkillsCollectionView { get; }
@@ -23,6 +28,10 @@ namespace DATApp.MVVM.ViewModel
         public ICommand SaveMatchCommand { get; }
         public ICommand DeleteMatchCommand { get; }
         public ICommand AddMatchToSkillCommand { get; }
+        private bool CanAddMatchToSkill() => Skill != null && Emotion != null && Level != null;
+        private bool CanSaveMatch() => SelectedMatch != null;
+        private bool CanDeleteMatch() => SelectedMatch != null;
+
 
         private int _number;
         public int Number
@@ -178,9 +187,5 @@ namespace DATApp.MVVM.ViewModel
             }
             return false;
         }
-
-        private bool CanAddMatchToSkill() => Skill != null && Emotion != null && Level != null;
-        private bool CanSaveMatch() => SelectedMatch != null;
-        private bool CanDeleteMatch() => SelectedMatch != null;
     }
 }

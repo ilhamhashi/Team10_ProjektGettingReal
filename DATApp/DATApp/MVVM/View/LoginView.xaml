@@ -12,22 +12,30 @@
     <UserControl.DataContext>
         <viewmodel:UsersViewModel />
     </UserControl.DataContext>
+    
     <Grid HorizontalAlignment="Center">
+
+        <!-- Definerer rækker -->
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="50*"/>
             <RowDefinition Height="120"/>
         </Grid.RowDefinitions>
 
+        <!-- Overskrift -->
         <Label Grid.Row="0" Content="Log ind" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" FontFamily="Leelawadee UI Semilight" FontSize="18" Foreground="#FF18025F"/>
 
+        <!-- Email og adgangskode felter -->
         <StackPanel Grid.Row="1" VerticalAlignment="Center">
             <controls:EmailTextBox Grid.Row="1" Margin="0,0,0,20"/>
             <controls:AdgangskodeTextBox Grid.Row="1"/>
         </StackPanel>
 
+        <!-- Infotekst -->
         <StackPanel Grid.Row="2">
             <Label Content="Kontakt klinikken for oprettelse af bruger" HorizontalAlignment="Center" FontFamily="Calibri Light" Foreground="#FF18025F" FontSize="10"  Margin="0,0,0,20"/>
+           
+            <!-- Valider button -->
             <Button x:Name="validateButton" Content = "Valider" Command="{Binding ValidateUserLoginCommand}" Width="150" Height="20" Click="validateButton_Click"/>
         </StackPanel>
     </Grid>

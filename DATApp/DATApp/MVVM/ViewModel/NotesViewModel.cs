@@ -11,7 +11,10 @@ namespace DATApp.MVVM.ViewModel
 {
     public class NotesViewModel : ViewModelBase
     {
+        // Instansierer et filenoterepository
         private readonly INoteRepository noteRepository = new FileNoteRepository("notes.txt");
+
+        //Indstiller properties, der binder til view
         public ObservableCollection<Note> Notes;
 
         private int _number;
@@ -64,8 +67,9 @@ namespace DATApp.MVVM.ViewModel
         public ICollectionView NotesCollectionView { get; set; }
         public ICollectionView SkillsCollectionView { get; }
 
-        private bool CanAddNote() => !string.IsNullOrWhiteSpace(Content) && Skill != null;
 
+        private bool CanAddNote() => !string.IsNullOrWhiteSpace(Content) && Skill != null;
+        //Skal være forfatter af noten for at gemme eller slette den (Kun Admins kan se alle noter)
         private bool CanSaveNote() => SelectedNote != null && MainWindowViewModel.CurrentUser?.Email == SelectedNote.Client.Email;
         private bool CanDeleteNote() => SelectedNote != null && MainWindowViewModel.CurrentUser?.Email == SelectedNote.Client.Email;
 

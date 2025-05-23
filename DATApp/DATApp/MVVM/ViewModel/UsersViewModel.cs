@@ -14,7 +14,10 @@ namespace DATApp.MVVM.ViewModel
 {
     public class UsersViewModel : ViewModelBase
     {
+        // Instansierer et fileuserrepository
         private readonly IUserRepository userRepository = new FileUserRepository("users.txt");
+
+        //Indstiller properties, der binder til view
         public ObservableCollection<User> Users { get; }
         public ICollectionView UsersCollectionView { get; }
 
@@ -64,6 +67,8 @@ namespace DATApp.MVVM.ViewModel
                 UsersCollectionView.Refresh();
             }
         }
+
+        // Indstiller Commands til at udføre CRUD-operationer og login
         public ICommand SaveUserCommand { get; }
         public ICommand AddUserCommand { get; }
         public ICommand DeleteUserCommand { get; }
@@ -147,7 +152,6 @@ namespace DATApp.MVVM.ViewModel
         }
 
         private bool CanAddUser() => !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Password);
-        private bool CanOpenAddUser() => true;
         private bool CanSaveUser() => SelectedUser != null;
         private bool CanDeleteUser() => SelectedUser != null;
         private bool CanLoginUser() => !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Password);

@@ -7,6 +7,7 @@ namespace DATApp.MVVM.ViewModel
 {
     internal class MainWindowViewModel : ViewModelBase
     {
+        // Binder til den bruger, der bruger systemet
         private static User? _currentUser;
         public static User? CurrentUser
         {
@@ -14,6 +15,7 @@ namespace DATApp.MVVM.ViewModel
             set { _currentUser = value; }
         }
 
+        // Binder til det view, som skal vises i indholdssektionen
         private object _currentView;
         public object CurrentView
         {
@@ -21,6 +23,7 @@ namespace DATApp.MVVM.ViewModel
             set { _currentView = value; OnPropertyChanged(); }
         }
 
+        // Binder til det den menu, som skal vises
         private object _currentMenuView;
         public object CurrentMenuView
         {
@@ -28,6 +31,7 @@ namespace DATApp.MVVM.ViewModel
             set { _currentMenuView = value; OnPropertyChanged(); }
         }
 
+        // Command der binder til knapperne i menuen
         public RelayCommand HomeViewCommand {  get; set; }
         public RelayCommand AdminHomeViewCommand { get; set; }
         public RelayCommand UsersViewCommand { get; set; }
@@ -41,6 +45,7 @@ namespace DATApp.MVVM.ViewModel
         public RelayCommand ClientViewCommand { get; set; }
         public RelayCommand CloseMainWindowCommand { get; set; }
 
+        // Definerer de forskellige views og viewmodels, der kan vises i indholdssektionen
         public MatchesViewModel MatchesVM { get; set; }
         public AdminMatchViewModel AdminMatchVM { get; set; }
         public UsersViewModel UsersVM { get; set; }
@@ -57,7 +62,7 @@ namespace DATApp.MVVM.ViewModel
 
 
         public MainWindowViewModel()
-        {
+        {            
             MatchesVM = new MatchesViewModel();
             AdminMatchVM = new AdminMatchViewModel();
             UsersVM = new UsersViewModel();
@@ -71,6 +76,7 @@ namespace DATApp.MVVM.ViewModel
             ClientMenuView  = new ClientMenuBar();
             AdminMenuView  = new AdminMenuBar();
             CurrentUser = new User();
+            CurrentUser = null;
 
             CurrentMenuView = BaseMenuView;
             CurrentView = MatchesVM;

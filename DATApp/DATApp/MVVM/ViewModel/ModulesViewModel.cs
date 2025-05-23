@@ -11,8 +11,12 @@ namespace DATApp.MVVM.ViewModel
 {
     public class ModulesViewModel : ViewModelBase
     {
+        // Instansierer et filemodulerepository
         private readonly FileModuleRepository moduleRepository = new FileModuleRepository("modules.txt");
+
+        //Indstiller properties, der binder til view
         public ObservableCollection<Module> Modules;
+        public static ICollectionView ModulesCollectionView { get; set; }
 
         private int number;
         public int Number
@@ -57,7 +61,9 @@ namespace DATApp.MVVM.ViewModel
         public ICommand SaveModuleCommand { get; }
         public ICommand AddModuleCommand { get; }
         public ICommand DeleteModuleCommand { get; }
-        public static ICollectionView ModulesCollectionView { get; set; }
+        private bool CanAddModule() => !string.IsNullOrWhiteSpace(Name);
+        private bool CanSaveModule() => SelectedModule != null;
+        private bool CanDeleteModule() => SelectedModule != null;
 
         public ModulesViewModel()
         {
@@ -117,9 +123,5 @@ namespace DATApp.MVVM.ViewModel
             }
             return false;
         }
-
-        private bool CanAddModule() => !string.IsNullOrWhiteSpace(Name);
-        private bool CanSaveModule() => SelectedModule != null;
-        private bool CanDeleteModule() => SelectedModule != null;
     }
 }

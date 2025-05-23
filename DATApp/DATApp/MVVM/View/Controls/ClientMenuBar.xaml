@@ -13,7 +13,6 @@
 
         <GroupBox Header="Menu">
             <StackPanel>
-
                 <RadioButton Content="Forside"
                          Height="50"
                          Foreground="Black"
