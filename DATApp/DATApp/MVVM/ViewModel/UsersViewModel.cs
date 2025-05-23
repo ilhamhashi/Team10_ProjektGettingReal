@@ -104,17 +104,9 @@ namespace DATApp.MVVM.ViewModel
 
         private void SaveUser()
         {
-            if (Users.Where(u => u.Email == SelectedUser.Email).Any())
-            {
-                MessageBox.Show($"Kunne ikke gemmes. Bruger eksisterer i forvejen", "Fejl", MessageBoxButton.OK, MessageBoxImage.Information);
-                SelectedUser = null;
-            }
-            else
-            {
                 userRepository.UpdateUser(SelectedUser);
                 MessageBox.Show($"Ændringerne er gemt", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
                 SelectedUser = null;
-            }
         }
 
         private void DeleteUser()

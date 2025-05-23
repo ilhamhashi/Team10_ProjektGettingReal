@@ -93,7 +93,7 @@ namespace DATApp.MVVM.ViewModel
         {
             noteRepository.Update(SelectedNote);
             // Dialogboks som bekræftelse
-            MessageBox.Show($"Ændringer Gemt!", "Redigeret", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show($"Ændringer Gemt!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
             // Tekstfelter ryddes for indhold
             SelectedNote = null;
         }

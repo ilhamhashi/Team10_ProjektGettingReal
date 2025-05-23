@@ -7,8 +7,8 @@ namespace DATApp.MVVM.ViewModel
 {
     internal class MainWindowViewModel : ViewModelBase
     {
-        private static User _currentUser;
-        public static User CurrentUser
+        private static User? _currentUser;
+        public static User? CurrentUser
         {
             get { return _currentUser; }
             set { _currentUser = value; }
@@ -71,7 +71,6 @@ namespace DATApp.MVVM.ViewModel
             ClientMenuView  = new ClientMenuBar();
             AdminMenuView  = new AdminMenuBar();
             CurrentUser = new User();
-            CurrentUser = null;
 
             CurrentMenuView = BaseMenuView;
 
@@ -133,7 +132,7 @@ namespace DATApp.MVVM.ViewModel
 
             MenuViewCommand = new RelayCommand(o =>
             {
-                if (CurrentUser == null || CurrentUser.Name == null)
+                if (CurrentUser == null)
                 {
                     CurrentMenuView = BaseMenuView;
                 }

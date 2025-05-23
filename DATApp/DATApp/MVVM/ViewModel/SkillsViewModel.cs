@@ -122,17 +122,10 @@ namespace DATApp.MVVM.ViewModel
 
         private void SaveSkill()
         {
-            if (Skills.Where(s => s.Name == SelectedSkill.Name).Any())
-            {
-                MessageBox.Show($"Kunne ikke gemmes. Færdighed eksisterer i forvejen", "Fejl", MessageBoxButton.OK, MessageBoxImage.Information);
-                SelectedSkill = null;
-            }
-            else
-            {
-                skillRepository.UpdateSkill(SelectedSkill);
-                MessageBox.Show($"Færdighed '{SelectedSkill.Name}' Rettet!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
-                SelectedSkill = null;
-            }
+            skillRepository.UpdateSkill(SelectedSkill);
+            MessageBox.Show($"Færdighed '{SelectedSkill.Name}' Rettet!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
+            SelectedSkill = null;
+
         }
 
         private void DeleteSkill()

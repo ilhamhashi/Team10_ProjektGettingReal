@@ -145,17 +145,9 @@ namespace DATApp.MVVM.ViewModel
 
         private void SaveMatch()
         {
-            if (Matches.Where(m => m.Skill.Number == SelectedMatch.Skill.Number && m.Emotion == SelectedMatch.Emotion && m.Level == SelectedMatch.Level).Any())
-            {
-                MessageBox.Show($"Kunne ikke gemmes. Kombination eksisterer i forvejen", "Fejl", MessageBoxButton.OK, MessageBoxImage.Information);
-                SelectedMatch = null;
-            }
-            else
-            {
-                matchRepository.UpdateMatch(SelectedMatch);
-                MessageBox.Show($"Ændringer gemt!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
-                SelectedMatch = null;
-            }
+            matchRepository.UpdateMatch(SelectedMatch);
+            MessageBox.Show($"Ændringer gemt!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
+            SelectedMatch = null;
         }
 
         private void DeleteMatch()

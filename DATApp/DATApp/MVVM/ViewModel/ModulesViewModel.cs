@@ -91,18 +91,11 @@ namespace DATApp.MVVM.ViewModel
 
         private void SaveModule()
         {
-            if (Modules.Where(m => m.Name == SelectedModule.Name).Any())
-            {
-                MessageBox.Show($"Kunne ikke gemmes. Modul eksisterer i forvejen", "Fejl", MessageBoxButton.OK, MessageBoxImage.Information);
-                SelectedModule = null;
-            }
-            else
-            {
-                moduleRepository.UpdateModule(SelectedModule);
-                MessageBox.Show($"Ændringer gemt!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
-                // Tekstfelter ryddes for indhold
-                SelectedModule = null;
-            }
+            moduleRepository.UpdateModule(SelectedModule);
+            MessageBox.Show($"Ændringer gemt!", "Udført", MessageBoxButton.OK, MessageBoxImage.Information);
+            // Tekstfelter ryddes for indhold
+            SelectedModule = null;
+
         }
 
         private void DeleteModule()

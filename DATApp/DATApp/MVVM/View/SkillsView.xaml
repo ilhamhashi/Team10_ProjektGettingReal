@@ -61,7 +61,6 @@
         <GroupBox Grid.Row="2" Header="Skriv en note - Du skal være logget ind" FontWeight="Light" Foreground="#272537">
             <Button Background="Transparent" BorderThickness="0" BorderBrush="Transparent"
                     Command="{Binding OpenAddNoteCommand, UpdateSourceTrigger=PropertyChanged}" Height="25" Width="100" HorizontalAlignment="Left"/>
-
         </GroupBox>
     </Grid>
 </UserControl>

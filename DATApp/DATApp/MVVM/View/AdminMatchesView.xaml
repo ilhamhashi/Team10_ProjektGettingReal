@@ -56,10 +56,10 @@
 
         <!-- Rediger valgt match -->
         <StackPanel Grid.Row="1" Grid.Column="1">
-            <GroupBox Header="Rediger oplysninger" 
-                  FontWeight="Light" 
-                  Foreground="#272537"
-                  Margin="2,2,2,2">
+            <GroupBox Header="Rediger oplysninger"
+                      Foreground="#272537"
+                      Margin="2,2,2,2">
+                
                 <StackPanel>
                     <GroupBox Header="Følelse">
                         <ComboBox SelectedItem="{Binding SelectedMatch.Emotion}"
@@ -73,10 +73,15 @@
                                   Margin="0,5,0,10" />
                     </GroupBox>
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Content="Opdater" Command="{Binding SaveMatchCommand, UpdateSourceTrigger=PropertyChanged}"
+                    <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Center">
+                        
+                        <Button Content="Opdater" 
+                                Command="{Binding SaveMatchCommand, UpdateSourceTrigger=PropertyChanged}"
                                 Margin="0,0,20,0"/>
-                        <Button Content="Slet" Command="{Binding DeleteMatchCommand, UpdateSourceTrigger=PropertyChanged}" />
+                        
+                        <Button Content="Slet" 
+                                Command="{Binding DeleteMatchCommand, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                 </StackPanel>
             </GroupBox>

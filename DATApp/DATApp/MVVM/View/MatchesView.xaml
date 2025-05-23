@@ -13,11 +13,13 @@
     </UserControl.DataContext>
 
     <Grid Margin="20,0,20,0">
+        <!-- Definerer rækker -->
         <Grid.RowDefinitions>
             <RowDefinition Height="30*" />
             <RowDefinition Height="70*"/>
         </Grid.RowDefinitions>
 
+        <!-- Bruger kan vælge følelse og intensitet -->
         <GroupBox Header="DAT-Match" Grid.Row="0">
             <StackPanel HorizontalAlignment="Left" Margin="5">
                 <Label Content="Vælg en følelse, der bedst beskriver din nuværende sindstilstand" />
@@ -28,8 +30,8 @@
             </StackPanel>
         </GroupBox>
 
+        <!-- Liste over Matches -->
         <GroupBox Grid.Row="2" Header="Resultat">
-
             <ScrollViewer  VerticalScrollBarVisibility="Auto">
                 <ListBox ItemsSource="{Binding MatchesFilterCollectionView, UpdateSourceTrigger=PropertyChanged}"
                      SelectedItem="{Binding SelectedSkill, UpdateSourceTrigger=PropertyChanged}"
@@ -58,5 +60,6 @@
                 </ListBox>
             </ScrollViewer>
         </GroupBox>
+        
     </Grid>
 </UserControl>
